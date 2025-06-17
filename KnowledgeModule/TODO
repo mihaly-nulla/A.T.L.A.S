@@ -1,0 +1,10 @@
+Knowledge Module
+│
+├── Documents (PDFs, Textos)
+├── Facts (Fatos Diretos)
+├── Ontologies (Relações Conceituais)
+├── Scenarios (Problemas, Simulações)
+├── Analogies (Explicações Figuradas)
+├── Procedures (Passo-a-passo)
+├── Constraints (Limitações)
+└── Memories (Histórico das Interações)
