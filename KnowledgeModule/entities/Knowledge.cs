@@ -7,7 +7,7 @@ namespace KnowledgeModule.entities
 {
     public class Knowledge
     {
-        private string concept_id;
+        private string ConceptId;
         private List<Document> documents;
     }
 }
