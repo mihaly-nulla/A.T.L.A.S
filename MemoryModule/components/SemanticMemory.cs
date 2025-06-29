@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 
-namespace MemoryModule.components
+namespace A.T.L.A.S.MemoryModule.components
 {
     public class SemanticMemory
     {
@@ -12,7 +12,13 @@ namespace MemoryModule.components
         private List<string> relatedConcepts;
         private DateTime discoveryDate;
 
-        public SemanticMemory(string conceptId, 
+        public SemanticMemory(string conceptId)
+        {
+            this.conceptId = conceptId;
+            relatedConcepts = new List<string>();
+        }
+
+        public SemanticMemory(string conceptId,
                                 List<string> relatedConcepts,
                                 DateTime discoveryDate)
         {

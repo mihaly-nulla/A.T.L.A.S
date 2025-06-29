@@ -1,17 +1,17 @@
-﻿using System;
+﻿using A.T.L.A.S.MemoryModule.components;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-
-namespace MemoryModule.systems
+namespace A.T.L.A.S.MemoryModule.systems
 {
-	public class MemorySystem
-	{
-		private 
-		public MemorySystem()
-		{
-
-		}
-	}
+    public class MemorySystem
+    {
+        private SemanticMemory semanticMemory;
+        public MemorySystem()
+        {
+            semanticMemory = new SemanticMemory("empty");
+        }
+    }
 }

@@ -7,6 +7,7 @@
                     "ID": "fisica_01",
                     "Title": "Fundamentos de Física — Volume 1",
                     "Description": "Livro base sobre cinemática e leis da física.",
+                    "Abstract": "AAAAAAAAAAAAAAAAAAAAAAAA",
                     "FilePath": "knowledge_base/fisica_vol1.pdf",
                     "Tags": ["fisica", "cinematica", "dinamica"]
                 }
@@ -19,6 +20,7 @@
                     "ID": "fisica_05",
                     "Title": "Fundamentos de Física Quântica — Volume 5",
                     "Description": "Livro base sobre física quântica.",
+                    "Abstract": "AAAAAAAAAAAAAAAAAAAAAAAA",
                     "FilePath": "knowledge_base/fisica_vol5.pdf",
                     "Tags": ["fisica", "quântica"]
                 }
@@ -31,6 +33,7 @@
                     "ID" : "ondulatory_colors",
                     "Title" : "Regras das cores em Ondulatória, no jogo",
                     "Description" : "Livro base com a lógica de ondulatória das cores no jogo",
+                    "Abstract": "AAAAAAAAAAAAAAAAAAAAAAAA",
                     "FilePath" : "knowledge_base/game_documents/color_ondulatory.pdf"
                 }
             ]

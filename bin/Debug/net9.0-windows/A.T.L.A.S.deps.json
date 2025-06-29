@@ -1,0 +1,23 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v9.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v9.0": {
+      "A.T.L.A.S/1.0.0": {
+        "runtime": {
+          "A.T.L.A.S.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "A.T.L.A.S/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
