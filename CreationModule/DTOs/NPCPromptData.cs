@@ -1,4 +1,5 @@
-﻿using System;
+﻿using A.T.L.A.S.PersonalityModule.systems;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -16,5 +17,8 @@ namespace A.T.L.A.S.CreationModule.DTOs
 
         [JsonPropertyName("npc_knowledge")]
         public List<string> KnowledgeBaseContent { get; set; }
+
+        [JsonPropertyName("npc_personality")]
+        public PersonalitySystem NPCPersonality { get; set; }
     }
 }

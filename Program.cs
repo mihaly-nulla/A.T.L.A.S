@@ -1,44 +1,57 @@
 using A.T.L.A.S.CreationModule.entities; // Brain (o NPC em si)
 using A.T.L.A.S.CreationModule.systems; // CreationSystem
 using A.T.L.A.S.KnowledgeModule.entities; // Knowledge, Document
+using A.T.L.A.S.PersonalityModule.systems;
+using A.T.L.A.S.PersonalityModule.entities;
+using A.T.L.A.S.PersonalityModule.components;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using A.T.L.A.S.CommunicationModule.systems;
 
 namespace A.T.L.A.S
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             Debug.WriteLine("--- Iniciando Teste de Geração de Prompt de NPC ---");
 
             CreationSystem creator = new CreationSystem();
 
             // 1. Criar alguns Documentos
-            Document docFisica01 = new Document(
-                "fisica_01",
-                "Fundamentos de Física — Volume 1",
+            Document docGenetica01 = new Document(
+                "genetics_dna",
+                "Fundamentos de Genética — Volume 1",
                 "Livro base sobre cinemática e leis da física. Contém informações essenciais sobre movimento, força e energia.",
-                "Resumo de física",
+                "The DNA, or deoxyribonucleic acid, is a fundamental nucleic acid that serves as the hereditary material in all known organisms, including viruses. Its structure is a double helix composed of two long polymer chains of nucleotides, which are held together by hydrogen bonds. This intricate molecular architecture allows DNA to store biological information in a sequence of bases (adenine, guanine, cytosine, and thymine). This information is duplicated through a process called replication and can be transcribed into RNA and translated into proteins, forming the central dogma of molecular biology. The precise sequence of nucleotides dictates the genetic code, providing the blueprint for cellular function, organism development, and reproduction.",
                 "knowledge_base/fisica_vol1.pdf",
                 new List<string> { "fisica", "cinematica", "dinamica" }
             );
 
-            Document docFisica05 = new Document(
-                "fisica_05",
-                "Fundamentos de Física Quântica — Volume 5",
-                "Livro base sobre física quântica, abordando conceitos como dualidade onda-partícula e mecânica quântica.",
-                "Resumo de quântica",
+            Document docGenetica02 = new Document(
+                "genetics_genes",
+                "Fundamentos de Genética — Volume 5",
+                "Genes sao como receitas em um grande livro de culinaria. Cada um tem o codigo para fazer algo incr\u00edvel no seu corpo!",
+                "A gene is defined as a basic physical and functional unit of heredity. It is a specific sequence of nucleotides in DNA or RNA that contains instructions for constructing a specific product, typically a protein or a functional RNA molecule. Genes are organized on chromosomes and their location is referred to as a locus. While some genes encode for the synthesis of proteins, others encode for functional RNA molecules that are not translated into proteins. The expression of a gene is a complex process involving transcription and translation, and it is regulated by various cellular mechanisms to ensure that the right products are made at the right time and in the right amounts.",
                 "knowledge_base/fisica_vol5.pdf",
                 new List<string> { "fisica", "quântica" }
             );
 
-            Document docOndulatoryColors = new Document(
-                "ondulatory_colors",
+            Document docGenetica03 = new Document(
+                "genetics_mitosis",
                 "Regras das cores em Ondulatória, no jogo",
                 "Livro com a lógica de como as cores interagem na física ondulatória dentro das regras específicas do jogo. Define a fusão de cores primárias e secundárias em ambientes de baixa luz.",
-                "Resumo de ondulatória",
+                "Mitosis is a critical phase of the cell cycle where a single eukaryotic cell divides into two genetically identical daughter cells. This process is divided into several distinct stages: prophase, metaphase, anaphase, and telophase, followed by cytokinesis. During mitosis, the cell's duplicated chromosomes are separated into two new nuclei, ensuring that each daughter cell receives a complete and identical set of chromosomes from the parent cell. This meticulous division is essential for asexual reproduction in single-celled organisms and for growth, tissue repair, and replacement in multicellular organisms. Any errors during this process can lead to chromosomal abnormalities, which are associated with various diseases.",
+                "knowledge_base/game_documents/color_ondulatory.pdf",
+                new List<string> { "jogo", "ondulatoria", "cores", "regras" }
+            );
+
+            Document docGenetica04 = new Document(
+                "genetics_heredity",
+                "Regras das cores em Ondulatória, no jogo",
+                "Livro com a lógica de como as cores interagem na física ondulatória dentro das regras específicas do jogo. Define a fusão de cores primárias e secundárias em ambientes de baixa luz.",
+                "Heredity is the biological process by which genetic information and traits are transmitted from parents to their offspring. This transmission occurs through the process of sexual or asexual reproduction, where genes from the parents are passed down to the next generation. The study of heredity, or genetics, involves understanding the mechanisms of gene expression, inheritance patterns (such as Mendelian inheritance), and genetic variation. Heredity is responsible for the similarities between parents and offspring, while genetic variation, influenced by factors like mutations and recombination, explains the differences. The principles of heredity are fundamental to understanding evolutionary biology and the diversity of life on Earth.",
                 "knowledge_base/game_documents/color_ondulatory.pdf",
                 new List<string> { "jogo", "ondulatoria", "cores", "regras" }
             );
@@ -46,44 +59,84 @@ namespace A.T.L.A.S
 
             // 2. Criar instâncias de Knowledge (conceitos com documentos)
             List<Knowledge> scientistInitialKnowledge = new List<Knowledge>
-        {
-            new Knowledge("physics_ondulatory", new List<Document> { docFisica01 }),
-            new Knowledge("physics_quantum", new List<Document> { docFisica05 }),
-            new Knowledge("game_ondulatory_rules-colors", new List<Document> { docOndulatoryColors })
-        };
-
-            /*List<Knowledge> adventurerInitialKnowledge = new List<Knowledge>
             {
-                new Knowledge("survival_basics", new List<Document> { new Document("surv_01", "Guia de Sobrevivência Rápida", "Manual com técnicas básicas de abrigo e alimentação.", "docs/survival.pdf", new List<string>{"survival"}) })
-            };*/
+                new Knowledge("cells", new List<Document> { docGenetica03, docGenetica04 }),
+                new Knowledge("dna-rna", new List<Document> { docGenetica01, docGenetica02 })
+            };
 
-            // 3. Criar NPCs (Brains) usando o CreationSystem
             Debug.WriteLine("\n--- Criando NPCs ---");
-            Brain scientistNpcBrain = creator.CreateNPC("NPC_Einstein", "Albert Einstein", scientistInitialKnowledge);
-            //Brain adventurerNpcBrain = creator.CreateNPC("NPC_IndianaJones", adventurerInitialKnowledge);
+            Brain rosaBrain =
+                creator.CreateNPC(
+                    "rosa",
+                    "Rosa",
+                    scientistInitialKnowledge,
+                    new PersonalitySystem(
+                                            new OCEAN(
+                                                        90,
+                                                        70,
+                                                        85,
+                                                        95,
+                                                        20
+                                                      ),
+                                            new SCHWARTZ(
+                                                            90,
+                                                            90,
+                                                            70,
+                                                            60,
+                                                            20,
+                                                            50,
+                                                            40,
+                                                            30,
+                                                            90,
+                                                            80
+                                                         ),
+                                            new DialogStyle(
+                                                                    "enthusiastic and inspiring", 
+                                                                    30,
+                                                                    "acessible, full of analogies and metaphors",
+                                                                    ""
+                                                                )
+                                         )
+            );
 
-            Debug.WriteLine("\n--- Testando Brains ---");
-            Debug.WriteLine(scientistNpcBrain.npcKnowledge.GetKnowledgeByConceptId("physics_quantum").ConceptId);
+            DialogStyle lucioDialogStyle = new DialogStyle(
+                "sarcastic, blunt, dry humor", // Tom direto e seco
+                80, // Mais formal/distante, embora com humor próprio
+                "technical, cynical, analytical", // Vocabulário técnico e analítico
+                "Dr. Gregory House" // A referência explícita ao House
+            );
+
+            PersonalitySystem lucioPersonality = new PersonalitySystem(
+                new OCEAN(80, 85, 20, 15, 70), // Open, Consc, Extra, Agree, Neuro
+                new SCHWARTZ(95, 60, 40, 90, 50, 40, 10, 10, 20, 30), // Self-Dir, Stim, Hedon, Achiev, Power, Secur, Conf, Trad, Benev, Univ
+                lucioDialogStyle
+            );
+
+            PersonalitySystem alternateRosaPersonality = new PersonalitySystem(
+                new OCEAN(80, 85, 20, 15, 70), // Open, Consc, Extra, Agree, Neuro
+                new SCHWARTZ(95, 60, 40, 90, 50, 40, 10, 10, 20, 30), // Self-Dir, Stim, Hedon, Achiev, Power, Secur, Conf, Trad, Benev, Univ
+                new DialogStyle(
+                        "enthusiastic and inspiring",
+                        30,
+                        "acessible, full of analogies and metaphors",
+                        ""
+                    )
+            );
+
+            Brain lucioNpcBrain = creator.CreateNPC("lucio", "Lucio", scientistInitialKnowledge, lucioPersonality);
+            Brain rosaAlternate = creator.CreateNPC("rosa-alternate", "Rosa", scientistInitialKnowledge, alternateRosaPersonality);
 
             Debug.WriteLine("\n--- Gerando JSON do Prompt para NPC_Einstein ---");
-            string scientistPromptJson = creator.GeneratePromptJsonForNpc("NPC_Einstein");
-            Debug.WriteLine(scientistPromptJson);
-            // 4. Testar a recuperação de conhecimento pelos Brains
-            /*Console.WriteLine("\n--- Testando Brains ---");
-            Console.WriteLine(scientistNpcBrain.GetKnowledgeDescription("physics_ondulatory"));
-            Console.WriteLine(adventurerNpcBrain.GetKnowledgeDescription("survival_basics"));
-            Console.WriteLine(scientistNpcBrain.GetKnowledgeDescription("unknown_concept"));
+            creator.GenerateAndSaveJson("rosa");
+            creator.GenerateAndSaveJson("lucio");
+            creator.GenerateAndSaveJson("rosa-alternate");
 
-            // 5. Gerar o JSON do prompt para os NPCs
-            Console.WriteLine("\n--- Gerando JSON do Prompt para NPC_Einstein ---");
-            string scientistPromptJson = creator.GeneratePromptJsonForNpc("NPC_Einstein");
-            Console.WriteLine(scientistPromptJson);
+            //CommunicationSystem communicator = new CommunicationSystem();
 
-            Console.WriteLine("\n--- Gerando JSON do Prompt para NPC_IndianaJones ---");
-            string adventurerPromptJson = creator.GeneratePromptJsonForNpc("NPC_IndianaJones");
-            Console.WriteLine(adventurerPromptJson);
+            //await communicator.SendPromptToGEMINI("rosa", "Oi Rosa, você pode me explicar o processo de divisão celular?", "AIzaSyCNQSxjSKrqBce4XJBt7SdCEF-yp7NkfBA");
+            //await communicator.SendPromptToGEMINI("lucio", "Oi Lucio, você pode me explicar o processo de divisão celular?", "AIzaSyCNQSxjSKrqBce4XJBt7SdCEF-yp7NkfBA");
+            //await communicator.SendPromptToGEMINI("rosa-alternate", "Oi Rosa, você pode me explicar o processo de divisão celular?", "AIzaSyCNQSxjSKrqBce4XJBt7SdCEF-yp7NkfBA");
 
-            Console.WriteLine("\n--- Teste Concluído ---");*/
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
             //Console.ReadLine();

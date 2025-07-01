@@ -1,22 +1,50 @@
 ﻿using A.T.L.A.S.CreationModule.DTOs;
 using A.T.L.A.S.CreationModule.entities;
 using A.T.L.A.S.KnowledgeModule.entities;
+using A.T.L.A.S.PersonalityModule.systems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace A.T.L.A.S.CreationModule.systems
 {
     public class CreationSystem
     {
+        private const string CHARACTER_SAVE_DIRECTORY_NAME = "characters";
+
+        private string CharactersFolderPath;
+
         private List<Brain> _allNpcBrains = new List<Brain>();
 
         public CreationSystem()
         {
-            // _globalKnowledgeBase = new GlobalKnowledgeBaseManager(); // Se aplicável
+            string _projectDirectory;
+            var currentDirectory = AppContext.BaseDirectory;
+            var directoryInfo = new DirectoryInfo(currentDirectory);
+
+            //TODO - Colocar para verificar se é raiz do A.T.L.A.S
+            for (int i = 0; i < 3 && directoryInfo.Parent != null; i++)
+            {
+                directoryInfo = directoryInfo.Parent;
+            }
+            _projectDirectory = directoryInfo.FullName;
+
+            // Define o caminho completo para a pasta de salvamento dos personagens.
+            this.CharactersFolderPath = Path.Combine(_projectDirectory, CHARACTER_SAVE_DIRECTORY_NAME);
+
+            // Garante que o diretório de salvamento exista.
+            if (!Directory.Exists(CharactersFolderPath))
+            {
+                Directory.CreateDirectory(CharactersFolderPath);
+                Debug.WriteLine($"Diretório de salvamento criado: {CharactersFolderPath}");
+            } else
+            {
+                Debug.WriteLine($"Diretório de salvamento já existe: {CharactersFolderPath}");
+            }
         }
 
         /// <summary>
@@ -26,7 +54,15 @@ namespace A.T.L.A.S.CreationModule.systems
         {
             var newNpc = new Brain(npcId, npcName, initialKnowledge);
             _allNpcBrains.Add(newNpc);
-            Console.WriteLine($"NPC {npcId} criado e adicionado ao CreationSystem.");
+            Debug.WriteLine($"NPC {npcId} criado e adicionado ao CreationSystem.");
+            return newNpc;
+        }
+
+        public Brain CreateNPC(string npcId, string npcName, List<Knowledge> initialKnowledge, PersonalitySystem npcPersonality)
+        {
+            var newNpc = new Brain(npcId, npcName, initialKnowledge, npcPersonality);
+            _allNpcBrains.Add(newNpc);
+            Debug.WriteLine($"NPC {npcId} criado e adicionado ao CreationSystem.");
             return newNpc;
         }
 
@@ -39,11 +75,10 @@ namespace A.T.L.A.S.CreationModule.systems
         }
 
 
-
         /// <summary>
         /// Gera o JSON de prompt para um NPC específico.
         /// </summary>
-        public string GeneratePromptJsonForNpc(string npcId)
+        public string GenerateJsonForNpc(string npcId)
         {
             var npcBrain = GetNPCBrain(npcId);
             if (npcBrain == null)
@@ -52,7 +87,7 @@ namespace A.T.L.A.S.CreationModule.systems
             }
 
             // Reutiliza a lógica de montagem do JSON, passando o npcBrain
-            var promptData = AssembleNpcPromptData(npcBrain);
+            var promptData = AssembleNpcData(npcBrain);
             var options = new JsonSerializerOptions
             {
                 WriteIndented = true,
@@ -62,7 +97,27 @@ namespace A.T.L.A.S.CreationModule.systems
             return JsonSerializer.Serialize(promptData, options);
         }
 
-        private NPCPromptData AssembleNpcPromptData(Brain npcBrain)
+        public void GenerateAndSaveJson(string npcId)
+        {
+            var jsonString = GenerateJsonForNpc(npcId);
+
+            // 2. Define o caminho completo do arquivo
+            string fileName = $"{npcId}.json";
+            string filePath = Path.Combine(this.CharactersFolderPath, fileName);
+
+            // 3. Salva a string JSON no arquivo
+            try
+            {
+                File.WriteAllText(filePath, jsonString);
+                Console.WriteLine($"Dados do NPC '{npcId}' salvos com sucesso em '{filePath}'.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro ao salvar o arquivo JSON para o NPC '{npcId}': {ex.Message}");
+            }
+        }
+
+        private NPCPromptData AssembleNpcData(Brain npcBrain)
         {
             // Coleciona o conteúdo dos documentos de cada Knowledge
             var knowledgeContentForPrompt = new List<string>();
@@ -101,8 +156,15 @@ namespace A.T.L.A.S.CreationModule.systems
             {
                 NPCId = npcBrain.GetNPCID(),
                 NPCName = npcBrain.GetNPCName(),
-                KnowledgeBaseContent = knowledgeContentForPrompt
+                KnowledgeBaseContent = knowledgeContentForPrompt,
+                NPCPersonality = npcBrain.npcPersonality
             };
         }
+
+        public string GetCharactersPath()
+        {
+            return this.CharactersFolderPath;
+        }
+
     }
 }

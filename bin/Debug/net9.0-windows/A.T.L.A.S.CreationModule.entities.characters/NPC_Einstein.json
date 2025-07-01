@@ -1,0 +1,36 @@
+{
+  "npc_id": "NPC_Einstein",
+  "npc_name": "Albert Einstein",
+  "npc_knowledge": [
+    "physics_ondulatory: Resumo de f\u00EDsica",
+    "physics_quantum: Resumo de qu\u00E2ntica",
+    "game_ondulatory_rules-colors: Resumo de ondulat\u00F3ria"
+  ],
+  "npc_personality": {
+    "OCEAN": {
+      "openness": 0,
+      "conscientiousness": 0,
+      "extraversion": 0,
+      "agreeableness": 0,
+      "neuroticism": 0
+    },
+    "SCHWARTZ": {
+      "self_direction": 0,
+      "stimulation": 0,
+      "hedonism": 0,
+      "achievement": 0,
+      "power": 0,
+      "security": 0,
+      "conformity": 0,
+      "tradition": 0,
+      "benevolence": 0,
+      "universalism": 0
+    },
+    "dialog_style": {
+      "tone": "",
+      "formality": 0,
+      "vocabulary": "",
+      "vocabulary_reference": ""
+    }
+  }
+}

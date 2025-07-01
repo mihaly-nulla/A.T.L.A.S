@@ -1,6 +1,7 @@
 ﻿using A.T.L.A.S.KnowledgeModule.entities;
 using A.T.L.A.S.KnowledgeModule.systems;
 using A.T.L.A.S.MemoryModule.systems;
+using A.T.L.A.S.PersonalityModule.systems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace A.T.L.A.S.CreationModule.entities
 
         private string NPCName;
         public KnowledgeSystem npcKnowledge { get; private set; }
+
+        public PersonalitySystem npcPersonality { get; private set; }
         //private MemorySystem npcMemory;
         //private PersonalitySystem npcPersonality;
 
@@ -27,6 +30,22 @@ namespace A.T.L.A.S.CreationModule.entities
             {
                 this.npcKnowledge.AddKnowledge(knowledge);
             }
+
+            this.npcPersonality = new PersonalitySystem();
+            //NpcMemory = new MemorySystem(); // Cria um MemorySystem sem ID do NPC
+        }
+
+        public Brain(string npcId, string npcName,
+                        List<Knowledge> initialKnowledge, PersonalitySystem npcPersonality)
+        {
+            this.NPCId = npcId;
+            this.NPCName = npcName;
+            this.npcKnowledge = new KnowledgeSystem();
+            foreach (var knowledge in initialKnowledge)
+            {
+                this.npcKnowledge.AddKnowledge(knowledge);
+            }
+            this.npcPersonality = npcPersonality;
             //NpcMemory = new MemorySystem(); // Cria um MemorySystem sem ID do NPC
         }
 

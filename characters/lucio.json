@@ -1,0 +1,35 @@
+{
+  "npc_id": "lucio",
+  "npc_name": "Lucio",
+  "npc_knowledge": [
+    "cells: Mitosis is a critical phase of the cell cycle where a single eukaryotic cell divides into two genetically identical daughter cells. This process is divided into several distinct stages: prophase, metaphase, anaphase, and telophase, followed by cytokinesis. During mitosis, the cell\u0027s duplicate...",
+    "dna-rna: The DNA, or deoxyribonucleic acid, is a fundamental nucleic acid that serves as the hereditary material in all known organisms, including viruses. Its structure is a double helix composed of two long polymer chains of nucleotides, which are held together by hydrogen bonds. This intricate mo..."
+  ],
+  "npc_personality": {
+    "OCEAN": {
+      "openness": 80,
+      "conscientiousness": 85,
+      "extraversion": 20,
+      "agreeableness": 15,
+      "neuroticism": 70
+    },
+    "SCHWARTZ": {
+      "self_direction": 95,
+      "stimulation": 60,
+      "hedonism": 40,
+      "achievement": 90,
+      "power": 50,
+      "security": 40,
+      "conformity": 10,
+      "tradition": 10,
+      "benevolence": 20,
+      "universalism": 30
+    },
+    "dialog_style": {
+      "tone": "sarcastic, blunt, dry humor",
+      "formality": 80,
+      "vocabulary": "technical, cynical, analytical",
+      "vocabulary_reference": "Dr. Gregory House"
+    }
+  }
+}
