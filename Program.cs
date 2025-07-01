@@ -131,12 +131,6 @@ namespace A.T.L.A.S
             creator.GenerateAndSaveJson("lucio");
             creator.GenerateAndSaveJson("rosa-alternate");
 
-            //CommunicationSystem communicator = new CommunicationSystem();
-
-            //await communicator.SendPromptToGEMINI("rosa", "Oi Rosa, você pode me explicar o processo de divisão celular?", "AIzaSyCNQSxjSKrqBce4XJBt7SdCEF-yp7NkfBA");
-            //await communicator.SendPromptToGEMINI("lucio", "Oi Lucio, você pode me explicar o processo de divisão celular?", "AIzaSyCNQSxjSKrqBce4XJBt7SdCEF-yp7NkfBA");
-            //await communicator.SendPromptToGEMINI("rosa-alternate", "Oi Rosa, você pode me explicar o processo de divisão celular?", "AIzaSyCNQSxjSKrqBce4XJBt7SdCEF-yp7NkfBA");
-
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
             //Console.ReadLine();
