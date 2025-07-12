@@ -18,6 +18,7 @@ namespace A.T.L.A.S
             Debug.WriteLine("--- Iniciando Teste de Geração de Prompt de NPC ---");
 
             CreationSystem creator = new CreationSystem();
+            CommunicationSystem communicator = new CommunicationSystem();
 
             // 1. Criar alguns Documentos
             Document docGenetica01 = new Document(
@@ -126,10 +127,14 @@ namespace A.T.L.A.S
             Brain lucioNpcBrain = creator.CreateNPC("lucio", "Lucio", scientistInitialKnowledge, lucioPersonality);
             Brain rosaAlternate = creator.CreateNPC("rosa-alternate", "Rosa", scientistInitialKnowledge, alternateRosaPersonality);
 
-            Debug.WriteLine("\n--- Gerando JSON do Prompt para NPC_Einstein ---");
+            /*Debug.WriteLine("\n--- Gerando JSON do Prompt para NPC_Einstein ---");
             creator.GenerateAndSaveJson("rosa");
             creator.GenerateAndSaveJson("lucio");
-            creator.GenerateAndSaveJson("rosa-alternate");
+            creator.GenerateAndSaveJson("rosa-alternate");*/
+
+
+            //communicator.SendPromptToGEMINI("rosa-alternate");
+
 
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());

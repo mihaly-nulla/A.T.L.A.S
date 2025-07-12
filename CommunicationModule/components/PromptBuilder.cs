@@ -42,7 +42,7 @@ namespace A.T.L.A.S.CommunicationModule.components
             prompt.AppendLine("```");
 
             // --- 3. Entrada do Jogador ---
-            prompt.AppendLine("\n--- Player Input ---");
+            prompt.AppendLine("\n--- Input Prompt ---");
             prompt.AppendLine(playerInput);
 
             // --- 4. Instruções Finais para o Formato de Saída ---
