@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="CommunicationModule\entities\" />
+    <Folder Include="CreationModule\components\" />
+    <Folder Include="CreationModule\entities\characters\" />
+    <Folder Include="KnowledgeModule\components\" />
+    <Folder Include="MemoryModule\entities\" />
+  </ItemGroup>
+
+</Project>
