@@ -1,13 +1,16 @@
-using A.T.L.A.S.CreationModule.entities; // Brain (o NPC em si)
-using A.T.L.A.S.CreationModule.systems; // CreationSystem
-using A.T.L.A.S.KnowledgeModule.entities; // Knowledge, Document
-using A.T.L.A.S.PersonalityModule.systems;
-using A.T.L.A.S.PersonalityModule.entities;
-using A.T.L.A.S.PersonalityModule.components;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using A.T.L.A.S.CommunicationModule.systems;
+
+using A.T.L.A.S.Heart.PersonalityModule.components;
+using A.T.L.A.S.Heart.PersonalityModule.systems;
+using A.T.L.A.S.Heart.PersonalityModule.entities;
+
+using A.T.L.A.S.Mind.KnowledgeModule.entities;
+using A.T.L.A.S.Mind.CommunicationModule.systems;
+
+using A.T.L.A.S.Factory.CreationModule.entities;
+using A.T.L.A.S.Factory.CreationModule.systems;
 
 namespace A.T.L.A.S
 {
