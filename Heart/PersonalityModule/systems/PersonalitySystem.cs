@@ -1,5 +1,4 @@
-﻿using A.T.L.A.S.Heart.PersonalityModule.components;
-using A.T.L.A.S.Heart.PersonalityModule.entities;
+﻿using A.T.L.A.S.Heart.PersonalityModule.entities;
 
 using System;
 using System.Collections.Generic;
@@ -13,20 +12,19 @@ namespace A.T.L.A.S.Heart.PersonalityModule.systems
     public class PersonalitySystem
     {
         [JsonPropertyName("OCEAN")]
-        public OCEAN oceanPersonality { get; private set; }
+        public OCEAN oceanPersonality { get; set; }
 
         [JsonPropertyName("SCHWARTZ")]
-        public SCHWARTZ schwartzPersonality { get; private set; }
+        public SCHWARTZ schwartzPersonality { get; set; }
 
         [JsonPropertyName("dialog_style")]
-        public DialogStyle personalityStyle { get; private set; }
+        public DialogStyle personalityStyle { get; set; }
 
         public PersonalitySystem()
         {
             oceanPersonality = new OCEAN();
             schwartzPersonality = new SCHWARTZ();
             personalityStyle = new DialogStyle();
-            //knowledgeBase = new List<Knowledge>();
         }
 
         public PersonalitySystem(

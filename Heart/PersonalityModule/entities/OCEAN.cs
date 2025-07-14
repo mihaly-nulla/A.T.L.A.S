@@ -10,28 +10,21 @@ namespace A.T.L.A.S.Heart.PersonalityModule.entities
     public class OCEAN
     {
         [JsonPropertyName("openness")]
-        public int Openness { get; private set; }
+        public int Openness { get; set; }
 
         [JsonPropertyName("conscientiousness")]
-        public int Conscientiousness { get; private set; }
+        public int Conscientiousness { get; set; }
    
         [JsonPropertyName("extraversion")]
-        public int Extraversion { get; private set; }
+        public int Extraversion { get; set; }
 
         [JsonPropertyName("agreeableness")]
-        public int Agreeableness { get; private set; }
+        public int Agreeableness { get; set; }
 
         [JsonPropertyName("neuroticism")]
-        public int Neuroticism { get; private set; }
+        public int Neuroticism { get; set; }
 
-        public OCEAN() 
-        {
-            Openness = 0;
-            Conscientiousness = 0;
-            Extraversion = 0;
-            Agreeableness = 0;
-            Neuroticism = 0;
-        }
+        public OCEAN() { }
 
         public OCEAN(
                         int openness,

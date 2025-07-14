@@ -15,6 +15,8 @@ namespace A.T.L.A.S.Mind.KnowledgeModule.entities
         [JsonPropertyName("Documents")]
         public List<Document> Documents { get; private set; } = new List<Document>();
 
+        public Knowledge() : this("", null) { }
+
         public Knowledge(string conceptId, List<Document> documents = null)
         {
             if (string.IsNullOrWhiteSpace(conceptId))

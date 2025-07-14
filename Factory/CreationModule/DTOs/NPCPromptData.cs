@@ -1,4 +1,5 @@
 ﻿using A.T.L.A.S.Heart.PersonalityModule.systems;
+using A.T.L.A.S.Heart.AffectionModule.systems;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,14 @@ namespace A.T.L.A.S.Factory.CreationModule.DTOs
         [JsonPropertyName("npc_name")]
         public string NPCName { get; set; }
 
-        [JsonPropertyName("npc_knowledge")]
-        public List<string> KnowledgeBaseContent { get; set; }
+        [JsonPropertyName("npc_knowledge_summaries")]
+        public List<string> NPCKnowledgeSummaries { get; set; }
 
         [JsonPropertyName("npc_personality")]
         public PersonalitySystem NPCPersonality { get; set; }
+
+        [JsonPropertyName("npc_affections")]
+        public AffectionSystem NPCAffection { get; set; }
+
     }
 }

@@ -10,48 +10,36 @@ namespace A.T.L.A.S.Heart.PersonalityModule.entities
     public class SCHWARTZ
     {
         [JsonPropertyName("self_direction")]
-        public int SelfDirection { get; private set; }
+        public int SelfDirection { get; set; }
 
         [JsonPropertyName("stimulation")]
-        public int Stimulation { get; private set; }
+        public int Stimulation { get; set; }
 
         [JsonPropertyName("hedonism")]
-        public int Hedonism { get; private set; }
+        public int Hedonism { get; set; }
 
         [JsonPropertyName("achievement")]
-        public int Achievement { get; private set; }
+        public int Achievement { get; set; }
 
         [JsonPropertyName("power")]
-        public int Power { get; private set; }
+        public int Power { get; set; }
 
         [JsonPropertyName("security")]
-        public int Security { get; private set; }
+        public int Security { get; set; }
 
         [JsonPropertyName("conformity")]
-        public int Conformity { get; private set; }
+        public int Conformity { get; set; }
 
         [JsonPropertyName("tradition")]
-        public int Tradition { get; private set; }
+        public int Tradition { get; set; }
 
         [JsonPropertyName("benevolence")]
-        public int Benevolence { get; private set; }
+        public int Benevolence { get; set; }
 
         [JsonPropertyName("universalism")]
-        public int Universalism { get; private set; }
+        public int Universalism { get; set; }
 
-        public SCHWARTZ()
-        {
-            SelfDirection = 0;
-            Stimulation = 0;
-            Hedonism = 0;
-            Achievement = 0;
-            Power = 0;
-            Security = 0;
-            Conformity = 0;
-            Tradition = 0;
-            Benevolence = 0;
-            Universalism = 0;
-        }
+        public SCHWARTZ() { }
 
         public SCHWARTZ(
                         int selfDirection,

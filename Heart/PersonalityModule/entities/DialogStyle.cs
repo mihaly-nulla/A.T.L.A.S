@@ -5,28 +5,27 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace A.T.L.A.S.Heart.PersonalityModule.components
+namespace A.T.L.A.S.Heart.PersonalityModule.entities
 {
     public class DialogStyle
     {
         [JsonPropertyName("tone")]
-        public string Tone { get; private set; }
+        public string Tone { get; set; }
 
         [JsonPropertyName("formality")]
-        public int Formality { get; private set; }
+        public int Formality { get; set; }
 
         [JsonPropertyName("vocabulary")]
-        public string Vocabulary { get; private set; }
+        public string Vocabulary { get; set; }
 
         [JsonPropertyName("vocabulary_reference")]
-        public string VocabularyReference { get; private set; }
+        public string VocabularyReference { get; set; }
 
         public DialogStyle() 
         {
-            Tone = "";
-            Formality = 0;
-            Vocabulary = "";
-            VocabularyReference = "";
+            this.Tone = string.Empty;
+            this.Vocabulary = string.Empty;
+            this.VocabularyReference = string.Empty;
         }
     
         public DialogStyle(

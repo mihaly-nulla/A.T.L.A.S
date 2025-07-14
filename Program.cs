@@ -1,16 +1,15 @@
+using A.T.L.A.S.Factory.CreationModule.entities;
+using A.T.L.A.S.Factory.CreationModule.systems;
+using A.T.L.A.S.Heart.AffectionModule.entities;
+using A.T.L.A.S.Heart.AffectionModule.systems;
+using A.T.L.A.S.Heart.PersonalityModule.entities;
+using A.T.L.A.S.Heart.PersonalityModule.systems;
+using A.T.L.A.S.Mind.CommunicationModule.systems;
+using A.T.L.A.S.Mind.KnowledgeModule.entities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-
-using A.T.L.A.S.Heart.PersonalityModule.components;
-using A.T.L.A.S.Heart.PersonalityModule.systems;
-using A.T.L.A.S.Heart.PersonalityModule.entities;
-
-using A.T.L.A.S.Mind.KnowledgeModule.entities;
-using A.T.L.A.S.Mind.CommunicationModule.systems;
-
-using A.T.L.A.S.Factory.CreationModule.entities;
-using A.T.L.A.S.Factory.CreationModule.systems;
+using System.Text.Json;
 
 namespace A.T.L.A.S
 {
@@ -18,11 +17,12 @@ namespace A.T.L.A.S
     {
         public static async Task Main(string[] args)
         {
+            
             Debug.WriteLine("--- Iniciando Teste de Geração de Prompt de NPC ---");
 
             CreationSystem creator = new CreationSystem();
             CommunicationSystem communicator = new CommunicationSystem();
-
+            
             // 1. Criar alguns Documentos
             Document docGenetica01 = new Document(
                 "genetics_dna",
@@ -68,6 +68,14 @@ namespace A.T.L.A.S
                 new Knowledge("dna-rna", new List<Document> { docGenetica01, docGenetica02 })
             };
 
+            var rosaRelationships = new List<Relationship>
+            {
+                new Relationship("lucio", 80, 70, "Friend", new List<string> { "sarcastic", "blunt" }),
+                new Relationship("einstein", 90, 85, "Mentor", new List<string> { "genius", "innovative" })
+            };
+
+            var rosaSocialStanding = new SocialStanding(90, new List<string> { "lucio", "einstein" }, new List<string> { "dracula" });
+
             Debug.WriteLine("\n--- Criando NPCs ---");
             Brain rosaBrain =
                 creator.CreateNPC(
@@ -100,7 +108,11 @@ namespace A.T.L.A.S
                                                                     "acessible, full of analogies and metaphors",
                                                                     ""
                                                                 )
-                                         )
+                                         ),
+                    new AffectionSystem(
+                                            rosaRelationships,
+                                            rosaSocialStanding
+                                       )
             );
 
             DialogStyle lucioDialogStyle = new DialogStyle(
@@ -127,17 +139,63 @@ namespace A.T.L.A.S
                     )
             );
 
-            Brain lucioNpcBrain = creator.CreateNPC("lucio", "Lucio", scientistInitialKnowledge, lucioPersonality);
-            Brain rosaAlternate = creator.CreateNPC("rosa-alternate", "Rosa", scientistInitialKnowledge, alternateRosaPersonality);
+            var lucioRelationships = new List<Relationship>
+            {
+                new Relationship("rosa", 80, 70, "Friend", new List<string> { "extrovert", "intelligent" })
+            };
 
-            /*Debug.WriteLine("\n--- Gerando JSON do Prompt para NPC_Einstein ---");
+            var lucioSocialStanding = new SocialStanding(70, new List<string> { "rosa" }, new List<string>());
+           
+
+            Brain lucioNpcBrain = creator.CreateNPC("lucio", "Lucio", scientistInitialKnowledge, lucioPersonality, new AffectionSystem(lucioRelationships, lucioSocialStanding));
+
+
+            Debug.WriteLine("\n--- Gerando JSON do Prompt para NPC_Einstein ---");
             creator.GenerateAndSaveJson("rosa");
             creator.GenerateAndSaveJson("lucio");
-            creator.GenerateAndSaveJson("rosa-alternate");*/
 
 
             //communicator.SendPromptToGEMINI("rosa-alternate");
 
+
+            // --- NOVO: Testar Carregamento de NPC ---
+            Debug.WriteLine("\n--- Carregando NPC_Lucio do arquivo ---");
+            try
+            {
+                Brain loadedLucioBrain = creator.LoadNPC("lucio");
+                Debug.WriteLine($"NPC '{loadedLucioBrain.GetNPCName()}' (ID: {loadedLucioBrain.GetNPCID()}) carregado com sucesso!");
+
+                // Verificar alguns dados carregados
+                Debug.WriteLine($"Personalidade Carregada (Openness): {loadedLucioBrain.npcPersonality.oceanPersonality.Openness}");
+                Debug.WriteLine($"Personalidade Carregada (Dialog Style): {loadedLucioBrain.npcPersonality.personalityStyle.Tone}");
+                //Console.WriteLine($"Reputação Carregada: {loadedLucioBrain.NpcAffections.SocialPerception.ReputationScore} ({loadedLucioBrain.NpcAffections.SocialPerception.ReputationType})");
+                //Console.WriteLine($"Relações Carregadas ({loadedLucioBrain.NpcAffections.Relationships.Count}):");
+                /*foreach (var rel in loadedLucioBrain.NpcAffections.Relationships)
+                {
+                    Console.WriteLine($"- Com {rel.TargetNpcId}: Afeição={rel.AffectionScore}, Confiança={rel.TrustScore}, Nível={rel.FriendshipLevel}");
+                }*/
+
+                // Teste de comunicação com o NPC carregado
+                /*Console.WriteLine("\n--- Simulação de Interação com NPC LÚCIO (CARREGADO) ---");
+                CommunicationSystem communicator = new CommunicationSystem(creator);
+                string playerInput = @"PLAYER_UTTERANCE: Olá, Dr. Lúcio!";
+                string aiResponse = await communicator.SendPromptToAI("lucio", playerInput); // Use o ID do NPC carregado
+                Console.WriteLine($"\nResposta da IA (LÚCIO Carregado): {aiResponse}");*/
+
+            }
+            catch (FileNotFoundException ex)
+            {
+                Debug.WriteLine($"Erro: Arquivo do NPC não encontrado - {ex.Message}");
+            }
+            catch (JsonException ex)
+            {
+                Debug.WriteLine($"Erro de JSON ao carregar NPC: {ex.Message}");
+                if (ex.InnerException != null) Console.WriteLine($"  Inner: {ex.InnerException.Message}");
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Um erro inesperado ocorreu ao carregar NPC: {ex.Message}");
+            }
 
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());

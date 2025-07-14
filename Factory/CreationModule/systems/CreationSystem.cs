@@ -1,14 +1,15 @@
-﻿using System;
+﻿using A.T.L.A.S.Factory.CreationModule.DTOs;
+using A.T.L.A.S.Factory.CreationModule.entities;
+using A.T.L.A.S.Heart.AffectionModule.systems;
+using A.T.L.A.S.Heart.PersonalityModule.systems;
+using A.T.L.A.S.Mind.KnowledgeModule.entities;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using System.Diagnostics;
-using A.T.L.A.S.Heart.PersonalityModule.systems;
-using A.T.L.A.S.Mind.KnowledgeModule.entities;
-using A.T.L.A.S.Factory.CreationModule.DTOs;
-using A.T.L.A.S.Factory.CreationModule.entities;
 
 namespace A.T.L.A.S.Factory.CreationModule.systems
 {
@@ -58,9 +59,10 @@ namespace A.T.L.A.S.Factory.CreationModule.systems
             return newNpc;
         }
 
-        public Brain CreateNPC(string npcId, string npcName, List<Knowledge> initialKnowledge, PersonalitySystem npcPersonality)
+        public Brain CreateNPC(string npcId, string npcName, List<Knowledge> initialKnowledge, 
+                                PersonalitySystem npcPersonality, AffectionSystem npcAffection)
         {
-            var newNpc = new Brain(npcId, npcName, initialKnowledge, npcPersonality);
+            var newNpc = new Brain(npcId, npcName, initialKnowledge, npcPersonality, npcAffection);
             _allNpcBrains.Add(newNpc);
             Debug.WriteLine($"NPC {npcId} criado e adicionado ao CreationSystem.");
             return newNpc;
@@ -156,14 +158,127 @@ namespace A.T.L.A.S.Factory.CreationModule.systems
             {
                 NPCId = npcBrain.GetNPCID(),
                 NPCName = npcBrain.GetNPCName(),
-                KnowledgeBaseContent = knowledgeContentForPrompt,
-                NPCPersonality = npcBrain.npcPersonality
+                NPCKnowledgeSummaries = knowledgeContentForPrompt,
+                NPCPersonality = npcBrain.npcPersonality,
+                NPCAffection = npcBrain.npcAffection
             };
         }
+
+        public string RetrieveNpcJsonString(string npcId)
+        {
+            string fileName = $"{npcId}.json";
+            string filePath = Path.Combine(this.CharactersFolderPath, fileName);
+
+            if (!File.Exists(filePath))
+            {
+                throw new FileNotFoundException($"Arquivo JSON para o NPC '{npcId}' não encontrado em: {filePath}");
+            }
+
+            try
+            {
+                string jsonString = File.ReadAllText(filePath);
+                Debug.WriteLine($"String JSON do NPC '{npcId}' recuperada com sucesso do arquivo.");
+                return jsonString;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Erro inesperado ao recuperar a string JSON do NPC '{npcId}': {ex.Message}");
+                throw;
+            }
+        }
+
 
         public string GetCharactersPath()
         {
             return CharactersFolderPath;
+        }
+
+        /// <summary>
+        /// Carrega um NPC do arquivo JSON e o reconstrói como um objeto Brain.
+        /// Adiciona o Brain reconstruído à lista de NPCs ativos.
+        /// </summary>
+        /// <param name="npcId">O ID do NPC a ser carregado.</param>
+        /// <returns>A instância do Brain do NPC carregado.</returns>
+        public Brain LoadNPC(string npcId)
+        {
+            // 1. Recuperar a string JSON do arquivo
+            string jsonString = RetrieveNpcJsonString(npcId);
+
+            Debug.WriteLine($"String JSON do NPC '{jsonString}' recuperada com sucesso.");
+
+            // 2. Desserializar a string JSON para o DTO NPCPromptData
+            var options = new JsonSerializerOptions
+            {
+                WriteIndented = true, // Não afeta desserialização, mas bom manter para consistência
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                ReferenceHandler = ReferenceHandler.IgnoreCycles
+                // Adicione conversores de data se suas classes de domínio usarem DateTime e precisarem de formato específico
+                // Converters = { new Helpers.IsoDateTimeConverter() }
+            };
+
+            // Certifique-se de que todas as sub-propriedades do NPCPromptData (PersonalityData, AffectionSystem)
+            // também tenham construtores vazios e JsonPropertyName configurados, senão a desserialização falhará.
+            NPCPromptData npcPromptData = JsonSerializer.Deserialize<NPCPromptData>(jsonString, options);
+
+            //Debug.WriteLine($"NPCPromptData desserializado com sucesso: {npcPromptData.NPCId}, {npcPromptData.NPCName}, {npcPromptData.NPCPersonality.oceanPersonality.Openness}");
+
+            if(npcPromptData.NPCPersonality == null)
+            {
+                Debug.WriteLine($"Atenção: NPC '{npcId}' não possui PersonalityData definida. Usando padrão.");
+            }
+            else if(npcPromptData.NPCPersonality.oceanPersonality == null)
+            {
+                Debug.WriteLine($"Atenção: NPC '{npcId}' não possui oceanPersonality definida. Usando padrão.");
+            }
+            else
+            {
+                Debug.WriteLine($"NPC '{npcId}' possui PersonalityData definida: {npcPromptData.NPCPersonality.oceanPersonality.Openness}, {npcPromptData.NPCPersonality.oceanPersonality.Conscientiousness}, {npcPromptData.NPCPersonality.oceanPersonality.Extraversion}, {npcPromptData.NPCPersonality.oceanPersonality.Agreeableness}, {npcPromptData.NPCPersonality.oceanPersonality.Neuroticism}");
+            }
+
+            // 3. Reconstruir o objeto Brain a partir dos dados do NPCPromptData
+            Brain reconstructedBrain = ReconstructBrainFromPromptData(npcPromptData);
+
+            // 4. Adicionar o Brain reconstruído à lista de NPCs ativos
+            // Opcional: Se o NPC já existir na lista, você pode querer atualizá-lo em vez de adicionar.
+            if (_allNpcBrains.Any(b => b.GetNPCID() == reconstructedBrain.GetNPCID()))
+            {
+                Debug.WriteLine($"NPC '{reconstructedBrain.GetNPCID()}' já existe na memória. Substituindo.");
+                _allNpcBrains.RemoveAll(b => b.GetNPCID() == reconstructedBrain.GetNPCID());
+            }
+            _allNpcBrains.Add(reconstructedBrain);
+            Debug.WriteLine($"NPC '{npcId}' carregado e reconstruído com sucesso.");
+
+            return reconstructedBrain;
+        }
+
+
+        /// <summary>
+        /// Reconstrói um objeto Brain a partir de um NPCPromptData.
+        /// </summary>
+        /// <param name="promptData">O DTO NPCPromptData contendo os dados do NPC.</param>
+        /// <returns>Uma nova instância da classe Brain.</returns>
+        private Brain ReconstructBrainFromPromptData(NPCPromptData promptData)
+        {
+            // **Reconstruindo PersonalityData:**
+            // NPCPromptData.NpcPersonality é do tipo PersonalityModule.entities.PersonalityData,
+            // então pode ser usado diretamente.
+            PersonalitySystem reconstructedPersonality = promptData.NPCPersonality ?? new PersonalitySystem();
+            AffectionSystem reconstructedAffections = promptData.NPCAffection ?? new AffectionSystem();
+
+
+            //AffectionSystem reconstructedAffectionSystem = promptData.NpcAffections ?? new AffectionSystem();
+
+
+
+
+            // Cria uma nova instância de Brain com os módulos reconstruídos
+            return new Brain(
+                promptData.NPCId,
+                promptData.NPCName,
+                new List<Knowledge>(),
+                reconstructedPersonality,
+                reconstructedAffections
+            );
         }
 
     }

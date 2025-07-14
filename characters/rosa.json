@@ -1,7 +1,7 @@
 {
   "npc_id": "rosa",
   "npc_name": "Rosa",
-  "npc_knowledge": [
+  "npc_knowledge_summaries": [
     "cells: Mitosis is a critical phase of the cell cycle where a single eukaryotic cell divides into two genetically identical daughter cells. This process is divided into several distinct stages: prophase, metaphase, anaphase, and telophase, followed by cytokinesis. During mitosis, the cell\u0027s duplicate...",
     "dna-rna: The DNA, or deoxyribonucleic acid, is a fundamental nucleic acid that serves as the hereditary material in all known organisms, including viruses. Its structure is a double helix composed of two long polymer chains of nucleotides, which are held together by hydrogen bonds. This intricate mo..."
   ],
@@ -29,7 +29,42 @@
       "tone": "enthusiastic and inspiring",
       "formality": 30,
       "vocabulary": "acessible, full of analogies and metaphors",
-      "vocabulary_reference": "Dr. Gregory House"
+      "vocabulary_reference": ""
+    }
+  },
+  "npc_affections": {
+    "relationships": [
+      {
+        "target_npc_id": "lucio",
+        "affection_score": 80,
+        "trust_score": 70,
+        "friendship_level": "Friend",
+        "traits": [
+          "sarcastic",
+          "blunt"
+        ]
+      },
+      {
+        "target_npc_id": "einstein",
+        "affection_score": 90,
+        "trust_score": 85,
+        "friendship_level": "Mentor",
+        "traits": [
+          "genius",
+          "innovative"
+        ]
+      }
+    ],
+    "social_standing": {
+      "reputation_score": 90,
+      "reputation_type": "Beloved",
+      "known_by_npcs": [
+        "lucio",
+        "einstein"
+      ],
+      "unfavorable_npcs": [
+        "dracula"
+      ]
     }
   }
 }
