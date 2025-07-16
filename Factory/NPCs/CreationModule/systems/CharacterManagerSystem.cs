@@ -1,5 +1,6 @@
-﻿using A.T.L.A.S.Factory.CreationModule.DTOs;
-using A.T.L.A.S.Factory.CreationModule.entities;
+﻿using A.T.L.A.S.Factory.NPCs.CreationModule.DTOs;
+using A.T.L.A.S.Factory.NPCs.CreationModule.entities;
+using A.T.L.A.S.Factory.Tools;
 using A.T.L.A.S.Heart.AffectionModule.systems;
 using A.T.L.A.S.Heart.PersonalityModule.systems;
 using A.T.L.A.S.Mind.KnowledgeModule.entities;
@@ -11,40 +12,28 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace A.T.L.A.S.Factory.CreationModule.systems
+namespace A.T.L.A.S.Factory.NPCs.CreationModule.systems
 {
-    public class CreationSystem
+    public class CharacterManagerSystem
     {
-        private const string CHARACTER_SAVE_DIRECTORY_NAME = "characters";
+        private const string CHARACTER_SAVE_DIRECTORY_NAME = "database/characters";
 
         private string CharactersFolderPath;
 
         private List<Brain> _allNpcBrains = new List<Brain>();
 
-        public CreationSystem()
+        public CharacterManagerSystem()
         {
-            string _projectDirectory;
-            var currentDirectory = AppContext.BaseDirectory;
-            var directoryInfo = new DirectoryInfo(currentDirectory);
+            this.CharactersFolderPath = DirectoryBuilderComponent.BuildCustomPath(CHARACTER_SAVE_DIRECTORY_NAME);
 
-            //TODO - Colocar para verificar se é raiz do A.T.L.A.S
-            for (int i = 0; i < 3 && directoryInfo.Parent != null; i++)
+            if (!Directory.Exists(this.CharactersFolderPath))
             {
-                directoryInfo = directoryInfo.Parent;
+                Directory.CreateDirectory(this.CharactersFolderPath);
+                Debug.WriteLine($"Diretório de salvamento criado: {this.CharactersFolderPath}");
             }
-            _projectDirectory = directoryInfo.FullName;
-
-            // Define o caminho completo para a pasta de salvamento dos personagens.
-            CharactersFolderPath = Path.Combine(_projectDirectory, CHARACTER_SAVE_DIRECTORY_NAME);
-
-            // Garante que o diretório de salvamento exista.
-            if (!Directory.Exists(CharactersFolderPath))
+            else
             {
-                Directory.CreateDirectory(CharactersFolderPath);
-                Debug.WriteLine($"Diretório de salvamento criado: {CharactersFolderPath}");
-            } else
-            {
-                Debug.WriteLine($"Diretório de salvamento já existe: {CharactersFolderPath}");
+                Debug.WriteLine($"Diretório de salvamento já existe: {this.CharactersFolderPath}");
             }
         }
 
@@ -74,6 +63,11 @@ namespace A.T.L.A.S.Factory.CreationModule.systems
         public Brain GetNPCBrain(string npcId)
         {
             return _allNpcBrains.FirstOrDefault(npc => npc.GetNPCID() == npcId);
+        }
+
+        public List<Brain> GetAllNPCBrains()
+        {
+            return _allNpcBrains;
         }
 
 
@@ -160,14 +154,14 @@ namespace A.T.L.A.S.Factory.CreationModule.systems
                 NPCName = npcBrain.GetNPCName(),
                 NPCKnowledgeSummaries = knowledgeContentForPrompt,
                 NPCPersonality = npcBrain.npcPersonality,
-                NPCAffection = npcBrain.npcAffection
+                NPCAffection = npcBrain.npcAffections
             };
         }
 
         public string RetrieveNpcJsonString(string npcId)
         {
             string fileName = $"{npcId}.json";
-            string filePath = Path.Combine(this.CharactersFolderPath, fileName);
+            string filePath = Path.Combine(CharactersFolderPath, fileName);
 
             if (!File.Exists(filePath))
             {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace A.T.L.A.S.Factory.CreationModule.DTOs
+namespace A.T.L.A.S.Factory.NPCs.CreationModule.DTOs
 {
     public class NPCPromptData
     {

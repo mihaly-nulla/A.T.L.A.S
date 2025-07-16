@@ -1,4 +1,7 @@
-﻿using System;
+﻿using A.T.L.A.S.Factory.NPCs.CreationModule.entities;
+using A.T.L.A.S.Factory.NPCs.CreationModule.systems;
+using A.T.L.A.S.Mind.CommunicationModule.components;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -7,9 +10,6 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-
-using A.T.L.A.S.Mind.CommunicationModule.components;
-using A.T.L.A.S.Factory.CreationModule.systems;
 
 namespace A.T.L.A.S.Mind.CommunicationModule.systems
 {
@@ -20,9 +20,9 @@ namespace A.T.L.A.S.Mind.CommunicationModule.systems
         private const string GEMINI_MODEL_URL = "https://generativelanguage.googleapis.com/v1beta/models/";
 
         private const string GEMINI_MODEL_ID = "gemini-2.5-flash";
-        
 
-        public CommunicationSystem() 
+
+        public CommunicationSystem()
         {
             _httpClient = new HttpClient();
         }
@@ -50,18 +50,21 @@ namespace A.T.L.A.S.Mind.CommunicationModule.systems
         }
 
 
-public async Task<string> SendPromptToGEMINI(string npcId, string playerInput, string apiKey)
+        public async Task<string> SendPromptToGEMINI(CharacterManagerSystem creator, string npcId, string playerInput, string apiKey)
         {
-            string path = new CreationSystem().GetCharactersPath();
+            string path = creator.GetCharactersPath();
             Debug.WriteLine($"\nCommunicationSystem: Preparando prompt para NPC '{npcId}' com input do jogador: '{playerInput}'");
             string npcProfileJson = RetrieveNPCJSON(npcId, path);
 
-            string fullPrompt = PromptBuilder.BuildAiPrompt(npcProfileJson, playerInput);
+            var relevantNpcData = GetRelevantNpcDataFromPrompt(creator, npcId, playerInput);
+
+            string fullPrompt = PromptBuilder.BuildAiPrompt(npcProfileJson, playerInput, relevantNpcData);
 
             Debug.WriteLine("--- FULL PROMPT SENT TO AI (Simulated) ---");
             Debug.WriteLine(fullPrompt);
             Debug.WriteLine("------------------------------------------");
-
+            return $"AI Response (simulated for {npcId}): Based on the detailed profile provided and your input, I would say something witty and insightful about {playerInput}.";
+            /*
             var requestPayload = new
             {
                 contents = new[]
@@ -93,7 +96,7 @@ public async Task<string> SendPromptToGEMINI(string npcId, string playerInput, s
             string fullRequestUri = $"{GEMINI_MODEL_URL}{GEMINI_MODEL_ID}:generateContent?key={apiKey}";
             Debug.WriteLine($"JSON PAYLOAD:\n\n {jsonPayload}");
             Debug.WriteLine($"FULL URL:\n\n {fullRequestUri}");
-            
+
             try
             {
                 var httpRequest = new HttpRequestMessage(HttpMethod.Post, fullRequestUri);
@@ -143,9 +146,51 @@ public async Task<string> SendPromptToGEMINI(string npcId, string playerInput, s
                 Debug.WriteLine("ERRO AO ENVIAR");
             }
 
-            return $"AI Response (simulated for {npcId}): Based on the detailed profile provided and your input, I would say something witty and insightful about {playerInput}.";
+            return $"AI Response (simulated for {npcId}): Based on the detailed profile provided and your input, I would say something witty and insightful about {playerInput}.";*/
         }
 
+        private Dictionary<string, string> GetRelevantNpcDataFromPrompt(CharacterManagerSystem creator, string npcID, string playerInput)
+        {
+            var relevantData = new Dictionary<string, string>();
+            var allKnownNpcs = creator.GetAllNPCBrains();
 
+            Brain currentNPC = creator.LoadNPC(npcID);
+            foreach (var character in allKnownNpcs)
+            {
+                if (character.GetNPCID() == npcID)
+                {
+                    continue; // Skip the current NPC
+                }
+
+                if (playerInput.IndexOf(character.GetNPCName(), StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    var relationship = currentNPC.npcAffections.GetRelationship(character.GetNPCID());
+                    var socialStanding = currentNPC.npcAffections.SocialPerception;
+
+                    bool isRelevant = relationship != null ||
+                                      socialStanding.KnownByNPCs.Contains(character.GetNPCID()) ||
+                                      socialStanding.UnfavorableNPCs.Contains(character.GetNPCID());
+
+                    if (isRelevant)
+                    {
+                        var summaryBuilder = new StringBuilder();
+
+                        summaryBuilder.AppendLine($"- Profile for the character {character.GetNPCName()}:");
+                        summaryBuilder.AppendLine($"  - Personality: {character.npcPersonality.personalityStyle.VocabularyReference} style ({character.npcPersonality.personalityStyle.Tone} tone).");
+                        summaryBuilder.AppendLine($"  - Reputation: {socialStanding.ReputationType}.");
+
+                        if (relationship != null)
+                        {
+                            summaryBuilder.AppendLine($"  - Relationship: {relationship.FriendshipLevel} (Affection: {relationship.AffectionScore}, Trust: {relationship.TrustScore}).");
+                            summaryBuilder.AppendLine($"  - Perceived Traits: {string.Join(", ", relationship.Traits)}.");
+                        }
+
+                        relevantData[character.GetNPCID()] = summaryBuilder.ToString();
+                    }
+                }
+            }
+
+            return relevantData;
+        }
     }
 }

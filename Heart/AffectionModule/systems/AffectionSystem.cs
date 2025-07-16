@@ -51,5 +51,9 @@ namespace A.T.L.A.S.Heart.AffectionModule.systems
             }
         }
 
+        public Relationship GetRelationship(string targetNpcId)
+        {
+            return this.Relationships.FirstOrDefault(r => r.TargetNpcId == targetNpcId);
+        }
     }
 }

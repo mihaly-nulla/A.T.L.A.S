@@ -10,18 +10,18 @@
 
   <ItemGroup>
     <Compile Remove="Mind\CommunicationModule\entities\**" />
-    <Compile Remove="Factory\CreationModule\components\**" />
-    <Compile Remove="Factory\CreationModule\entities\characters\**" />
+    <Compile Remove="Factory\NPCs\CreationModule\components\**" />
+    <Compile Remove="Factory\NPCs\CreationModule\entities\characters\**" />
     <Compile Remove="Mind\KnowledgeModule\components\**" />
     <Compile Remove="Mind\MemoryModule\entities\**" />
     <EmbeddedResource Remove="Mind\CommunicationModule\entities\**" />
-    <EmbeddedResource Remove="Factory\CreationModule\components\**" />
-    <EmbeddedResource Remove="Factory\CreationModule\entities\characters\**" />
+    <EmbeddedResource Remove="Factory\NPCs\CreationModule\components\**" />
+    <EmbeddedResource Remove="Factory\NPCs\CreationModule\entities\characters\**" />
     <EmbeddedResource Remove="Mind\KnowledgeModule\components\**" />
     <EmbeddedResource Remove="Mind\MemoryModule\entities\**" />
     <None Remove="Mind\CommunicationModule\entities\**" />
-    <None Remove="Factory\CreationModule\components\**" />
-    <None Remove="Factory\CreationModule\entities\characters\**" />
+    <None Remove="Factory\NPCs\CreationModule\components\**" />
+    <None Remove="Factory\NPCs\CreationModule\entities\characters\**" />
     <None Remove="Mind\KnowledgeModule\components\**" />
     <None Remove="Mind\MemoryModule\entities\**" />
   </ItemGroup>
@@ -29,6 +29,7 @@
   <ItemGroup>
     <Folder Include="Heart\AffectionModule\components\" />
     <Folder Include="Heart\PersonalityModule\components\" />
+    <Folder Include="database\universe\" />
     <Folder Include="Vision\" />
   </ItemGroup>
 

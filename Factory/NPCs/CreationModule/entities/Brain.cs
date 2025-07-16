@@ -9,19 +9,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using A.T.L.A.S.Heart.AffectionModule.systems;
+using A.T.L.A.S.Heart.IdentityModule.systems;
 
-namespace A.T.L.A.S.Factory.CreationModule.entities
+namespace A.T.L.A.S.Factory.NPCs.CreationModule.entities
 {
     public class Brain
     {
         private string NPCId;
 
         private string NPCName;
+
+        public IdentitySystem npcIdentity { get; private set; }
         public KnowledgeSystem npcKnowledge { get; private set; }
 
         public PersonalitySystem npcPersonality { get; private set; }
 
-        public AffectionSystem npcAffection { get; private set; }
+        public AffectionSystem npcAffections { get; private set; }
 
         public Brain(string npcId, string npcName, List<Knowledge> initialKnowledge)
         {
@@ -43,15 +46,15 @@ namespace A.T.L.A.S.Factory.CreationModule.entities
                         PersonalitySystem npcPersonality,
                         AffectionSystem npcAffection)
         {
-            this.NPCId = npcId;
-            this.NPCName = npcName;
-            this.npcKnowledge = new KnowledgeSystem();
+            NPCId = npcId;
+            NPCName = npcName;
+            npcKnowledge = new KnowledgeSystem();
             foreach (var knowledge in initialKnowledge)
             {
                 npcKnowledge.AddKnowledge(knowledge);
             }
             this.npcPersonality = npcPersonality;
-            this.npcAffection = npcAffection;
+            npcAffections = npcAffection;
             //NpcMemory = new MemorySystem(); // Cria um MemorySystem sem ID do NPC
         }
 

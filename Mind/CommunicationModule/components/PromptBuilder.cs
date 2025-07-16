@@ -15,9 +15,11 @@ namespace A.T.L.A.S.Mind.CommunicationModule.components
         /// <param name="playerInput">A entrada mais recente do jogador ou o contexto da conversa.</param>
         /// <param name="contextualInformation">Informações adicionais relevantes para o prompt (e.g., objetivo atual, localização, status de quest).</param>
         /// <returns>A string completa do prompt para enviar à IA.</returns>
-        public static string BuildAiPrompt(string npcProfileJson, string playerInput)
+        public static string BuildAiPrompt(string npcProfileJson, string playerInput, Dictionary<string, string> relevantNpcData)
         {
             StringBuilder prompt = new StringBuilder();
+
+
 
             // --- 1. Instruções para a IA (O "Persona" e a Tarefa) ---
             prompt.AppendLine("You are an autonomous Non-Player Character (NPC) in a simulation. Your goal is to respond authentically, leveraging your internal profile, knowledge, and memory.");
@@ -40,6 +42,15 @@ namespace A.T.L.A.S.Mind.CommunicationModule.components
             prompt.AppendLine("```json");
             prompt.AppendLine(npcProfileJson);
             prompt.AppendLine("```");
+
+            if (relevantNpcData != null && relevantNpcData.Any())
+            {
+                prompt.AppendLine("\n--- Profiles of Related NPCs (Retrieved from Database) ---");
+                foreach (var entry in relevantNpcData)
+                {
+                    prompt.AppendLine(entry.Value);
+                }
+            }
 
             // --- 3. Entrada do Jogador ---
             prompt.AppendLine("\n--- Input Prompt ---");
