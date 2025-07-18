@@ -1,5 +1,6 @@
 using A.T.L.A.S.Factory.NPCs.CreationModule.systems;
-using A.T.L.A.S.Factory.World.CreationModule.entities;
+using A.T.L.A.S.Factory.Universe.CreationModule.entities.race;
+using A.T.L.A.S.Factory.Universe.CreationModule.entities.region;
 using A.T.L.A.S.Factory.World.CreationModule.systems;
 using A.T.L.A.S.Heart.AffectionModule.entities;
 using A.T.L.A.S.Heart.AffectionModule.systems;
@@ -21,7 +22,7 @@ namespace A.T.L.A.S
             
             Debug.WriteLine("--- Iniciando Teste de Geração de Prompt de NPC ---");
 
-            CharacterManagerSystem characterFactory = new CharacterManagerSystem();
+            CharacterFactory characterFactory = new CharacterFactory();
             CommunicationSystem communicator = new CommunicationSystem();
             
             // 1. Criar alguns Documentos
@@ -161,7 +162,79 @@ namespace A.T.L.A.S
             //characterFactory.LoadNPC("rosa");
             //characterFactory.LoadNPC("lucio");
 
-            RaceManagerSystem raceFactory = new RaceManagerSystem();
+            RaceFactory raceFactory = new RaceFactory();
+            EnvironmentFactory environmentFactory = new EnvironmentFactory();
+
+            /*Location CoffeShop = new Location(
+                "coffe_shop",
+                "Cafeteria do Bairro",
+                "Coffe Shop",
+                "Uma pequena e aconchegante cafeteria localizada no coração do bairro, conhecida por seu café fresco e ambiente acolhedor. A cafeteria é um local de encontro popular entre os moradores locais, oferecendo uma variedade de cafés, chás e doces caseiros. O ambiente é decorado com móveis de madeira rústica e quadros de artistas locais nas paredes. Há mesas internas e externas, permitindo que os clientes desfrutem de suas bebidas enquanto observam a vida do bairro passar.",
+                new List<string> { "cafe", "encontro", "social" }
+            );
+
+            Location GrandSquare = new Location(
+                "grand_square",
+                "Central Square",
+                "Common Plaza",
+                "Uma vasta praça central cercada por edifícios históricos e monumentos. É um ponto de encontro popular para eventos comunitários, feiras e celebrações. A praça é adornada com jardins bem cuidados, fontes e bancos, proporcionando um espaço agradável para relaxar e socializar. Frequentemente, artistas de rua se apresentam aqui, adicionando vida e cor ao ambiente.",
+                new List<string> { "encontro", "evento", "social" }
+            );
+
+            Location Library = new Location(
+                "library",
+                "Biblioteca Municipal",
+                "Public Library",
+                "Uma biblioteca pública bem equipada, oferecendo uma vasta coleção de livros, periódicos e recursos digitais. É um local tranquilo, ideal para estudo e pesquisa. A biblioteca também organiza eventos culturais, palestras e clubes de leitura, promovendo a educação e o envolvimento comunitário. O ambiente é calmo e acolhedor, com áreas de leitura confortáveis e acesso à internet.",
+                new List<string> { "educacao", "cultura", "social" }
+            );
+
+            Location Wallmart = new Location(
+                "wallmart",
+                "Supermercado Wallmart",
+                "Supermarket",
+                "Um grande supermercado que oferece uma ampla variedade de produtos, desde alimentos frescos até eletrônicos e roupas. É um local conveniente para compras diárias, com preços competitivos e promoções frequentes. O supermercado é bem iluminado e organizado, facilitando a navegação pelos corredores. Há também uma seção de produtos locais e orgânicos, promovendo a sustentabilidade.",
+                new List<string> { "compras", "conveniencia", "social" }
+            );
+
+            Dictionary<string, Location> AcasiaLocations = new Dictionary<string, Location>
+            {
+                { CoffeShop.LocationID, CoffeShop },
+                { GrandSquare.LocationID, GrandSquare }
+            };
+
+            Dictionary<string, Location> SolisLocations = new Dictionary<string, Location>
+            {
+                { Library.LocationID, Library },
+                { Wallmart.LocationID, Wallmart }
+            };
+
+            WorldEnvironment RuaAcasia = new WorldEnvironment(
+                "rua_acasia",
+                "Rua Acasia",
+                "Street",
+                "Uma rua tranquila e arborizada, conhecida por suas casas coloridas e jardins bem cuidados. É um local residencial popular, com uma comunidade amigável e ativa. A rua é cercada por árvores de acácia, que florescem em cores vibrantes durante a primavera. Há calçadas largas para caminhadas e ciclovias, tornando-a ideal para passeios a pé ou de bicicleta.",
+                new List<string> { "rua", "residencial", "tranquilo" },
+                "A Rua Acácia é o coração de uma comunidade coesa, onde os moradores se conhecem e participam ativamente da vida local. Há um forte senso de vizinhança e pertencimento. É comum ver crianças brincando nas calçadas largas e nos pequenos jardins da frente, sob o olhar atento dos adultos. Os moradores organizam eventos regulares, como festas de rua no verão, bazares comunitários na praça próxima e mutirões para manutenção dos jardins públicos e das ciclovias. Existe uma rede informal de apoio, onde vizinhos ajudam uns aos outros com pequenos favores, como cuidar de animais de estimação ou buscar correspondências durante viagens. A segurança é percebida como alta, em parte devido à vigilância comunitária e à baixa rotatividade de moradores. Conversas casuais nos passeios com animais de estimação ou durante o regar dos jardins são a norma.",
+                "O contexto político da Rua Acácia é fortemente influenciado pela sua natureza comunitária. Os moradores são proativos nas questões locais e geralmente votam em representantes que defendam os interesses do bairro, como melhorias na infraestrutura urbana (iluminação, poda de árvores), segurança pública e manutenção de áreas verdes. Há uma Associação de Moradores bem estabelecida e atuante, que serve como principal canal de comunicação com a prefeitura e os órgãos de segurança. Essa associação se reúne mensalmente para discutir problemas, propor soluções e organizar ações coletivas. Pequenas disputas políticas internas podem surgir em relação a detalhes como a cor dos postes de luz ou o tipo de planta a ser cultivada nas áreas comuns, mas raramente escalam para grandes conflitos. A participação cívica é alta, e os moradores não hesitam em contactar seus representantes eleitos para expressar preocupações ou solicitar melhorias. A rua mantém um bom relacionamento com a polícia de bairro, que realiza patrulhamento frequente, sendo vista mais como um serviço de apoio à comunidade do que como uma força de controle.",
+                AcasiaLocations
+            );
+
+            WorldEnvironment RuaSolis = new WorldEnvironment(
+                "rua_solis",
+                "Rua Solis",
+                "Street",
+                "A Rua Solis é uma artéria vibrante e movimentada da cidade, pulsando com a energia do comércio e do fluxo constante de pessoas e veículos. Suas calçadas são largas, mas frequentemente cheias, ladeadas por uma diversidade de estabelecimentos que vão desde pequenas lojas de conveniência até grandes redes varejistas. No coração da Rua Solis, encontra-se a Biblioteca Municipal \"Saber Aberto\", um oásis de tranquilidade e conhecimento, contrastando com a agitação externa. A poucos quarteirões de distância, ergue-se o imponente Walmart, que atrai um público vasto e diversificado, gerando um tráfego considerável. Apesar do barulho constante e do ritmo acelerado, a Rua Solis é um ponto de encontro e de passagem essencial para muitos moradores, oferecendo uma gama completa de serviços e produtos. O transporte público é intenso, com pontos de ônibus movimentados e táxis circulando.",
+                new List<string> { "rua", "comercial", "movimentado" },
+                "O contexto social da Rua Solis é marcado pela diversidade e transitoriedade. É um caldeirão de diferentes grupos sociais e econômicos que convergem por motivos variados: compras no Walmart, estudo ou acesso a serviços na biblioteca, trabalho nas lojas ou simples deslocamento. As interações são mais efêmeras e transacionais do que na Rua Acácia; as pessoas se cruzam, mas raramente formam laços profundos. Na Biblioteca Municipal, o ambiente social é mais focado e silencioso, com estudantes, pesquisadores e leitores buscando concentração, embora os arredores da biblioteca possam ser pontos de encontro informais. O Walmart é um microcosmo da sociedade, onde consumidores apressados se misturam, e a dinâmica social é ditada pela busca por produtos e pela eficiência das compras. Há um senso de anonimato predominante; as pessoas são mais observadoras do que participantes ativas em um coletivo. Os eventos sociais são raros e, quando ocorrem, são geralmente promoções comerciais ou feiras organizadas pela prefeitura, não por iniciativa da comunidade local.",
+                "Politicamente, a Rua Solis é um ponto de interesse devido ao seu fluxo de tráfego e importância comercial. As questões políticas aqui giram em torno de:\r\n\r\nInfraestrutura: Demanda constante por melhorias no trânsito (semáforos, faixas de pedestres), pavimentação e estacionamento.\r\n\r\nSegurança Pública: Devido ao grande movimento de pessoas e estabelecimentos comerciais, há uma preocupação maior com segurança, levando a mais patrulhamento policial e talvez câmeras de vigilância.\r\n\r\nRegulamentação Comercial: Debates sobre horários de funcionamento, impostos para comerciantes e permissões para vendedores ambulantes são frequentes.\r\n\r\nInteresses Comerciais vs. Moradores: Conflitos podem surgir entre os interesses dos grandes estabelecimentos comerciais (que querem mais tráfego) e os poucos moradores residenciais da rua (que buscam menos barulho e congestionamento).\r\n\r\nAtivismo de Base: Raramente há um ativismo político local forte vindo dos moradores da rua, mas associações comerciais ou grupos de consumidores podem ter voz nas decisões que afetam a Rua Solis. As decisões políticas tendem a vir de órgãos municipais, visando o benefício econômico da região.",
+                SolisLocations
+            );
+
+            environmentFactory.AddEnvironment(RuaAcasia);
+            environmentFactory.AddEnvironment(RuaSolis);
+
+            environmentFactory.SaveAllEnvironments();*/
 
             /*Race HighElf = raceFactory.CreateRace("elf_h",
                                    "High Elf",
@@ -207,14 +280,28 @@ namespace A.T.L.A.S
 
             raceFactory.LoadAllRaces();
 
-            Race HighElf = raceFactory.RaceDatabase.GetRaceById("elf_h");
-            Race Orc = raceFactory.RaceDatabase.GetRaceById("orc");
-            Race Dwarf = raceFactory.RaceDatabase.GetRaceById("dwarf");
+            environmentFactory.LoadAllEnvironments();
+
+            Race HighElf = raceFactory.RaceDatabase.GetResourceById("elf_h");
+            Race Orc = raceFactory.RaceDatabase.GetResourceById("orc");
+            Race Dwarf = raceFactory.RaceDatabase.GetResourceById("dwarf");
+
+            WorldEnvironment RuaAcasia = environmentFactory.EnvironmentDatabase.GetResourceById("rua_acasia");
+            WorldEnvironment RuaSolis = environmentFactory.EnvironmentDatabase.GetResourceById("rua_solis");
 
             Debug.WriteLine("\n--- Exibindo Raças Carregadas ---");
             Debug.WriteLine($"Raça: {HighElf.RaceName}");
             Debug.WriteLine($"Raça: {Orc.RaceName}");
             Debug.WriteLine($"Raça: {Dwarf.RaceName}");
+
+            Debug.WriteLine("\n--- Exibindo Environments Carregadoss ---");
+            Debug.WriteLine($"Environment: {RuaAcasia.EnvironmentName}");
+            Debug.WriteLine($"Environment Location: {RuaAcasia.EnvironmentName} - {RuaAcasia.EnvironmentMajorLocations["coffe_shop"].LocationName}");
+            Debug.WriteLine($"Environment Location: {RuaAcasia.EnvironmentName} - {RuaAcasia.EnvironmentMajorLocations["grand_square"].LocationName}");
+
+            Debug.WriteLine($"Environment: {RuaSolis.EnvironmentName}");
+            Debug.WriteLine($"Environment Location: {RuaSolis.EnvironmentName} - {RuaSolis.EnvironmentMajorLocations["library"].LocationName}");
+            Debug.WriteLine($"Environment Location: {RuaSolis.EnvironmentName} - {RuaSolis.EnvironmentMajorLocations["wallmart"].LocationName}");
 
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());

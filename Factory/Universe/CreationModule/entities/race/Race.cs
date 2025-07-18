@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace A.T.L.A.S.Factory.World.CreationModule.entities
+namespace A.T.L.A.S.Factory.Universe.CreationModule.entities.race
 {
     public class Race
     {
@@ -26,11 +26,11 @@ namespace A.T.L.A.S.Factory.World.CreationModule.entities
 
         public Race() 
         {
-            this.RaceID = string.Empty;
-            this.RaceName = string.Empty;
-            this.RaceInformation = new RaceDescription();
-            this.RaceAppearenceDescription = string.Empty;
-            this.RaceLore = string.Empty;
+            RaceID = string.Empty;
+            RaceName = string.Empty;
+            RaceInformation = new RaceDescription();
+            RaceAppearenceDescription = string.Empty;
+            RaceLore = string.Empty;
         }
 
         public Race(string raceID,
@@ -38,10 +38,10 @@ namespace A.T.L.A.S.Factory.World.CreationModule.entities
                     string raceAppearenceDescription,
                     string raceLore)
         {
-            this.RaceID = raceID;
-            this.RaceName = raceName;
-            this.RaceAppearenceDescription = raceAppearenceDescription;
-            this.RaceLore = raceLore;
+            RaceID = raceID;
+            RaceName = raceName;
+            RaceAppearenceDescription = raceAppearenceDescription;
+            RaceLore = raceLore;
         }
 
         public Race(string raceID,
@@ -50,16 +50,16 @@ namespace A.T.L.A.S.Factory.World.CreationModule.entities
                     string raceAppearenceDescription,
                     string raceLore)
         {
-            this.RaceID = raceID;
-            this.RaceName = raceName;
-            this.RaceInformation = raceInformation;
-            this.RaceAppearenceDescription = raceAppearenceDescription;
-            this.RaceLore = raceLore;
+            RaceID = raceID;
+            RaceName = raceName;
+            RaceInformation = raceInformation;
+            RaceAppearenceDescription = raceAppearenceDescription;
+            RaceLore = raceLore;
         }
 
         public void SetRaceInformation(RaceDescription raceInformation)
         {
-            this.RaceInformation = raceInformation;
+            RaceInformation = raceInformation;
         }
     }
 }

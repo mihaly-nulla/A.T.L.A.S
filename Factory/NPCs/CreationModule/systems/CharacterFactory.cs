@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace A.T.L.A.S.Factory.NPCs.CreationModule.systems
 {
-    public class CharacterManagerSystem
+    public class CharacterFactory
     {
         private const string CHARACTER_SAVE_DIRECTORY_NAME = "database/characters";
 
@@ -22,7 +22,7 @@ namespace A.T.L.A.S.Factory.NPCs.CreationModule.systems
 
         private List<Brain> _allNpcBrains = new List<Brain>();
 
-        public CharacterManagerSystem()
+        public CharacterFactory()
         {
             this.CharactersFolderPath = DirectoryBuilderComponent.BuildCustomPath(CHARACTER_SAVE_DIRECTORY_NAME);
 

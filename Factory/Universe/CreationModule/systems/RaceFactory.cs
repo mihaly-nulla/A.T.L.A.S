@@ -1,6 +1,6 @@
 ﻿using A.T.L.A.S.Factory.Tools;
-using A.T.L.A.S.Factory.World.CreationModule.DTOs;
-using A.T.L.A.S.Factory.World.CreationModule.entities;
+using A.T.L.A.S.Factory.Universe.CreationModule.DTOs.race;
+using A.T.L.A.S.Factory.Universe.CreationModule.entities.race;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,18 +9,19 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
+//TODO - Verificar possibilidade de aplicar um Factory Method
 namespace A.T.L.A.S.Factory.World.CreationModule.systems
 {
-    public class RaceManagerSystem
+    public class RaceFactory
     {
         private const string RACE_SAVE_DIRECTORY_NAME = "database/universe/races"; // Pasta dentro da raiz do projeto
-        private const string RACES_FILE_NAME = "world_races.json";
+        private const string RACES_FILE_NAME = "races.json";
 
         private readonly string _racesFilePath;
 
         public UniverseRaces RaceDatabase { get; private set; }
 
-        public RaceManagerSystem()
+        public RaceFactory()
         {
             string loreFolderPath = DirectoryBuilderComponent.BuildCustomPath(RACE_SAVE_DIRECTORY_NAME);
             this._racesFilePath = Path.Combine(loreFolderPath, RACES_FILE_NAME);
@@ -84,9 +85,9 @@ namespace A.T.L.A.S.Factory.World.CreationModule.systems
 
         public void AddRace(Race newRace)
         {
-            if (this.RaceDatabase != null && !this.RaceDatabase.UniverseRacesDatabase.ContainsKey(newRace.RaceID))
+            if (this.RaceDatabase != null && !this.RaceDatabase.UniverseResourcesDatabase.ContainsKey(newRace.RaceID))
             {
-                RaceDatabase.UniverseRacesDatabase.Add(newRace.RaceID, newRace);
+                this.RaceDatabase.UniverseResourcesDatabase.Add(newRace.RaceID, newRace);
                 Debug.WriteLine($"Raça '{newRace.RaceName}' adicionada ao banco de dados.");
             }
             else
@@ -122,7 +123,7 @@ namespace A.T.L.A.S.Factory.World.CreationModule.systems
 
         public void RemoveRace(string raceId)
         {
-            if (this.RaceDatabase != null && this.RaceDatabase.UniverseRacesDatabase.Remove(raceId))
+            if (this.RaceDatabase != null && this.RaceDatabase.UniverseResourcesDatabase.Remove(raceId))
             {
                 Debug.WriteLine($"Raça '{raceId}' removida do banco de dados.");
             }

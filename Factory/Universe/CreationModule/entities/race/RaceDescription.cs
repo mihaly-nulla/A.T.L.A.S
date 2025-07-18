@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace A.T.L.A.S.Factory.World.CreationModule.entities
+namespace A.T.L.A.S.Factory.Universe.CreationModule.entities.race
 {
     public class RaceDescription
     {
@@ -23,10 +23,10 @@ namespace A.T.L.A.S.Factory.World.CreationModule.entities
 
         public RaceDescription()
         {
-            this.RacialGeneralOverview = string.Empty;
-            this.RacialCulturalValues = string.Empty;
-            this.RacialSocialBehavior = string.Empty;
-            this.RacialAbilities = string.Empty;
+            RacialGeneralOverview = string.Empty;
+            RacialCulturalValues = string.Empty;
+            RacialSocialBehavior = string.Empty;
+            RacialAbilities = string.Empty;
         }
 
         public RaceDescription(string racialGeneralOverview,

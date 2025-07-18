@@ -50,7 +50,7 @@ namespace A.T.L.A.S.Mind.CommunicationModule.systems
         }
 
 
-        public async Task<string> SendPromptToGEMINI(CharacterManagerSystem creator, string npcId, string playerInput, string apiKey)
+        public async Task<string> SendPromptToGEMINI(CharacterFactory creator, string npcId, string playerInput, string apiKey)
         {
             string path = creator.GetCharactersPath();
             Debug.WriteLine($"\nCommunicationSystem: Preparando prompt para NPC '{npcId}' com input do jogador: '{playerInput}'");
@@ -149,7 +149,7 @@ namespace A.T.L.A.S.Mind.CommunicationModule.systems
             return $"AI Response (simulated for {npcId}): Based on the detailed profile provided and your input, I would say something witty and insightful about {playerInput}.";*/
         }
 
-        private Dictionary<string, string> GetRelevantNpcDataFromPrompt(CharacterManagerSystem creator, string npcID, string playerInput)
+        private Dictionary<string, string> GetRelevantNpcDataFromPrompt(CharacterFactory creator, string npcID, string playerInput)
         {
             var relevantData = new Dictionary<string, string>();
             var allKnownNpcs = creator.GetAllNPCBrains();
