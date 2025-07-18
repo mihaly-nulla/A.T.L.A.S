@@ -29,7 +29,6 @@
   <ItemGroup>
     <Folder Include="database\universe\environments\" />
     <Folder Include="Heart\AffectionModule\components\" />
-    <Folder Include="Heart\PersonalityModule\components\" />
     <Folder Include="Vision\" />
   </ItemGroup>
 

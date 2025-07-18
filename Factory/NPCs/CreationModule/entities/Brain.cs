@@ -17,55 +17,53 @@ namespace A.T.L.A.S.Factory.NPCs.CreationModule.entities
     {
         private string NPCId;
 
-        private string NPCName;
+        public IdentitySystem NpcIdentity { get; private set; }
 
-        public IdentitySystem npcIdentity { get; private set; }
-        public KnowledgeSystem npcKnowledge { get; private set; }
+        public KnowledgeSystem NpcKnowledge { get; private set; }
 
-        public PersonalitySystem npcPersonality { get; private set; }
+        public PersonalitySystem NpcPersonality { get; private set; }
 
-        public AffectionSystem npcAffections { get; private set; }
+        public AffectionSystem NpcAffections { get; private set; }
 
-        public Brain(string npcId, string npcName, List<Knowledge> initialKnowledge)
+        public Brain(string npcId, List<Knowledge> initialKnowledge)
         {
-            NPCId = npcId;
-            NPCName = npcName;
-            //this.npcPersonality = personality;
-            npcKnowledge = new KnowledgeSystem();
+            this.NPCId = npcId;
+            NpcKnowledge = new KnowledgeSystem();
             foreach (var knowledge in initialKnowledge)
             {
-                npcKnowledge.AddKnowledge(knowledge);
+                NpcKnowledge.AddKnowledge(knowledge);
             }
 
-            npcPersonality = new PersonalitySystem();
+            NpcPersonality = new PersonalitySystem();
             //NpcMemory = new MemorySystem(); // Cria um MemorySystem sem ID do NPC
         }
 
-        public Brain(string npcId, string npcName,
-                        List<Knowledge> initialKnowledge, 
-                        PersonalitySystem npcPersonality,
-                        AffectionSystem npcAffection)
+        public Brain(string npcId,
+                     IdentitySystem npcIdentity,
+                     List<Knowledge> initialKnowledge, 
+                     PersonalitySystem npcPersonality,
+                     AffectionSystem npcAffection)
         {
-            NPCId = npcId;
-            NPCName = npcName;
-            npcKnowledge = new KnowledgeSystem();
+            this.NPCId = npcId;
+            this.NpcKnowledge = new KnowledgeSystem();
             foreach (var knowledge in initialKnowledge)
             {
-                npcKnowledge.AddKnowledge(knowledge);
+                this.NpcKnowledge.AddKnowledge(knowledge);
             }
-            this.npcPersonality = npcPersonality;
-            npcAffections = npcAffection;
+            this.NpcPersonality = npcPersonality;
+            this.NpcAffections = npcAffection;
+            this.NpcIdentity = npcIdentity;
             //NpcMemory = new MemorySystem(); // Cria um MemorySystem sem ID do NPC
         }
 
         public string GetNPCName()
         {
-            return NPCName;
+            return this.NpcIdentity.NpcName;
         }
 
         public string GetNPCID()
         {
-            return NPCId;
+            return this.NPCId;
         }
         
     }

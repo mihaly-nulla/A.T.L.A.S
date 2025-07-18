@@ -1,11 +1,11 @@
 using A.T.L.A.S.Factory.NPCs.CreationModule.systems;
-using A.T.L.A.S.Factory.Universe.CreationModule.entities.race;
-using A.T.L.A.S.Factory.Universe.CreationModule.entities.region;
+using A.T.L.A.S.Factory.NPCs.CreationModule.entities;
 using A.T.L.A.S.Factory.World.CreationModule.systems;
 using A.T.L.A.S.Heart.AffectionModule.entities;
 using A.T.L.A.S.Heart.AffectionModule.systems;
 using A.T.L.A.S.Heart.PersonalityModule.entities;
 using A.T.L.A.S.Heart.PersonalityModule.systems;
+using A.T.L.A.S.Heart.IdentityModule.systems;
 using A.T.L.A.S.Mind.CommunicationModule.systems;
 using A.T.L.A.S.Mind.KnowledgeModule.entities;
 using System;
@@ -26,7 +26,7 @@ namespace A.T.L.A.S
             CommunicationSystem communicator = new CommunicationSystem();
             
             // 1. Criar alguns Documentos
-            /*Document docGenetica01 = new Document(
+            Document docGenetica01 = new Document(
                 "genetics_dna",
                 "Fundamentos de Genética — Volume 1",
                 "Livro base sobre cinemática e leis da física. Contém informações essenciais sobre movimento, força e energia.",
@@ -80,9 +80,25 @@ namespace A.T.L.A.S
 
             Debug.WriteLine("\n--- Criando NPCs ---");
             Brain rosaBrain =
-                creator.CreateNPC(
+                characterFactory.CreateNPC(
                     "rosa",
-                    "Rosa",
+                    new IdentitySystem(
+                                            "Rosa Lovegood",
+                                            "human",
+                                            false,
+                                            35,
+                                            "Rosa é uma professora de genética apaixonada e animada, conhecida por sua capacidade de tornar conceitos complexos acessíveis e envolventes. Sua abordagem amigável e divertida cativa os alunos.",
+                                            "Rosa Lovegood descobriu seu amor pela ciência na infância, fascinada pelos mistérios da vida em nível microscópico. Formou-se com honras em genética e dedicou anos à pesquisa, mas encontrou sua verdadeira vocação no ensino. Acredita que o conhecimento deve ser compartilhado com entusiasmo e que a curiosidade é o maior motor da descoberta. Sua energia contagiante e seu bom humor são marcas registradas em sala de aula, inspirando muitos a seguir o caminho da ciência. Ela se esforça para criar um ambiente de aprendizado leve e acolhedor, sempre com um sorriso no rosto, embora possa ser surpreendentemente firme quando necessário.",
+                                            "Teacher",
+                                            "Mulher de estatura média, com cabelos castanhos ondulados e olhos expressivos. Seu sorriso é fácil e acolhedor, e ela gesticula bastante ao falar, transmitindo entusiasmo. Gosta de usar roupas coloridas e confortáveis que refletem sua personalidade vibrante.",
+                                            new List<string> 
+                                            {
+                                                "O conhecimento é um tesouro a ser compartilhado.",
+                                                "A curiosidade move o mundo.",
+                                                "Errar faz parte do processo de aprendizado.",
+                                                "Todos podem entender ciência se for bem explicada."
+                                            }
+                                        ),
                     scientistInitialKnowledge,
                     new PersonalitySystem(
                                             new OCEAN(
@@ -149,12 +165,37 @@ namespace A.T.L.A.S
             var lucioSocialStanding = new SocialStanding(70, new List<string> { "rosa" }, new List<string>());
            
 
-            Brain lucioNpcBrain = creator.CreateNPC("lucio", "Lucio", scientistInitialKnowledge, lucioPersonality, new AffectionSystem(lucioRelationships, lucioSocialStanding));
+            Brain lucioNpcBrain = characterFactory.CreateNPC(
+                "lucio", 
+                new IdentitySystem(
+                        "Lucio House",
+                        "human",
+                        true,
+                        55,
+                        "Lucio é um médico especialista em genética, conhecido por seu humor sarcástico e sua abordagem direta. Ele é um pensador crítico e não tem paciência para tolices, mas é extremamente competente em sua área.",
+                        "Lucio House é um renomado geneticista que se destacou por sua abordagem direta e cínica à medicina. Desde jovem, mostrou interesse pela biologia, mas sua verdadeira paixão pela genética surgiu durante a faculdade de medicina. Ele é conhecido por sua mente afiada e seu humor sarcástico, o que o torna tanto admirado quanto temido por seus colegas. Lucio acredita que a verdade deve ser dita, não importa quão dura seja, e isso o leva a ser muitas vezes visto como insensível. No entanto, sua competência e dedicação à ciência são inegáveis, e ele é respeitado por suas contribuições significativas ao campo da genética.",
+                        "Geneticist",
+                        "Homem de estatura média, com cabelos grisalhos desgrenhados e barba por fazer. Seus olhos azuis, frequentemente semicerrados, carregam um ar de sarcasmo e inteligência penetrante. Anda com uma leve mancada, apoiando-se em uma bengala, mas sua presença é inegável.",
+                        new List<string>
+                        {
+                            "A verdade é absoluta, não importa o quão dolorosa ela seja.",
+                            "Todos mentem, a ciência busca os fatos.",
+                            "A estupidez é a maior praga da humanidade.",
+                            "Resultados práticos superam boas intenções vazias."
+                        }
+                ), 
+                scientistInitialKnowledge, 
+                lucioPersonality, 
+                new AffectionSystem(
+                                        lucioRelationships, 
+                                        lucioSocialStanding
+                                    )
+            );
 
 
             Debug.WriteLine("\n--- Gerando JSON do Prompt para NPC_Einstein ---");
-            creator.GenerateAndSaveJson("rosa");
-            creator.GenerateAndSaveJson("lucio");*/
+            characterFactory.SaveCharacterAsJSON("rosa");
+            characterFactory.SaveCharacterAsJSON("lucio");
 
 
             //communicator.SendPromptToGEMINI("rosa-alternate");
@@ -272,36 +313,25 @@ namespace A.T.L.A.S
                                    "Os Anões têm sua origem nas profundezas das montanhas mais antigas, onde construíram vastas cidades subterrâneas adornadas com sua arte e engenharia. Sua história é uma saga de grandes minerações, descoberta de tesouros lendários e guerras épicas contra criaturas das profundezas. Guardiões de segredos antigos e protetores de reinos sob a terra, eles mantêm uma memória coletiva de seus ancestrais que guia cada aspecto de sua existência."
             );
 
+            Race Human = raceFactory.CreateRace(
+                "human",
+                "Humano", 
+                raceFactory.CreateRaceDescription(
+                    "Uma raça versátil e adaptável, com uma capacidade inigualável de inovação e colonização. Humanos são conhecidos por sua resiliência, ambição e uma vasta diversidade cultural que os permite prosperar em quase todos os ambientes.", // general_overview
+                    "A cultura humana valoriza a diversidade, o progresso tecnológico e social, a liberdade individual e a formação de grandes sociedades. Eles têm uma forte inclinação para a exploração, o comércio e a busca por conhecimento, muitas vezes superando limites com ousadia.", // cultural_values
+                    "Humanos apresentam uma vasta gama de comportamentos sociais, desde a cooperação em grandes impérios até a rivalidade entre nações. São geralmente expressivos e curiosos sobre o desconhecido, capazes de formar laços profundos ou de trair por ganância. Sua comunicação é direta, mas também adaptável a nuances sociais.", // social_behavior
+                    "Possuem uma notável adaptabilidade física e mental. São proficientes em uma vasta gama de habilidades, desde a engenharia e construção complexa até o comércio e a diplomacia. Sua capacidade de aprendizado rápido e de inovar em tecnologia os torna formidáveis em diversos campos, embora não possuam habilidades mágicas inatas ou força bruta excepcional de outras raças." // typical_abilities_and_skills
+                ),
+                "Humanos apresentam uma diversidade física notável, variando amplamente em altura, tom de pele, cor de cabelo e estrutura corporal. Suas feições são proporcionais e eles tendem a ser atléticos. Não possuem características físicas distintivas como orelhas pontudas, mas sua expressividade facial e corporal é muito desenvolvida. Vestem-se com uma grande variedade de estilos, refletindo suas culturas e tecnologias diversas.", // race_appearance_description
+                "A história humana é marcada por ascensões e quedas de impérios, inovações tecnológicas revolucionárias e exploração incansável. Desde a forja das primeiras ferramentas até a construção de megacidades, os humanos moldaram o mundo de maneiras profundas, enfrentando desafios internos e externos com notável resiliência e, por vezes, grande brutalidade. Sua busca incessante por progresso os levou a colonizar novos territórios e a desvendar os segredos do universo." // race_lore
+            );
+
+            raceFactory.AddRace(Human);
             raceFactory.AddRace(HighElf);
             raceFactory.AddRace(Orc);
             raceFactory.AddRace(Dwarf);
 
             raceFactory.SaveAllRaces();*/
-
-            raceFactory.LoadAllRaces();
-
-            environmentFactory.LoadAllEnvironments();
-
-            Race HighElf = raceFactory.RaceDatabase.GetResourceById("elf_h");
-            Race Orc = raceFactory.RaceDatabase.GetResourceById("orc");
-            Race Dwarf = raceFactory.RaceDatabase.GetResourceById("dwarf");
-
-            WorldEnvironment RuaAcasia = environmentFactory.EnvironmentDatabase.GetResourceById("rua_acasia");
-            WorldEnvironment RuaSolis = environmentFactory.EnvironmentDatabase.GetResourceById("rua_solis");
-
-            Debug.WriteLine("\n--- Exibindo Raças Carregadas ---");
-            Debug.WriteLine($"Raça: {HighElf.RaceName}");
-            Debug.WriteLine($"Raça: {Orc.RaceName}");
-            Debug.WriteLine($"Raça: {Dwarf.RaceName}");
-
-            Debug.WriteLine("\n--- Exibindo Environments Carregadoss ---");
-            Debug.WriteLine($"Environment: {RuaAcasia.EnvironmentName}");
-            Debug.WriteLine($"Environment Location: {RuaAcasia.EnvironmentName} - {RuaAcasia.EnvironmentMajorLocations["coffe_shop"].LocationName}");
-            Debug.WriteLine($"Environment Location: {RuaAcasia.EnvironmentName} - {RuaAcasia.EnvironmentMajorLocations["grand_square"].LocationName}");
-
-            Debug.WriteLine($"Environment: {RuaSolis.EnvironmentName}");
-            Debug.WriteLine($"Environment Location: {RuaSolis.EnvironmentName} - {RuaSolis.EnvironmentMajorLocations["library"].LocationName}");
-            Debug.WriteLine($"Environment Location: {RuaSolis.EnvironmentName} - {RuaSolis.EnvironmentMajorLocations["wallmart"].LocationName}");
 
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());

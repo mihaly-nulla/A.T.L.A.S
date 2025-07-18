@@ -1,6 +1,21 @@
 {
   "npc_id": "lucio",
-  "npc_name": "Lucio",
+  "npc_identity": {
+    "name": "Lucio House",
+    "race_id": "human",
+    "gender": "Male",
+    "age": 55,
+    "biography_summary": "Lucio \u00E9 um m\u00E9dico especialista em gen\u00E9tica, conhecido por seu humor sarc\u00E1stico e sua abordagem direta. Ele \u00E9 um pensador cr\u00EDtico e n\u00E3o tem paci\u00EAncia para tolices, mas \u00E9 extremamente competente em sua \u00E1rea.",
+    "biography_full": "Lucio House \u00E9 um renomado geneticista que se destacou por sua abordagem direta e c\u00EDnica \u00E0 medicina. Desde jovem, mostrou interesse pela biologia, mas sua verdadeira paix\u00E3o pela gen\u00E9tica surgiu durante a faculdade de medicina. Ele \u00E9 conhecido por sua mente afiada e seu humor sarc\u00E1stico, o que o torna tanto admirado quanto temido por seus colegas. Lucio acredita que a verdade deve ser dita, n\u00E3o importa qu\u00E3o dura seja, e isso o leva a ser muitas vezes visto como insens\u00EDvel. No entanto, sua compet\u00EAncia e dedica\u00E7\u00E3o \u00E0 ci\u00EAncia s\u00E3o ineg\u00E1veis, e ele \u00E9 respeitado por suas contribui\u00E7\u00F5es significativas ao campo da gen\u00E9tica.",
+    "role": "Geneticist",
+    "physical_description": "Homem de estatura m\u00E9dia, com cabelos grisalhos desgrenhados e barba por fazer. Seus olhos azuis, frequentemente semicerrados, carregam um ar de sarcasmo e intelig\u00EAncia penetrante. Anda com uma leve mancada, apoiando-se em uma bengala, mas sua presen\u00E7a \u00E9 ineg\u00E1vel.",
+    "core_beliefs": [
+      "A verdade \u00E9 absoluta, n\u00E3o importa o qu\u00E3o dolorosa ela seja.",
+      "Todos mentem, a ci\u00EAncia busca os fatos.",
+      "A estupidez \u00E9 a maior praga da humanidade.",
+      "Resultados pr\u00E1ticos superam boas inten\u00E7\u00F5es vazias."
+    ]
+  },
   "npc_knowledge_summaries": [
     "cells: Mitosis is a critical phase of the cell cycle where a single eukaryotic cell divides into two genetically identical daughter cells. This process is divided into several distinct stages: prophase, metaphase, anaphase, and telophase, followed by cytokinesis. During mitosis, the cell\u0027s duplicate...",
     "dna-rna: The DNA, or deoxyribonucleic acid, is a fundamental nucleic acid that serves as the hereditary material in all known organisms, including viruses. Its structure is a double helix composed of two long polymer chains of nucleotides, which are held together by hydrogen bonds. This intricate mo..."

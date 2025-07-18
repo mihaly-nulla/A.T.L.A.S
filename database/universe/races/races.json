@@ -1,5 +1,17 @@
 {
   "world_races": {
+    "human": {
+      "race_id": "human",
+      "race_name": "Humano",
+      "race_description": {
+        "general_overview": "Uma ra\u00E7a vers\u00E1til e adapt\u00E1vel, com uma capacidade inigual\u00E1vel de inova\u00E7\u00E3o e coloniza\u00E7\u00E3o. Humanos s\u00E3o conhecidos por sua resili\u00EAncia, ambi\u00E7\u00E3o e uma vasta diversidade cultural que os permite prosperar em quase todos os ambientes.",
+        "cultural_values": "A cultura humana valoriza a diversidade, o progresso tecnol\u00F3gico e social, a liberdade individual e a forma\u00E7\u00E3o de grandes sociedades. Eles t\u00EAm uma forte inclina\u00E7\u00E3o para a explora\u00E7\u00E3o, o com\u00E9rcio e a busca por conhecimento, muitas vezes superando limites com ousadia.",
+        "social_behavior": "Humanos apresentam uma vasta gama de comportamentos sociais, desde a coopera\u00E7\u00E3o em grandes imp\u00E9rios at\u00E9 a rivalidade entre na\u00E7\u00F5es. S\u00E3o geralmente expressivos e curiosos sobre o desconhecido, capazes de formar la\u00E7os profundos ou de trair por gan\u00E2ncia. Sua comunica\u00E7\u00E3o \u00E9 direta, mas tamb\u00E9m adapt\u00E1vel a nuances sociais.",
+        "typical_abilities_and_skills": "Possuem uma not\u00E1vel adaptabilidade f\u00EDsica e mental. S\u00E3o proficientes em uma vasta gama de habilidades, desde a engenharia e constru\u00E7\u00E3o complexa at\u00E9 o com\u00E9rcio e a diplomacia. Sua capacidade de aprendizado r\u00E1pido e de inovar em tecnologia os torna formid\u00E1veis em diversos campos, embora n\u00E3o possuam habilidades m\u00E1gicas inatas ou for\u00E7a bruta excepcional de outras ra\u00E7as."
+      },
+      "race_appearence_description": "Humanos apresentam uma diversidade f\u00EDsica not\u00E1vel, variando amplamente em altura, tom de pele, cor de cabelo e estrutura corporal. Suas fei\u00E7\u00F5es s\u00E3o proporcionais e eles tendem a ser atl\u00E9ticos. N\u00E3o possuem caracter\u00EDsticas f\u00EDsicas distintivas como orelhas pontudas, mas sua expressividade facial e corporal \u00E9 muito desenvolvida. Vestem-se com uma grande variedade de estilos, refletindo suas culturas e tecnologias diversas.",
+      "race_lore": "A hist\u00F3ria humana \u00E9 marcada por ascens\u00F5es e quedas de imp\u00E9rios, inova\u00E7\u00F5es tecnol\u00F3gicas revolucion\u00E1rias e explora\u00E7\u00E3o incans\u00E1vel. Desde a forja das primeiras ferramentas at\u00E9 a constru\u00E7\u00E3o de megacidades, os humanos moldaram o mundo de maneiras profundas, enfrentando desafios internos e externos com not\u00E1vel resili\u00EAncia e, por vezes, grande brutalidade. Sua busca incessante por progresso os levou a colonizar novos territ\u00F3rios e a desvendar os segredos do universo."
+    },
     "elf_h": {
       "race_id": "elf_h",
       "race_name": "High Elf",

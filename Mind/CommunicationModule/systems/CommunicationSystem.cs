@@ -164,8 +164,8 @@ namespace A.T.L.A.S.Mind.CommunicationModule.systems
 
                 if (playerInput.IndexOf(character.GetNPCName(), StringComparison.OrdinalIgnoreCase) >= 0)
                 {
-                    var relationship = currentNPC.npcAffections.GetRelationship(character.GetNPCID());
-                    var socialStanding = currentNPC.npcAffections.SocialPerception;
+                    var relationship = currentNPC.NpcAffections.GetRelationship(character.GetNPCID());
+                    var socialStanding = currentNPC.NpcAffections.SocialPerception;
 
                     bool isRelevant = relationship != null ||
                                       socialStanding.KnownByNPCs.Contains(character.GetNPCID()) ||
@@ -176,7 +176,7 @@ namespace A.T.L.A.S.Mind.CommunicationModule.systems
                         var summaryBuilder = new StringBuilder();
 
                         summaryBuilder.AppendLine($"- Profile for the character {character.GetNPCName()}:");
-                        summaryBuilder.AppendLine($"  - Personality: {character.npcPersonality.personalityStyle.VocabularyReference} style ({character.npcPersonality.personalityStyle.Tone} tone).");
+                        summaryBuilder.AppendLine($"  - Personality: {character.NpcPersonality.personalityStyle.VocabularyReference} style ({character.NpcPersonality.personalityStyle.Tone} tone).");
                         summaryBuilder.AppendLine($"  - Reputation: {socialStanding.ReputationType}.");
 
                         if (relationship != null)

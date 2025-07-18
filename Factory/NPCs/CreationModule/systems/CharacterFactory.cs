@@ -2,6 +2,7 @@
 using A.T.L.A.S.Factory.NPCs.CreationModule.entities;
 using A.T.L.A.S.Factory.Tools;
 using A.T.L.A.S.Heart.AffectionModule.systems;
+using A.T.L.A.S.Heart.IdentityModule.systems;
 using A.T.L.A.S.Heart.PersonalityModule.systems;
 using A.T.L.A.S.Mind.KnowledgeModule.entities;
 using System;
@@ -42,16 +43,19 @@ namespace A.T.L.A.S.Factory.NPCs.CreationModule.systems
         /// </summary>
         public Brain CreateNPC(string npcId, string npcName, List<Knowledge> initialKnowledge)
         {
-            var newNpc = new Brain(npcId, npcName, initialKnowledge);
+            var newNpc = new Brain(npcId, initialKnowledge);
             _allNpcBrains.Add(newNpc);
             Debug.WriteLine($"NPC {npcId} criado e adicionado ao CreationSystem.");
             return newNpc;
         }
 
-        public Brain CreateNPC(string npcId, string npcName, List<Knowledge> initialKnowledge, 
-                                PersonalitySystem npcPersonality, AffectionSystem npcAffection)
+        public Brain CreateNPC(string npcId,
+                               IdentitySystem npcIdentity,
+                               List<Knowledge> initialKnowledge, 
+                               PersonalitySystem npcPersonality, 
+                               AffectionSystem npcAffection)
         {
-            var newNpc = new Brain(npcId, npcName, initialKnowledge, npcPersonality, npcAffection);
+            var newNpc = new Brain(npcId, npcIdentity, initialKnowledge, npcPersonality, npcAffection);
             _allNpcBrains.Add(newNpc);
             Debug.WriteLine($"NPC {npcId} criado e adicionado ao CreationSystem.");
             return newNpc;
@@ -74,7 +78,7 @@ namespace A.T.L.A.S.Factory.NPCs.CreationModule.systems
         /// <summary>
         /// Gera o JSON de prompt para um NPC específico.
         /// </summary>
-        public string GenerateJsonForNpc(string npcId)
+        private string GenerateJsonForNpc(string npcId)
         {
             var npcBrain = GetNPCBrain(npcId);
             if (npcBrain == null)
@@ -83,17 +87,17 @@ namespace A.T.L.A.S.Factory.NPCs.CreationModule.systems
             }
 
             // Reutiliza a lógica de montagem do JSON, passando o npcBrain
-            var promptData = AssembleNpcData(npcBrain);
+            var npc = AssembleNpcData(npcBrain);
             var options = new JsonSerializerOptions
             {
                 WriteIndented = true,
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
                 ReferenceHandler = ReferenceHandler.IgnoreCycles
             };
-            return JsonSerializer.Serialize(promptData, options);
+            return JsonSerializer.Serialize(npc, options);
         }
 
-        public void GenerateAndSaveJson(string npcId)
+        public void SaveCharacterAsJSON(string npcId)
         {
             var jsonString = GenerateJsonForNpc(npcId);
 
@@ -113,12 +117,12 @@ namespace A.T.L.A.S.Factory.NPCs.CreationModule.systems
             }
         }
 
-        private NPCPromptData AssembleNpcData(Brain npcBrain)
+        private CharacterRepresentation AssembleNpcData(Brain npcBrain)
         {
             // Coleciona o conteúdo dos documentos de cada Knowledge
             var knowledgeContentForPrompt = new List<string>();
 
-            foreach (var knowledgeEntry in npcBrain.npcKnowledge.GetAllKnowledge())
+            foreach (var knowledgeEntry in npcBrain.NpcKnowledge.GetAllKnowledge())
             {
                 // Para cada conceito (Knowledge), colete o conteúdo relevante dos documentos
                 var relevantContent = new List<string>();
@@ -148,13 +152,13 @@ namespace A.T.L.A.S.Factory.NPCs.CreationModule.systems
                 }
             }
 
-            return new NPCPromptData
+            return new CharacterRepresentation
             {
                 NPCId = npcBrain.GetNPCID(),
-                NPCName = npcBrain.GetNPCName(),
+                NPCIdentity = npcBrain.NpcIdentity,
                 NPCKnowledgeSummaries = knowledgeContentForPrompt,
-                NPCPersonality = npcBrain.npcPersonality,
-                NPCAffection = npcBrain.npcAffections
+                NPCPersonality = npcBrain.NpcPersonality,
+                NPCAffection = npcBrain.NpcAffections
             };
         }
 
@@ -212,7 +216,7 @@ namespace A.T.L.A.S.Factory.NPCs.CreationModule.systems
 
             // Certifique-se de que todas as sub-propriedades do NPCPromptData (PersonalityData, AffectionSystem)
             // também tenham construtores vazios e JsonPropertyName configurados, senão a desserialização falhará.
-            NPCPromptData npcPromptData = JsonSerializer.Deserialize<NPCPromptData>(jsonString, options);
+            CharacterRepresentation npcPromptData = JsonSerializer.Deserialize<CharacterRepresentation>(jsonString, options);
 
             //Debug.WriteLine($"NPCPromptData desserializado com sucesso: {npcPromptData.NPCId}, {npcPromptData.NPCName}, {npcPromptData.NPCPersonality.oceanPersonality.Openness}");
 
@@ -251,13 +255,15 @@ namespace A.T.L.A.S.Factory.NPCs.CreationModule.systems
         /// </summary>
         /// <param name="promptData">O DTO NPCPromptData contendo os dados do NPC.</param>
         /// <returns>Uma nova instância da classe Brain.</returns>
-        private Brain ReconstructBrainFromPromptData(NPCPromptData promptData)
+        private Brain ReconstructBrainFromPromptData(CharacterRepresentation promptData)
         {
             // **Reconstruindo PersonalityData:**
             // NPCPromptData.NpcPersonality é do tipo PersonalityModule.entities.PersonalityData,
             // então pode ser usado diretamente.
+            IdentitySystem reconstructedIdentity = promptData.NPCIdentity ?? new IdentitySystem();
             PersonalitySystem reconstructedPersonality = promptData.NPCPersonality ?? new PersonalitySystem();
             AffectionSystem reconstructedAffections = promptData.NPCAffection ?? new AffectionSystem();
+
 
 
             //AffectionSystem reconstructedAffectionSystem = promptData.NpcAffections ?? new AffectionSystem();
@@ -268,8 +274,8 @@ namespace A.T.L.A.S.Factory.NPCs.CreationModule.systems
             // Cria uma nova instância de Brain com os módulos reconstruídos
             return new Brain(
                 promptData.NPCId,
-                promptData.NPCName,
-                new List<Knowledge>(),
+                reconstructedIdentity,
+                new List<Knowledge>(), //TODO - É preciso fazer a reconstrução dos conhecimentos?
                 reconstructedPersonality,
                 reconstructedAffections
             );
