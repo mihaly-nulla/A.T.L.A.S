@@ -1,0 +1,33 @@
+{
+  "npc_affections": {
+    "relationships": [
+      {
+        "targed_npc_id": "ID_SAMPLE1",
+        "affection_score": 50,
+        "trust_score": 70,
+        "friendship_level": "friendly",
+        "traits": [ "curious", "supportive" ]
+      },
+      {
+        "targed_npc_id": "ID_SAMPLE2",
+        "affection_score": 70,
+        "trust_score": 70,
+        "friendship_level": "friendly",
+        "traits": [ "supportive" ]
+      },
+      {
+        "targed_npc_id": "ID_SAMPLE3",
+        "affection_score": 30,
+        "trust_score": 10,
+        "friendship_level": "disgusted",
+        "traits": [ "apathetic", "untrustworthy" ]
+      }
+    ],
+    "social_standing": {
+      "reputation_score": 50,
+      "reputation_type": "good",
+      "known_by_npcs": [ "ID_SAMPLE1", "ID_SAMPLE2", "ID_SAMPLE3" ],
+      "unfavorable_npcs": [ "ID_SAMPLE4" ]
+    }
+  }
+}

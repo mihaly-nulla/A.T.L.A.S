@@ -1,0 +1,43 @@
+{
+  "worlds": {
+    "city_metropolis": {
+      "world_id": "city_metropolis",
+      "name": "Metropolis",
+      "type": "Cyberpunk City",
+      "general_description": "Uma metropole futurista e distopica...",
+      "major_locations_overview": {
+        "central_sprawl": {
+          "region_id": "central_sprawl",
+          "name": "Centro Urbano (Central Sprawl)",
+          "type": "district",
+          "description_summary": "O corcaoo comercial e administrativo...",
+          "key_features": [
+            "Torre da OmniCorp",
+            "Monotrilho Principal"
+          ]
+        },
+        "under_city": {
+          "region_id": "under_city",
+          "name": "Cidade Subterranea (Under-City)",
+          "type": "district",
+          "description_summary": "As camadas mais baixas da cidade...",
+          "key_features": [
+            "Mercado de Esgoto",
+            "Cl�s Criminosos"
+          ]
+        },
+        "sky_districts": {
+          "region_id": "sky_districts",
+          "name": "Distritos Celestes",
+          "type": "district",
+          "description_summary": "Plataformas elevadas acima da polui��o, lar da elite corporativa e de tecnologias de ponta, acess�veis apenas por aero-t�xis.",
+          "key_features": [
+            "Resid�ncias de Luxo",
+            "Laborat�rios de P&D",
+            "Jardins Suspensos"
+          ]
+        }
+      }
+    }
+  }
+}

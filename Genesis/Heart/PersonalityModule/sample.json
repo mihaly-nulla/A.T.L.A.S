@@ -1,0 +1,29 @@
+{
+  "npc_personality": {
+    "OCEAN": {
+      "openness": 85,
+      "conscientiousness": 60,
+      "extraversion": 75,
+      "agreeableness": 90,
+      "neuroticism": 20
+    },
+    "SCHWARTZ": {
+      "self_direction": 9,
+      "stimulation": 4,
+      "hedonism": 6,
+      "achievement": 7,
+      "power": 3,
+      "security": 5,
+      "conformity": 3,
+      "tradition": 2,
+      "benevolence": 9,
+      "universalism": 8
+    },
+    "dialog_style": {
+      "tone": "descontraído",
+      "formality": 0,
+      "vocabulary": "regionalista interiorano",
+      "vocabulary_reference": "Chico Bento"
+    }
+  }
+}

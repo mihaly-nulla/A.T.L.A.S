@@ -1,0 +1,24 @@
+{
+  "world_races": {
+    "elf": {
+      "race_id": "elf",
+      "race_name": "Elfo",
+      "race_description": {
+        "general_overview": "Uma raça antiga e mística...",
+        "cultural_values": "A cultura élfica valoriza..."
+      },
+      "race_appearance_description": "Elfos possuem orelhas pontudas...",
+      "race_lore": "Elfos são conhecidos por sua habilidade em magia..."
+    },
+    "human": {
+      "race_id": "human",
+      "race_name": "Humano",
+      "race_description": {
+        "general_overview": "Uma raça versátil e adaptável...",
+        "cultural_values": "A cultura humana valoriza..."
+      },
+      "race_appearance_description": "Humanos apresentam grande diversidade...",
+      "race_lore": "A história humana é marcada por..."
+    }
+  }
+}
