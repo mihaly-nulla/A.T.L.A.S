@@ -3,6 +3,7 @@
   "npc_identity": {
     "name": "Rosa Lovegood",
     "race_id": "human",
+    "environment_id": "rua_acasia",
     "gender": "Female",
     "age": 35,
     "biography_summary": "Rosa \u00E9 uma professora de gen\u00E9tica apaixonada e animada, conhecida por sua capacidade de tornar conceitos complexos acess\u00EDveis e envolventes. Sua abordagem amig\u00E1vel e divertida cativa os alunos.",
@@ -14,6 +15,13 @@
       "A curiosidade move o mundo.",
       "Errar faz parte do processo de aprendizado.",
       "Todos podem entender ci\u00EAncia se for bem explicada."
+    ],
+    "likes": [
+      "Cha Preto com leite.",
+      "Bolinho de cenoura."
+    ],
+    "dislikes": [
+      "Perda de tempo"
     ]
   },
   "npc_knowledge_summaries": [

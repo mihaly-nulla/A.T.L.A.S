@@ -3,6 +3,7 @@
   "npc_identity": {
     "name": "Lucio House",
     "race_id": "human",
+    "environment_id": "rua_acasia",
     "gender": "Male",
     "age": 55,
     "biography_summary": "Lucio \u00E9 um m\u00E9dico especialista em gen\u00E9tica, conhecido por seu humor sarc\u00E1stico e sua abordagem direta. Ele \u00E9 um pensador cr\u00EDtico e n\u00E3o tem paci\u00EAncia para tolices, mas \u00E9 extremamente competente em sua \u00E1rea.",
@@ -14,6 +15,12 @@
       "Todos mentem, a ci\u00EAncia busca os fatos.",
       "A estupidez \u00E9 a maior praga da humanidade.",
       "Resultados pr\u00E1ticos superam boas inten\u00E7\u00F5es vazias."
+    ],
+    "likes": [
+      "Cafe Preto."
+    ],
+    "dislikes": [
+      "Contar mentiras"
     ]
   },
   "npc_knowledge_summaries": [

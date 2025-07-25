@@ -1,0 +1,59 @@
+{
+  "world_environments": {
+    "unknown_planet1": {
+      "environment_id": "unknown_planet1",
+      "name": "?",
+      "type": "Planet",
+      "general_description": "",
+      "key_characteristics": [],
+      "historical_context_summary": "",
+      "major_locations_overview": {
+        "unknown_location1": {
+          "location_id": "unknown_location1",
+          "name": "??",
+          "type": "Moon",
+          "description_summary": "",
+          "key_features": []
+        },
+        "unknown_location2": {
+          "location_id": "unknown_location2",
+          "name": "",
+          "type": "Moon",
+          "description_summary": "",
+          "key_features": []
+        },
+        "unknown_location3": {
+          "location_id": "unknown_location3",
+          "name": "",
+          "type": "Anomally",
+          "description_summary": "",
+          "key_features": []
+        }
+      }
+    },
+    "unknown_planet2": {
+      "environment_id": "unknown_planet2",
+      "name": "?",
+      "type": "Planet",
+      "general_description": "",
+      "key_characteristics": [],
+      "historical_context_summary": "",
+      "major_locations_overview": {
+        "unknown_location1": {
+          "location_id": "unknown_location1",
+          "name": "??",
+          "type": "Anomally",
+          "description_summary": "",
+          "key_features": []
+        },
+        "unknown_location2": {
+          "location_id": "unknown_location2",
+          "name": "",
+          "type": "Terrain",
+          "description_summary": "",
+          "key_features": []
+        }
+      }
+    }
+  }
+}

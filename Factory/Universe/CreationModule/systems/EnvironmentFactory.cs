@@ -37,6 +37,13 @@ namespace A.T.L.A.S.Factory.World.CreationModule.systems
             this.EnvironmentDatabase = new UniverseEnvironments(); // Inicializa o banco de dados de environments vazio
         }
 
+        public EnvironmentFactory(string path)
+        {
+            string fullPath = Path.Combine(path, ENVIRONMENT_SAVE_DIRECTORY_NAME.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
+
+            this._environmentsFilePath = fullPath;
+        }
+
         /// <summary>
         /// Carrega todas as definições de raça do arquivo JSON.
         /// </summary>
@@ -102,8 +109,6 @@ namespace A.T.L.A.S.Factory.World.CreationModule.systems
                                string environmentDescription,
                                List<string> environmentCharacteristics,
                                string environmentHistoricalContext,
-                               string environmentSociopoliticalOverview,
-                               string environmentTechLevel,
                                Dictionary<string, Location> relevantLocations)
         {
             return new WorldEnvironment(
@@ -113,7 +118,6 @@ namespace A.T.L.A.S.Factory.World.CreationModule.systems
                                             environmentDescription,
                                             environmentCharacteristics,
                                             environmentHistoricalContext,
-                                            environmentSociopoliticalOverview,
                                             relevantLocations
                                         );
         }
@@ -143,6 +147,20 @@ namespace A.T.L.A.S.Factory.World.CreationModule.systems
             {
                 Debug.WriteLine($"Aviso: Raça '{environmentId}' não encontrada ou RaceDatabase é nulo.");
             }
+        }
+
+        /// <summary>
+        /// Obtém uma definição de WorldEnvironment específica do banco de dados de environments carregado em memória.
+        /// </summary>
+        /// <param name="environmentId">O ID da raça a ser recuperada.</param>
+        /// <returns>O objeto WorldEnvironment correspondente, ou null se não for encontrada.</returns>
+        public WorldEnvironment GetEnvironmentById(string raceId) // Nome mais claro: GetRaceById (RaceFactory)
+        {
+            if (this.EnvironmentDatabase.CheckIfEmpty())
+            {
+                this.LoadAllEnvironments();
+            }
+            return this.EnvironmentDatabase.GetResourceById(raceId);
         }
     }
 }

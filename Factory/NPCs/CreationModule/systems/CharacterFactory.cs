@@ -38,6 +38,13 @@ namespace A.T.L.A.S.Factory.NPCs.CreationModule.systems
             }
         }
 
+        public CharacterFactory(string path)
+        {
+            string fullPath = Path.Combine(path, CHARACTER_SAVE_DIRECTORY_NAME.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
+
+            this.CharactersFolderPath = fullPath;
+        }
+
         /// <summary>
         /// Cria e adiciona um novo NPC ao sistema.
         /// </summary>

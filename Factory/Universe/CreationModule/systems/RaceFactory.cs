@@ -37,6 +37,13 @@ namespace A.T.L.A.S.Factory.World.CreationModule.systems
             this.RaceDatabase = new UniverseRaces(); // Inicializa o banco de dados de raças vazio
         }
 
+        public RaceFactory(string path)
+        {
+            string fullPath = Path.Combine(path, RACE_SAVE_DIRECTORY_NAME.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
+
+            this._racesFilePath = fullPath;
+        }
+
         /// <summary>
         /// Carrega todas as definições de raça do arquivo JSON.
         /// </summary>
@@ -131,6 +138,21 @@ namespace A.T.L.A.S.Factory.World.CreationModule.systems
             {
                 Debug.WriteLine($"Aviso: Raça '{raceId}' não encontrada ou RaceDatabase é nulo.");
             }
+        }
+
+        /// <summary>
+        /// Obtém uma definição de raça específica do banco de dados de raças carregado em memória.
+        /// </summary>
+        /// <param name="raceId">O ID da raça a ser recuperada.</param>
+        /// <returns>O objeto Race correspondente, ou null se não for encontrada.</returns>
+        public Race GetRaceById(string raceId) // Nome mais claro: GetRaceById (RaceFactory)
+        {
+            
+            if(this.RaceDatabase.CheckIfEmpty())
+            {
+                this.LoadAllRaces();
+            }
+            return this.RaceDatabase.GetResourceById(raceId);
         }
     }
 }

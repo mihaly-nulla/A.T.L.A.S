@@ -23,8 +23,8 @@ namespace A.T.L.A.S
             Debug.WriteLine("--- Iniciando Teste de Geração de Prompt de NPC ---");
 
             CharacterFactory characterFactory = new CharacterFactory();
-            CommunicationSystem communicator = new CommunicationSystem();
-            
+            CommunicationSystem communicator = new CommunicationSystem(characterFactory);
+            /*
             // 1. Criar alguns Documentos
             Document docGenetica01 = new Document(
                 "genetics_dna",
@@ -85,6 +85,7 @@ namespace A.T.L.A.S
                     new IdentitySystem(
                                             "Rosa Lovegood",
                                             "human",
+                                            "rua_acasia",
                                             false,
                                             35,
                                             "Rosa é uma professora de genética apaixonada e animada, conhecida por sua capacidade de tornar conceitos complexos acessíveis e envolventes. Sua abordagem amigável e divertida cativa os alunos.",
@@ -97,6 +98,15 @@ namespace A.T.L.A.S
                                                 "A curiosidade move o mundo.",
                                                 "Errar faz parte do processo de aprendizado.",
                                                 "Todos podem entender ciência se for bem explicada."
+                                            },
+                                            new List<string>
+                                            {
+                                                "Cha Preto com leite.",
+                                                "Bolinho de cenoura."
+                                            },
+                                            new List<string>
+                                            {
+                                                "Perda de tempo"
                                             }
                                         ),
                     scientistInitialKnowledge,
@@ -170,6 +180,7 @@ namespace A.T.L.A.S
                 new IdentitySystem(
                         "Lucio House",
                         "human",
+                        "rua_acasia",
                         true,
                         55,
                         "Lucio é um médico especialista em genética, conhecido por seu humor sarcástico e sua abordagem direta. Ele é um pensador crítico e não tem paciência para tolices, mas é extremamente competente em sua área.",
@@ -182,6 +193,14 @@ namespace A.T.L.A.S
                             "Todos mentem, a ciência busca os fatos.",
                             "A estupidez é a maior praga da humanidade.",
                             "Resultados práticos superam boas intenções vazias."
+                        },
+                        new List<string>
+                        {
+                            "Cafe Preto."
+                        },
+                        new List<string>
+                        {
+                            "Contar mentiras"
                         }
                 ), 
                 scientistInitialKnowledge, 
@@ -195,7 +214,7 @@ namespace A.T.L.A.S
 
             Debug.WriteLine("\n--- Gerando JSON do Prompt para NPC_Einstein ---");
             characterFactory.SaveCharacterAsJSON("rosa");
-            characterFactory.SaveCharacterAsJSON("lucio");
+            characterFactory.SaveCharacterAsJSON("lucio");*/
 
 
             //communicator.SendPromptToGEMINI("rosa-alternate");
@@ -332,6 +351,11 @@ namespace A.T.L.A.S
             raceFactory.AddRace(Dwarf);
 
             raceFactory.SaveAllRaces();*/
+
+            characterFactory.LoadNPC("rosa");
+            characterFactory.LoadNPC("lucio");
+
+            await communicator.SendPromptToGEMINI("lucio", "O que você acha da Rosa, sua amiga?", "AIzaSyADcETD90F-ocN5bND7tAGnaa0974RIbQY");
 
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());

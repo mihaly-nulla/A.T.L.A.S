@@ -15,7 +15,12 @@ namespace A.T.L.A.S.Mind.CommunicationModule.components
         /// <param name="playerInput">A entrada mais recente do jogador ou o contexto da conversa.</param>
         /// <param name="contextualInformation">Informações adicionais relevantes para o prompt (e.g., objetivo atual, localização, status de quest).</param>
         /// <returns>A string completa do prompt para enviar à IA.</returns>
-        public static string BuildAiPrompt(string npcProfileJson, string playerInput, Dictionary<string, string> relevantNpcData)
+        public static string BuildAiPrompt(
+                                                string npcProfileJson, 
+                                                string playerInput, 
+                                                Dictionary<string, string> relevantNpcData,
+                                                string relevantRaceData,
+                                                string relevantEnvironmentData)
         {
             StringBuilder prompt = new StringBuilder();
 
@@ -24,7 +29,7 @@ namespace A.T.L.A.S.Mind.CommunicationModule.components
             // --- 1. Instruções para a IA (O "Persona" e a Tarefa) ---
             prompt.AppendLine("You are an autonomous Non-Player Character (NPC) in a simulation. Your goal is to respond authentically, leveraging your internal profile, knowledge, and memory.");
             prompt.AppendLine("Your character is specified by the provided NPC Profile.");
-            prompt.AppendLine("You possess a unique personality and knowledge base. Your responses should reflect your character's traits and current understanding.");
+            prompt.AppendLine("You possess a unique personality. Your responses should reflect your character's traits.");
 
             prompt.AppendLine("Your core personality is primarily defined by your OCEAN and SCHWARTZ values. These models represent the fundamental aspects of your character and should be the guiding force behind your thoughts and actions.");
             prompt.AppendLine("Your 'dialog_style' further refines how this core personality is expressed, influencing your tone, formality, and vocabulary.");
@@ -45,11 +50,25 @@ namespace A.T.L.A.S.Mind.CommunicationModule.components
 
             if (relevantNpcData != null && relevantNpcData.Any())
             {
-                prompt.AppendLine("\n--- Profiles of Related NPCs (Retrieved from Database) ---");
+                prompt.AppendLine("\n--- Profiles of Related NPCs ---");
                 foreach (var entry in relevantNpcData)
                 {
                     prompt.AppendLine(entry.Value);
                 }
+            }
+
+            if (!string.IsNullOrWhiteSpace(relevantRaceData))
+            {
+                prompt.AppendLine("\n--- Your Race Data ---");
+                
+                prompt.AppendLine(relevantRaceData);
+            }
+
+            if (!string.IsNullOrWhiteSpace(relevantEnvironmentData))
+            {
+                prompt.AppendLine("\n--- Your Place of Origin Data ---");
+
+                prompt.AppendLine(relevantEnvironmentData);
             }
 
             // --- 3. Entrada do Jogador ---

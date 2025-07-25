@@ -27,9 +27,6 @@ namespace A.T.L.A.S.Factory.Universe.CreationModule.entities.region
         [JsonPropertyName("historical_context_summary")]
         public string EnvironmentHistoricalContext { get; set; }
 
-        [JsonPropertyName("sociopolitical_overview")]
-        public string EnvironmentSociopoliticalOverview { get; set; }
-
         [JsonPropertyName("major_locations_overview")]
         public Dictionary<string, Location> EnvironmentMajorLocations { get; set; }
 
@@ -41,7 +38,6 @@ namespace A.T.L.A.S.Factory.Universe.CreationModule.entities.region
             this.EnvironmentDescription = string.Empty;
             this.EnvironmentCharacteristics = new List<string>();
             this.EnvironmentHistoricalContext = string.Empty;
-            this.EnvironmentSociopoliticalOverview = string.Empty;
             this.EnvironmentMajorLocations = new Dictionary<string, Location>();
         }
 
@@ -50,8 +46,7 @@ namespace A.T.L.A.S.Factory.Universe.CreationModule.entities.region
                         string environmentType,
                         string environmentDescription,
                         List<string> environmentCharacteristics,
-                        string environmentHistoricalContext,
-                        string environmentSociopoliticalOverview)
+                        string environmentHistoricalContext)
         {
             this.EnvironmentID = environmentID;
             this.EnvironmentName = environmentName;
@@ -59,7 +54,6 @@ namespace A.T.L.A.S.Factory.Universe.CreationModule.entities.region
             this.EnvironmentDescription = environmentDescription;
             this.EnvironmentCharacteristics = environmentCharacteristics;
             this.EnvironmentHistoricalContext = environmentHistoricalContext;
-            this.EnvironmentSociopoliticalOverview = environmentSociopoliticalOverview;
         }
 
         public WorldEnvironment(string environmentID,
@@ -68,7 +62,6 @@ namespace A.T.L.A.S.Factory.Universe.CreationModule.entities.region
                                 string environmentDescription,
                                 List<string> environmentCharacteristics,
                                 string environmentHistoricalContext,
-                                string environmentSociopoliticalOverview,
                                 Dictionary<string, Location> majorLocations)
         {
             this.EnvironmentID = environmentID;
@@ -77,7 +70,6 @@ namespace A.T.L.A.S.Factory.Universe.CreationModule.entities.region
             this.EnvironmentDescription = environmentDescription;
             this.EnvironmentCharacteristics = environmentCharacteristics;
             this.EnvironmentHistoricalContext = environmentHistoricalContext;
-            this.EnvironmentSociopoliticalOverview = environmentSociopoliticalOverview;
             this.EnvironmentMajorLocations = majorLocations;
         }
 

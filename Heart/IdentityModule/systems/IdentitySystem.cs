@@ -16,6 +16,9 @@ namespace A.T.L.A.S.Heart.IdentityModule.systems
         [JsonPropertyName("race_id")]
         public string RaceID { get; set; }
 
+        [JsonPropertyName("environment_id")]
+        public string EnvironmentID { get; set; }
+
         [JsonPropertyName("gender")]
         public string Gender { get; set; }
 
@@ -37,10 +40,16 @@ namespace A.T.L.A.S.Heart.IdentityModule.systems
         [JsonPropertyName("core_beliefs")]
         public List<string> CoreBeliefs { get; set; }
 
+        [JsonPropertyName("likes")]
+        public List<string> Likes { get; set; }
+
+        [JsonPropertyName("dislikes")]
+        public List<string> Dislikes { get; set; }
         public IdentitySystem()
         {
             this.NpcName = string.Empty;
             this.RaceID = string.Empty;
+            this.EnvironmentID = string.Empty;
             this.Gender = string.Empty;
             this.BiographySummary = string.Empty;
             this.BiographyFull = string.Empty;
@@ -51,16 +60,20 @@ namespace A.T.L.A.S.Heart.IdentityModule.systems
 
         public IdentitySystem(string npcName, 
                               string raceID,
+                              string environmentID,
                               bool gender,
                               int age,
                               string biographySummary,
                               string biographyFull,
                               string role,
                               string physicalDescription,
-                              List<string> coreBeliefs)
+                              List<string> coreBeliefs,
+                              List<string> likes,
+                              List<string> dislikes)
         {
             this.NpcName = npcName;
             this.RaceID = raceID;
+            this.EnvironmentID = environmentID;
             this.Gender = gender ? "Male" : "Female";
             this.Age = age;
             this.BiographySummary = biographySummary;
@@ -68,6 +81,8 @@ namespace A.T.L.A.S.Heart.IdentityModule.systems
             this.Role = role;
             this.PhysicalDescription = physicalDescription; 
             this.CoreBeliefs = coreBeliefs ?? new List<string>();
+            this.Likes = likes ?? new List<string>();
+            this.Dislikes = dislikes ?? new List<string>();
         }
     }
 }

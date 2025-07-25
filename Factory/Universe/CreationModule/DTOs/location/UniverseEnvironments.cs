@@ -38,5 +38,15 @@ namespace A.T.L.A.S.Factory.Universe.CreationModule.DTOs.location
             }
             return null;
         }
+
+        public bool CheckIfEmpty()
+        {
+            if (this.UniverseResourcesDatabase == null || this.UniverseResourcesDatabase.Count == 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }

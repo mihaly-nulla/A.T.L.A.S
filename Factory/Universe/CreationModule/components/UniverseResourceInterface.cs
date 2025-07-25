@@ -14,5 +14,6 @@ namespace A.T.L.A.S.Factory.Universe.CreationModule.components
 
         TEntity GetResourceById(string resourceId);
 
+        bool CheckIfEmpty();
     }
 }

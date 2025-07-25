@@ -27,13 +27,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="database\universe\environments\" />
     <Folder Include="Heart\AffectionModule\components\" />
     <Folder Include="Vision\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="LLamaSharp" Version="0.24.0" />
+    <PackageReference Include="System.Text.Json" Version="9.0.7" />
   </ItemGroup>
 
 </Project>
