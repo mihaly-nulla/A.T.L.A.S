@@ -355,7 +355,7 @@ namespace A.T.L.A.S
             characterFactory.LoadNPC("rosa");
             characterFactory.LoadNPC("lucio");
 
-            await communicator.SendPromptToGEMINI("lucio", "O que você acha da Rosa, sua amiga?", "AIzaSyADcETD90F-ocN5bND7tAGnaa0974RIbQY");
+            //await communicator.SendPromptToGEMINI("lucio", "O que você acha da Rosa, sua amiga?", "");
 
             ApplicationConfiguration.Initialize();
             Application.Run(new Form1());
