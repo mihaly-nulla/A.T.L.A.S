@@ -458,9 +458,6 @@
       "Genesis/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v2.1",
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.3"
-        },
         "compile": {
           "bin/placeholder/Genesis.dll": {}
         },
@@ -992,9 +989,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Projects\\CSharp\\A.T.L.A.S\\Tester\\Tester.csproj",
-      "projectName": "Tester",
-      "projectPath": "C:\\Projects\\CSharp\\A.T.L.A.S\\Tester\\Tester.csproj",
+      "projectUniqueName": "C:\\Projects\\CSharp\\A.T.L.A.S\\Tester\\Newtonsoft.csproj",
+      "projectName": "Newtonsoft",
+      "projectPath": "C:\\Projects\\CSharp\\A.T.L.A.S\\Tester\\Newtonsoft.csproj",
       "packagesPath": "C:\\Users\\thiag\\.nuget\\packages\\",
       "outputPath": "C:\\Projects\\CSharp\\A.T.L.A.S\\Tester\\obj\\",
       "projectStyle": "PackageReference",

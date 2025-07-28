@@ -9,12 +9,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Newtonsoft.Json;
 namespace Genesis.Factory.Universe.CreationModule.DTOs.location
 {
-    public class UniverseEnvironments : UniversePersistence<UniverseEnvironments>, UniverseResourceInterface<WorldEnvironment, UniverseEnvironments>
+    public class UniverseEnvironments : UniverseResourceInterface<WorldEnvironment, UniverseEnvironments>
     {
-        [JsonProperty("world_environments")]
         public Dictionary<string, WorldEnvironment> UniverseResourcesDatabase { get; set; }
 
         public UniverseEnvironments()

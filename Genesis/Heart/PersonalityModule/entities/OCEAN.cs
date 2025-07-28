@@ -4,25 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Newtonsoft.Json;
-
 namespace Genesis.Heart.PersonalityModule.entities
 {
     public class OCEAN
     {
-        [JsonProperty("openness")]
         public int Openness { get; set; }
 
-        [JsonProperty("conscientiousness")]
         public int Conscientiousness { get; set; }
    
-        [JsonProperty("extraversion")]
         public int Extraversion { get; set; }
 
-        [JsonProperty("agreeableness")]
         public int Agreeableness { get; set; }
 
-        [JsonProperty("neuroticism")]
         public int Neuroticism { get; set; }
 
         public OCEAN() { }

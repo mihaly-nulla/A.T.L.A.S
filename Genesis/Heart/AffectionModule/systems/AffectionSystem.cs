@@ -5,15 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Newtonsoft.Json;
 namespace Genesis.Heart.AffectionModule.systems
 {
     public class AffectionSystem
     {
-        [JsonProperty("relationships")]
         public List<Relationship> Relationships { get; set; }
 
-        [JsonProperty("social_standing")]
         public SocialStanding SocialPerception { get; set; }
 
         public AffectionSystem()

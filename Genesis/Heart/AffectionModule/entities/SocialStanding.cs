@@ -4,21 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Newtonsoft.Json;
 namespace Genesis.Heart.AffectionModule.entities
 {
     public class SocialStanding
     {
-        [JsonProperty("reputation_score")]
         public int ReputationScore { get; set; }
 
-        [JsonProperty("reputation_type")]
         public string ReputationType { get; set; }
 
-        [JsonProperty("known_by_npcs")]
         public List<string> KnownByNPCs { get; set; }
 
-        [JsonProperty("unfavorable_npcs")]
         public List<string> UnfavorableNPCs { get; set; }
 
         public SocialStanding()

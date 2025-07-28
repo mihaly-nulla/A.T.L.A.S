@@ -14,8 +14,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace Genesis.Mind.CommunicationModule.systems
 {
@@ -33,12 +31,12 @@ namespace Genesis.Mind.CommunicationModule.systems
 
         private EnvironmentFactory NPCEnvironmentFactory;
 
-
         public CommunicationSystem()
         {
             _httpClient = new HttpClient();
+            //this._serializer = serializer ?? throw new ArgumentNullException(nameof(serializer), "O serializador não pode ser nulo.");
 
-            //this.NPCFactory = new CharacterFactory();
+            this.NPCFactory = new CharacterFactory();
             this.NPCRaceFactory = new RaceFactory();
             this.NPCEnvironmentFactory = new EnvironmentFactory();
         }
@@ -46,7 +44,8 @@ namespace Genesis.Mind.CommunicationModule.systems
         public CommunicationSystem(
                                         CharacterFactory characterFactory,
                                         RaceFactory raceFactory,
-                                        EnvironmentFactory environmentFactory)
+                                        EnvironmentFactory environmentFactory
+                                   )
         {
             _httpClient = new HttpClient();
 
@@ -57,34 +56,11 @@ namespace Genesis.Mind.CommunicationModule.systems
 
         public CommunicationSystem(CharacterFactory characterFactory)
         {
-            _httpClient = new HttpClient();
-
+            _httpClient = new HttpClient();            
             this.NPCFactory = characterFactory;
 
             this.NPCRaceFactory = new RaceFactory();
             this.NPCEnvironmentFactory = new EnvironmentFactory();
-        }
-        private string RetrieveNPCJSON(string npcId, string path)
-        {
-            string fileName = $"{npcId}.json";
-            string filePath = Path.Combine(path, fileName);
-
-            if (!File.Exists(filePath))
-            {
-                throw new FileNotFoundException($"Arquivo JSON para o NPC '{npcId}' não encontrado em: {filePath}");
-            }
-
-            try
-            {
-                string jsonString = File.ReadAllText(filePath);
-                Debug.WriteLine($"String JSON do NPC '{npcId}' recuperada com sucesso do arquivo.");
-                return jsonString;
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Erro inesperado ao recuperar a string JSON do NPC '{npcId}': {ex.Message}");
-                throw;
-            }
         }
 
 
@@ -239,11 +215,10 @@ namespace Genesis.Mind.CommunicationModule.systems
         }
 
 
-        public async Task<string> SendPromptToGEMINI(
-                                                        string npcId, string inputPrompt, string apiKey
+        /*public async Task<string> SendPromptToGEMINI(
+                                                        Brain npc, string inputPrompt, string apiKey
                                                     )
         {
-            string path = this.NPCFactory.GetCharactersPath();
             string inputPromptLower = inputPrompt.ToLowerInvariant();
 
             Debug.WriteLine($"\nCommunicationSystem: Preparando prompt para NPC '{npcId}' com input do jogador: '{inputPrompt}'");
@@ -355,6 +330,6 @@ namespace Genesis.Mind.CommunicationModule.systems
             }
 
             return $"AI Response (simulated for {npcId}): Based on the detailed profile provided and your input, I would say something witty and insightful about {inputPrompt}.";
-        }
+        }*/
     }
 }

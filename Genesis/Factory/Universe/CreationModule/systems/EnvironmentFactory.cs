@@ -1,6 +1,4 @@
-﻿using Genesis.Factory.Tools;
-using Genesis.Factory.Tools.SerializationInterface;
-using Genesis.Factory.Universe.CreationModule.DTOs.location;
+﻿using Genesis.Factory.Universe.CreationModule.DTOs.location;
 using Genesis.Factory.Universe.CreationModule.entities.region;
 
 using System;
@@ -12,76 +10,14 @@ namespace Genesis.Factory.Universe.CreationModule.systems
 {
     public class EnvironmentFactory
     {
-        private const string ENVIRONMENT_SAVE_DIRECTORY_NAME = "database/universe/environments";
-        private const string ENVIRONMENTS_FILE_NAME = "environments.json";
-
-        private readonly string _environmentsFilePath;
 
         public UniverseEnvironments EnvironmentDatabase { get; private set; }
 
-        private ISerializer _serializer;
-        public EnvironmentFactory(ISerializer serialzier)
+        public EnvironmentFactory()
         {
-            string loreFolderPath = DirectoryBuilderComponent.BuildCustomPath(ENVIRONMENT_SAVE_DIRECTORY_NAME);
-            _environmentsFilePath = Path.Combine(loreFolderPath, ENVIRONMENTS_FILE_NAME);
-
-            // Garante que o diretório de salvamento exista
-            if (!Directory.Exists(loreFolderPath))
-            {
-                Directory.CreateDirectory(loreFolderPath);
-                Debug.WriteLine($"Diretório de lore criado: {loreFolderPath}");
-            }
-            Debug.WriteLine($"Caminho do arquivo de raças: {_environmentsFilePath}");
 
             EnvironmentDatabase = new UniverseEnvironments(); // Inicializa o banco de dados de environments vazio
-            
-            this._serializer = serialzier ?? throw new ArgumentNullException(nameof(serialzier), "O serializador não pode ser nulo.");
-        }
 
-        public EnvironmentFactory(string path, ISerializer serialzier)
-        {
-            string fullPath = Path.Combine(path, ENVIRONMENT_SAVE_DIRECTORY_NAME.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
-
-            _environmentsFilePath = fullPath;
-
-            this._serializer = serialzier ?? throw new ArgumentNullException(nameof(serialzier), "O serializador não pode ser nulo.");
-        }
-
-        /// <summary>
-        /// Carrega todas as definições de raça do arquivo JSON.
-        /// </summary>
-        public void LoadAllEnvironments()
-        {
-            try
-            {
-                EnvironmentDatabase = this._serializer.Deserialize<UniverseEnvironments>(UniverseEnvironments.LoadFromJsonFile(_environmentsFilePath));
-            }
-            catch (FileNotFoundException)
-            {
-                Debug.WriteLine($"Arquivo de raças '{_environmentsFilePath}' não encontrado. Iniciando com banco de dados de raças vazio.");
-                EnvironmentDatabase = new UniverseEnvironments(); // Cria um novo sistema vazio se o arquivo não existir
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"Erro ao carregar raças: {ex.Message}");
-                EnvironmentDatabase = new UniverseEnvironments(); // Garante que a instância não seja nula
-            }
-        }
-
-        /// <summary>
-        /// Salva todas as definições de raça atuais em um arquivo JSON.
-        /// </summary>
-        public void SaveAllEnvironments()
-        {
-            if (EnvironmentDatabase != null)
-            {
-                //UniverseEnvironments.SaveToJsonFile(EnvironmentDatabase, _environmentsFilePath);
-                UniverseEnvironments.SaveToJsonFile(_serializer.Serialize(EnvironmentDatabase), _environmentsFilePath);
-            }
-            else
-            {
-                Debug.WriteLine("Aviso: Tentativa de salvar environments, mas RaceDatabase é nulo.");
-            }
         }
 
         public void SetEnvironmentDatabase(UniverseEnvironments worldEnvironments)
@@ -162,7 +98,7 @@ namespace Genesis.Factory.Universe.CreationModule.systems
         {
             if (EnvironmentDatabase.CheckIfEmpty())
             {
-                LoadAllEnvironments();
+                throw new InvalidOperationException("Nenhum database de environments foi carregado.");
             }
             return EnvironmentDatabase.GetResourceById(raceId);
         }

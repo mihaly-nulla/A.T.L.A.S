@@ -4,30 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Newtonsoft.Json;
 namespace Genesis.Factory.Universe.CreationModule.entities.region
 {
     public class WorldEnvironment
     {
-        [JsonProperty("environment_id")]
+
         public string EnvironmentID { get; set; }
 
-        [JsonProperty("name")]
         public string EnvironmentName { get; set; }
 
-        [JsonProperty("type")]
         public string EnvironmentType { get; set; }
 
-        [JsonProperty("general_description")]
         public string EnvironmentDescription { get; set; }
 
-        [JsonProperty("key_characteristics")]
         public List<string> EnvironmentCharacteristics { get; set; }
 
-        [JsonProperty("historical_context_summary")]
         public string EnvironmentHistoricalContext { get; set; }
 
-        [JsonProperty("major_locations_overview")]
         public Dictionary<string, Location> EnvironmentMajorLocations { get; set; }
 
         public WorldEnvironment()

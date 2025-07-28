@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36301.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genesis", "Genesis.csproj", "{6CBFBD82-B8B2-4EBE-8DAF-DD1A7595F6A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tester", "..\Tester\Tester.csproj", "{756EB419-E347-910C-F3AF-3C289CE621C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newtonsoft", "..\Tester\Newtonsoft.csproj", "{756EB419-E347-910C-F3AF-3C289CE621C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

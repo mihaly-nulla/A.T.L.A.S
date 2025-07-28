@@ -7,12 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Newtonsoft.Json;
 namespace Genesis.Factory.Universe.CreationModule.DTOs.race
 {
-    public class UniverseRaces : UniversePersistence<UniverseRaces>, UniverseResourceInterface<Race, UniverseRaces>
+    public class UniverseRaces : UniverseResourceInterface<Race, UniverseRaces>
     {
-        [JsonProperty("world_races")]
         public Dictionary<string, Race> UniverseResourcesDatabase { get; set; }
 
         public UniverseRaces()

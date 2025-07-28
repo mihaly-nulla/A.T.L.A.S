@@ -4,24 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Newtonsoft.Json;
 namespace Genesis.Factory.Universe.CreationModule.entities.region
 {
     public class Location
     {
-        [JsonProperty("location_id")]
         public string LocationID { get; set; }
 
-        [JsonProperty("name")]
         public string LocationName { get; set; }
 
-        [JsonProperty("type")]
         public string LocationType { get; set; }
 
-        [JsonProperty("description_summary")]
         public string LocationDescription { get; set; }
 
-        [JsonProperty("key_features")]
         public List<string> LocationKeyFeatures { get; set; }
 
         public Location()

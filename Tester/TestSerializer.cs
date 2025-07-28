@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Tester
+namespace Newtonsoft
 {
     public class TestSerializer : ISerializer
     {

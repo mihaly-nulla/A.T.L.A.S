@@ -4,22 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Newtonsoft.Json;
-
 namespace Genesis.Heart.PersonalityModule.entities
 {
     public class DialogStyle
     {
-        [JsonProperty("tone")]
         public string Tone { get; set; }
 
-        [JsonProperty("formality")]
         public int Formality { get; set; }
 
-        [JsonProperty("vocabulary")]
         public string Vocabulary { get; set; }
 
-        [JsonProperty("vocabulary_reference")]
         public string VocabularyReference { get; set; }
 
         public DialogStyle() 

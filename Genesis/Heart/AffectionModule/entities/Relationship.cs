@@ -3,25 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace Genesis.Heart.AffectionModule.entities
 {
     public class Relationship
     {
-        [JsonProperty("target_npc_id")]
         public string TargetNpcId { get; set; }
 
-        [JsonProperty("affection_score")]
         public int AffectionScore { get; set; }
 
-        [JsonProperty("trust_score")]
         public int TrustScore { get; set; }
 
-        [JsonProperty("friendship_level")]
         public string FriendshipLevel { get; set; }
 
-        [JsonProperty("traits")]
         public List<string> Traits { get; set; }
 
         public Relationship()

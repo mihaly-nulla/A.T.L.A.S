@@ -16,7 +16,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using static System.Net.Mime.MediaTypeNames;
 using System.Threading.Tasks;
-using Tester;
+using Newtonsoft;
+using Genesis;
 
 namespace A.T.L.A.S
 {
@@ -24,10 +25,11 @@ namespace A.T.L.A.S
     {
         public static async Task Main(string[] args)
         {
-            RaceFactory raceFactory = new RaceFactory();
+            Atlas atlas = Atlas.Instance;
+            /*RaceFactory raceFactory = new RaceFactory();
             EnvironmentFactory environmentFactory = new EnvironmentFactory();
             CharacterFactory characterFactory = new CharacterFactory(new TestSerializer());
-            CommunicationSystem communicator = new CommunicationSystem(characterFactory);
+            CommunicationSystem communicator = new CommunicationSystem(characterFactory);*/
 
             /*Debug.WriteLine("--- Iniciando Teste de Geração de Prompt de NPC ---");
 
@@ -230,7 +232,7 @@ namespace A.T.L.A.S
 
             //characterFactory.LoadNPC("rosa");
             //characterFactory.LoadNPC("lucio");
-            
+
             /*Location CoffeShop = new Location(
                 "coffe_shop",
                 "Cafeteria do Bairro",
@@ -356,8 +358,8 @@ namespace A.T.L.A.S
 
             raceFactory.SaveAllRaces();*/
 
-            characterFactory.LoadNPC("rosa");
-            characterFactory.LoadNPC("lucio");
+            /*characterFactory.LoadNPC("rosa");
+            characterFactory.LoadNPC("lucio");*/
 
             //await communicator.SendPromptToGEMINI("lucio", "O que você acha da Rosa, sua amiga?", "AIzaSyCP8mQ3vaTcgs9sDl7p2xuFzwqlPyxQHe4");
             //Console.ReadLine();

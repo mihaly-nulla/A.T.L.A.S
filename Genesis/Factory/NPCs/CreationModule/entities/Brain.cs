@@ -20,8 +20,6 @@ namespace Genesis.Factory.NPCs.CreationModule.entities
 
         public IdentitySystem NpcIdentity { get; private set; }
 
-        public KnowledgeSystem NpcKnowledge { get; private set; }
-
         public PersonalitySystem NpcPersonality { get; private set; }
 
         public AffectionSystem NpcAffections { get; private set; }
@@ -29,11 +27,6 @@ namespace Genesis.Factory.NPCs.CreationModule.entities
         public Brain(string npcId, List<Knowledge> initialKnowledge)
         {
             this.NPCId = npcId;
-            NpcKnowledge = new KnowledgeSystem();
-            foreach (var knowledge in initialKnowledge)
-            {
-                NpcKnowledge.AddKnowledge(knowledge);
-            }
 
             NpcPersonality = new PersonalitySystem();
             //NpcMemory = new MemorySystem(); // Cria um MemorySystem sem ID do NPC
@@ -41,16 +34,10 @@ namespace Genesis.Factory.NPCs.CreationModule.entities
 
         public Brain(string npcId,
                      IdentitySystem npcIdentity,
-                     List<Knowledge> initialKnowledge, 
                      PersonalitySystem npcPersonality,
                      AffectionSystem npcAffection)
         {
             this.NPCId = npcId;
-            this.NpcKnowledge = new KnowledgeSystem();
-            foreach (var knowledge in initialKnowledge)
-            {
-                this.NpcKnowledge.AddKnowledge(knowledge);
-            }
             this.NpcPersonality = npcPersonality;
             this.NpcAffections = npcAffection;
             this.NpcIdentity = npcIdentity;
