@@ -40,5 +40,20 @@ namespace Genesis
             Console.WriteLine("ATLAS inicializado com sucesso.");
         }
 
+        public RaceFactory GetRaceManager()
+        {
+            return RaceManager;
+        }
+
+        public EnvironmentFactory GetEnvironmentManager()
+        {
+            return EnvironmentManager;
+        }
+
+        public CharacterFactory GetCharacterManager()
+        {
+            return CharacterManager;
+
+        }
     }
 }

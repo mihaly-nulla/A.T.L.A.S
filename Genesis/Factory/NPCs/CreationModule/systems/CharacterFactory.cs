@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.IO;
+using Genesis.Heart.PersonalityModule.entities;
 
 namespace Genesis.Factory.NPCs.CreationModule.systems
 {
@@ -29,6 +30,20 @@ namespace Genesis.Factory.NPCs.CreationModule.systems
             var newNpc = new Brain(npcId, npcIdentity, npcPersonality, npcAffection);
             _allNpcBrains.Add(newNpc);
             Debug.WriteLine($"NPC {npcId} criado e adicionado ao CreationSystem.");
+            return newNpc;
+        }
+
+        public Brain CreateNPC(string npcId)
+        {
+            // Cria um NPC com identidade, personalidade e afeto padrão
+            var defaultIdentity = new IdentitySystem();
+            var defaultPersonality = new PersonalitySystem();
+            var defaultAffection = new AffectionSystem();
+            
+            var newNpc = new Brain(npcId, defaultIdentity, defaultPersonality, defaultAffection);
+
+            _allNpcBrains.Add(newNpc);
+
             return newNpc;
         }
 

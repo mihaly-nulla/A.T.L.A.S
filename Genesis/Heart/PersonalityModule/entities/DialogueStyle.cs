@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Genesis.Heart.PersonalityModule.entities
 {
-    public class DialogStyle
+    public class DialogueStyle
     {
         public string Tone { get; set; }
 
@@ -16,14 +16,14 @@ namespace Genesis.Heart.PersonalityModule.entities
 
         public string VocabularyReference { get; set; }
 
-        public DialogStyle() 
+        public DialogueStyle() 
         {
             this.Tone = string.Empty;
             this.Vocabulary = string.Empty;
             this.VocabularyReference = string.Empty;
         }
     
-        public DialogStyle(
+        public DialogueStyle(
                                 string tone,
                                 int formality,
                                 string vocabulary,

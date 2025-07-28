@@ -19,7 +19,7 @@ namespace Genesis.Heart.IdentityModule.systems
 
         public int Age { get; set; }
 
-        public string BiographySummary { get; set; }
+        //public string BiographySummary { get; set; }
 
         public string BiographyFull { get; set; }
 
@@ -38,7 +38,7 @@ namespace Genesis.Heart.IdentityModule.systems
             RaceID = string.Empty;
             EnvironmentID = string.Empty;
             Gender = string.Empty;
-            BiographySummary = string.Empty;
+            //BiographySummary = string.Empty;
             BiographyFull = string.Empty;
             Role = string.Empty;
             PhysicalDescription = string.Empty;
@@ -50,7 +50,6 @@ namespace Genesis.Heart.IdentityModule.systems
                               string environmentID,
                               bool gender,
                               int age,
-                              string biographySummary,
                               string biographyFull,
                               string role,
                               string physicalDescription,
@@ -63,7 +62,7 @@ namespace Genesis.Heart.IdentityModule.systems
             EnvironmentID = environmentID;
             Gender = gender ? "Male" : "Female";
             Age = age;
-            BiographySummary = biographySummary;
+            //BiographySummary = biographySummary;
             BiographyFull = biographyFull;
             Role = role;
             PhysicalDescription = physicalDescription;

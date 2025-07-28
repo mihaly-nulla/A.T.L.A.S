@@ -11,19 +11,19 @@ namespace Genesis.Heart.PersonalityModule.systems
     {
         public OCEAN oceanPersonality { get; set; }
         public SCHWARTZ schwartzPersonality { get; set; }
-        public DialogStyle personalityStyle { get; set; }
+        public DialogueStyle personalityStyle { get; set; }
 
         public PersonalitySystem()
         {
             oceanPersonality = new OCEAN();
             schwartzPersonality = new SCHWARTZ();
-            personalityStyle = new DialogStyle();
+            personalityStyle = new DialogueStyle();
         }
 
         public PersonalitySystem(
                                     OCEAN oceanPersonality, 
                                     SCHWARTZ schwartzPersonality,  
-                                    DialogStyle personalityStyle
+                                    DialogueStyle personalityStyle
                                 )
         {
             this.oceanPersonality = oceanPersonality;

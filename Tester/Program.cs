@@ -16,8 +16,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using static System.Net.Mime.MediaTypeNames;
 using System.Threading.Tasks;
-using Newtonsoft;
+using Newtonsoft.Json;
 using Genesis;
+using System.Runtime.CompilerServices;
+using Newtonsoft.DTO;
+using Newtonsoft.DTO.Identity;
+using Newtonsoft.DTO.Personality;
+using Newtonsoft.DTO.Affection;
 
 namespace A.T.L.A.S
 {
@@ -26,6 +31,110 @@ namespace A.T.L.A.S
         public static async Task Main(string[] args)
         {
             Atlas atlas = Atlas.Instance;
+
+            var test_npc = atlas.GetCharacterManager().CreateNPC("test");
+
+            test_npc.NpcPersonality.oceanPersonality = new OCEAN(100, 100, 100, 100, 100);
+
+            test_npc.NpcPersonality.schwartzPersonality = new SCHWARTZ(100, 100, 100, 100, 100, 100, 100, 100, 100, 100);
+
+            test_npc.NpcPersonality.personalityStyle = new DialogueStyle(
+                "enthusiastic and inspiring",
+                30,
+                "accessible, full of analogies and metaphors",
+                ""
+            );
+
+            test_npc.NpcIdentity.NpcName = "Test";
+            test_npc.NpcIdentity.RaceID = "human";
+            test_npc.NpcIdentity.EnvironmentID = "rua_acasia";
+            test_npc.NpcIdentity.Gender = "Male";
+            test_npc.NpcIdentity.Age = 30;
+            test_npc.NpcIdentity.BiographyFull = "This is a test NPC created to demonstrate the functionality of the Atlas system. It serves as a placeholder for testing purposes.";   
+            test_npc.NpcIdentity.Role = "Test Role";
+            test_npc.NpcIdentity.PhysicalDescription = "A generic test NPC with no specific features.";
+            test_npc.NpcIdentity.CoreBeliefs = new List<string>
+            {
+                "Knowledge is power.",
+                "Curiosity drives innovation.",
+                "Empathy is essential for understanding others."
+            };
+            test_npc.NpcIdentity.Likes = new List<string>
+            {
+                "Reading books",
+                "Exploring new ideas",
+                "Helping others"
+            };
+
+            test_npc.NpcIdentity.Dislikes = new List<string>
+            {
+                "Ignorance",
+                "Close-mindedness",
+                "Dishonesty"
+            };
+
+            test_npc.NpcAffections.AddRelationship(
+                new Relationship(
+                    "lucio",
+                    80,
+                    70,
+                    "Friend",
+                    new List<string> { "sarcastic", "blunt" }
+                )
+            );
+
+            test_npc.NpcAffections.SocialPerception = new SocialStanding(
+                90,
+                new List<string> { "lucio" },
+                new List<string> { "dracula" }
+            );
+
+            PersonalityMapper personalityMapper = new PersonalityMapper();
+            IdentityMapper identityMapper = new IdentityMapper();
+            AffectionMapper affectionMapper = new AffectionMapper();
+
+            var npcDTO = new NPC
+            {
+                NPCId = test_npc.GetNPCID(),
+                NpcIdentity = identityMapper.ToDTO(test_npc.NpcIdentity),
+                NpcPersonality = personalityMapper.ToDTO(test_npc.NpcPersonality),
+                NpcAffections = affectionMapper.ToDTO(test_npc.NpcAffections)
+            };
+
+            var settings = new JsonSerializerSettings
+            {
+                // Formata o JSON com quebras de linha e indentação para facilitar a leitura
+                Formatting = Formatting.Indented,
+                // Ignora propriedades com valor nulo para um JSON mais limpo
+                NullValueHandling = NullValueHandling.Ignore
+            };
+
+            // 2. Serialize o objeto DTO para uma string JSON
+            string npcJsonString = JsonConvert.SerializeObject(npcDTO, settings);
+
+            Debug.WriteLine("Serialized NPC JSON:");
+            Debug.WriteLine(npcJsonString);
+
+            NPC deserializedNpc = JsonConvert.DeserializeObject<NPC>(npcJsonString);
+
+            atlas.GetCharacterManager().CreateNPC(
+                                                    "test_deserialized",
+                                                    identityMapper.FromDTO(deserializedNpc.NpcIdentity),
+                                                    personalityMapper.FromDTO(deserializedNpc.NpcPersonality),
+                                                    affectionMapper.FromDTO(deserializedNpc.NpcAffections)
+                                                 );
+
+            var created_npc = atlas.GetCharacterManager().GetNPCBrain("test_deserialized");
+
+            Debug.WriteLine("Deserialized NPC:");
+
+            Debug.WriteLine($"NPC ID: {created_npc.GetNPCID()}");
+
+            Debug.WriteLine($"NPC Name: {created_npc.NpcIdentity.NpcName}");
+            Debug.WriteLine($"NPC OCEAN: {created_npc.NpcPersonality.oceanPersonality.Openness}");
+            Debug.WriteLine($"NPC Biography: {created_npc.NpcIdentity.BiographyFull}");
+
+
             /*RaceFactory raceFactory = new RaceFactory();
             EnvironmentFactory environmentFactory = new EnvironmentFactory();
             CharacterFactory characterFactory = new CharacterFactory(new TestSerializer());
