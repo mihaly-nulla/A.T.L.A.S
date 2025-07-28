@@ -12,8 +12,10 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
+using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Genesis.Mind.CommunicationModule.systems
 {
@@ -23,7 +25,7 @@ namespace Genesis.Mind.CommunicationModule.systems
 
         private const string GEMINI_MODEL_URL = "https://generativelanguage.googleapis.com/v1beta/models/";
 
-        private const string GEMINI_MODEL_ID = "gemini-2.5-flash";
+        private const string GEMINI_MODEL_ID = "gemini-2.5-flash-lite-preview-06-17";
 
         private CharacterFactory NPCFactory;
 
@@ -36,7 +38,7 @@ namespace Genesis.Mind.CommunicationModule.systems
         {
             _httpClient = new HttpClient();
 
-            this.NPCFactory = new CharacterFactory();
+            //this.NPCFactory = new CharacterFactory();
             this.NPCRaceFactory = new RaceFactory();
             this.NPCEnvironmentFactory = new EnvironmentFactory();
         }
@@ -130,7 +132,7 @@ namespace Genesis.Mind.CommunicationModule.systems
                     {
                         var summaryBuilder = new StringBuilder();
 
-                        summaryBuilder.AppendLine($"- Profile for the character {character.GetNPCName()}:");
+                        summaryBuilder.AppendLine($" - Profile for the character {character.GetNPCName()}:");
                         summaryBuilder.AppendLine($"  - Personality: {character.NpcPersonality.personalityStyle.VocabularyReference} style ({character.NpcPersonality.personalityStyle.Tone} tone).");
                         summaryBuilder.AppendLine($"  - Reputation: {socialStanding.ReputationType}.");
 
@@ -162,7 +164,7 @@ namespace Genesis.Mind.CommunicationModule.systems
                 {
                     StringBuilder raceSummaryBuilder = new StringBuilder(); 
                     
-                    raceSummaryBuilder.AppendLine($"- Your race is {npcRace.RaceName} (race_id: {npcRace.RaceID}).");
+                    raceSummaryBuilder.AppendLine($" - Your race is {npcRace.RaceName} (race_id: {npcRace.RaceID}).");
                     raceSummaryBuilder.AppendLine($"  - Race General Overview: {npcRace.RaceInformation.RacialGeneralOverview}");
 
                     bool needsCultural = inputPrompt.Contains("cultura") || inputPrompt.Contains("sociedade") || inputPrompt.Contains("valores");
@@ -199,7 +201,7 @@ namespace Genesis.Mind.CommunicationModule.systems
                 {
                     StringBuilder environmentSummaryBuilder = new StringBuilder();
 
-                    environmentSummaryBuilder.AppendLine($"- Your place of origin is {npcEnvironment.EnvironmentName}, of type {npcEnvironment.EnvironmentType}  (environment_id: {npcEnvironment.EnvironmentID}).");
+                    environmentSummaryBuilder.AppendLine($" - Your place of origin is {npcEnvironment.EnvironmentName}, of type {npcEnvironment.EnvironmentType}  (environment_id: {npcEnvironment.EnvironmentID}).");
                     environmentSummaryBuilder.AppendLine($"  - Environment General Description: {npcEnvironment.EnvironmentDescription}");
                     if (npcEnvironment.EnvironmentCharacteristics != null && npcEnvironment.EnvironmentCharacteristics.Any())
                         environmentSummaryBuilder.AppendLine($"  - Environment Key Characteristics: {string.Join(", ", npcEnvironment.EnvironmentCharacteristics)}.");
@@ -222,8 +224,8 @@ namespace Genesis.Mind.CommunicationModule.systems
                         int i = 0;
                         foreach (var locEntry in npcEnvironment.EnvironmentMajorLocations.Values)
                         {
-                            environmentSummaryBuilder.AppendLine($"    - Location {i} Name: {locEntry.LocationName} of type: {locEntry.LocationType}");
-                            environmentSummaryBuilder.AppendLine($"    - Location {i} Description: {locEntry.LocationDescription}");
+                            environmentSummaryBuilder.AppendLine($"   - Location {i} Name: {locEntry.LocationName} of type: {locEntry.LocationType}");
+                            environmentSummaryBuilder.AppendLine($"   - Location {i} Description: {locEntry.LocationDescription}");
                             i++;
                         }
                     }
@@ -301,7 +303,7 @@ namespace Genesis.Mind.CommunicationModule.systems
                 }
             };
 
-            var jsonPayload = JsonSerializer.Serialize(requestPayload, new JsonSerializerOptions { WriteIndented = true });
+            var jsonPayload = JsonConvert.SerializeObject(requestPayload, new JsonSerializerSettings { Formatting = Formatting.None });
             string fullRequestUri = $"{GEMINI_MODEL_URL}{GEMINI_MODEL_ID}:generateContent?key={apiKey}";
             Debug.WriteLine($"JSON PAYLOAD:\n\n {jsonPayload}");
             Debug.WriteLine($"FULL URL:\n\n {fullRequestUri}");
@@ -321,29 +323,26 @@ namespace Genesis.Mind.CommunicationModule.systems
 
                 Debug.WriteLine($"RESPONSE BODY: {responseBody}");
 
-                var geminiResponse = JsonSerializer.Deserialize<JsonElement>(responseBody);
+                var geminiResponse = JObject.Parse(responseBody);
 
-                if (geminiResponse.TryGetProperty(
-                                                    "candidates", out JsonElement candidatesElement) &&
-                                                    candidatesElement.EnumerateArray().Any()
-                                                  )
+                if (geminiResponse.TryGetValue("candidates", out JToken candidatesToken) &&
+                    candidatesToken is JArray candidatesArray && candidatesArray.Any())
                 {
-                    var firstCandidate = candidatesElement.EnumerateArray().First();
-                    if (firstCandidate.TryGetProperty("content", out JsonElement contentElement) &&
-                        contentElement.TryGetProperty("parts", out JsonElement partsElement) &&
-                        partsElement.EnumerateArray().Any())
-                    {
-                        var firstPart = partsElement.EnumerateArray().First();
-                        if (firstPart.TryGetProperty("text", out JsonElement textElement))
-                        {
-                            string aiResponseText = textElement.GetString();
-                            Debug.WriteLine("\n--- Resposta Bruta da API do Gemini ---");
-                            Debug.WriteLine(responseBody);
-                            Debug.WriteLine("------------------------------------");
-                            return aiResponseText;
-                        }
+                    JToken firstCandidate = candidatesArray.First();
 
+                    JToken textToken = firstCandidate?["content"]?["parts"]?.FirstOrDefault()?["text"];
+
+                    if (textToken != null)
+                    {
+                        // Converte o valor do token para string
+                        string aiResponseText = textToken.Value<string>();
+
+                        Debug.WriteLine("\n--- Resposta Bruta da API do Gemini ---");
+                        Debug.WriteLine(responseBody);
+                        Debug.WriteLine("------------------------------------");
+                        return aiResponseText;
                     }
+                           
                 }
                 Debug.WriteLine("\n--- Resposta Bruta da API do Gemini ---");
                 Debug.WriteLine(responseBody);

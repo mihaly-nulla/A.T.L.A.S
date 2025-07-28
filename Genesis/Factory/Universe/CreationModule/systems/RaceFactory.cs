@@ -1,15 +1,14 @@
 ﻿using Genesis.Factory.Tools;
+using Genesis.Factory.Tools.SerializationInterface;
 using Genesis.Factory.Universe.CreationModule.DTOs.race;
 using Genesis.Factory.Universe.CreationModule.entities.race;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-
 //TODO - Verificar possibilidade de aplicar um Factory Method
 namespace Genesis.Factory.Universe.CreationModule.systems
 {
@@ -22,7 +21,9 @@ namespace Genesis.Factory.Universe.CreationModule.systems
 
         public UniverseRaces RaceDatabase { get; private set; }
 
-        public RaceFactory()
+        private ISerializer _serializer;
+
+        public RaceFactory(ISerializer serializer)
         {
             string loreFolderPath = DirectoryBuilderComponent.BuildCustomPath(RACE_SAVE_DIRECTORY_NAME);
             _racesFilePath = Path.Combine(loreFolderPath, RACES_FILE_NAME);
@@ -36,13 +37,15 @@ namespace Genesis.Factory.Universe.CreationModule.systems
             Debug.WriteLine($"Caminho do arquivo de raças: {_racesFilePath}");
 
             RaceDatabase = new UniverseRaces(); // Inicializa o banco de dados de raças vazio
+            this._serializer = serializer ?? throw new ArgumentNullException(nameof(serializer), "O serializador não pode ser nulo.");
         }
 
-        public RaceFactory(string path)
+        public RaceFactory(string path, ISerializer serializer)
         {
             string fullPath = Path.Combine(path, RACE_SAVE_DIRECTORY_NAME.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
 
             _racesFilePath = fullPath;
+            this._serializer = serializer ?? throw new ArgumentNullException(nameof(serializer), "O serializador não pode ser nulo.");
         }
 
         /// <summary>
@@ -52,7 +55,7 @@ namespace Genesis.Factory.Universe.CreationModule.systems
         {
             try
             {
-                RaceDatabase = UniverseRaces.LoadFromJsonFile(_racesFilePath);
+                RaceDatabase = this._serializer.Deserialize<UniverseRaces>(UniverseRaces.LoadFromJsonFile(_racesFilePath));
             }
             catch (FileNotFoundException)
             {
@@ -73,7 +76,7 @@ namespace Genesis.Factory.Universe.CreationModule.systems
         {
             if (RaceDatabase != null)
             {
-                UniverseRaces.SaveToJsonFile(RaceDatabase, _racesFilePath);
+                UniverseRaces.SaveToJsonFile(_serializer.Serialize(RaceDatabase), _racesFilePath);
             }
             else
             {

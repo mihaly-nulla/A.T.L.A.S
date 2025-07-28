@@ -5,13 +5,12 @@ using Genesis.Heart.AffectionModule.systems;
 using Genesis.Heart.IdentityModule.systems;
 using Genesis.Heart.PersonalityModule.systems;
 using Genesis.Mind.KnowledgeModule.entities;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.IO;
+using Genesis.Factory.Tools.SerializationInterface;
 
 namespace Genesis.Factory.NPCs.CreationModule.systems
 {
@@ -23,7 +22,9 @@ namespace Genesis.Factory.NPCs.CreationModule.systems
 
         private List<Brain> _allNpcBrains = new List<Brain>();
 
-        public CharacterFactory()
+        private ISerializer _serializer;
+
+        public CharacterFactory(ISerializer serializer)
         {
             CharactersFolderPath = DirectoryBuilderComponent.BuildCustomPath(CHARACTER_SAVE_DIRECTORY_NAME);
 
@@ -36,13 +37,17 @@ namespace Genesis.Factory.NPCs.CreationModule.systems
             {
                 Debug.WriteLine($"Diretório de salvamento já existe: {CharactersFolderPath}");
             }
+
+            this._serializer = serializer;
         }
 
-        public CharacterFactory(string path)
+        public CharacterFactory(ISerializer serializer, string path)
         {
             string fullPath = Path.Combine(path, CHARACTER_SAVE_DIRECTORY_NAME.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
 
             CharactersFolderPath = fullPath;
+
+            this._serializer = serializer;
         }
 
         /// <summary>
@@ -96,15 +101,16 @@ namespace Genesis.Factory.NPCs.CreationModule.systems
             // Reutiliza a lógica de montagem do JSON, passando o npcBrain
             var npc = AssembleNpcData(npcBrain);
 
+            return _serializer.Serialize(npc);
 
-            var settings = new JsonSerializerSettings
+            /*var settings = new JsonSerializerSettings
             {
                 Formatting = Formatting.None,
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
 
-            return JsonConvert.SerializeObject(npc, settings);
+            return JsonConvert.SerializeObject(npc, settings);*/
         }
 
         public void SaveCharacterAsJSON(string npcId)
@@ -215,14 +221,16 @@ namespace Genesis.Factory.NPCs.CreationModule.systems
             Debug.WriteLine($"String JSON do NPC '{jsonString}' recuperada com sucesso.");
 
             // 2. Desserializar a string JSON para o DTO NPCPromptData
-            var settings = new JsonSerializerSettings
+            /*var settings = new JsonSerializerSettings
             {
                 Formatting = Formatting.None,
                 NullValueHandling = NullValueHandling.Ignore,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
 
-            CharacterRepresentation npcPromptData = JsonConvert.DeserializeObject<CharacterRepresentation>(jsonString, settings);
+            CharacterRepresentation npcPromptData = JsonConvert.DeserializeObject<CharacterRepresentation>(jsonString, settings);*/
+
+            CharacterRepresentation npcPromptData = _serializer.Deserialize<CharacterRepresentation>(jsonString);
 
             //Debug.WriteLine($"NPCPromptData desserializado com sucesso: {npcPromptData.NPCId}, {npcPromptData.NPCName}, {npcPromptData.NPCPersonality.oceanPersonality.Openness}");
 

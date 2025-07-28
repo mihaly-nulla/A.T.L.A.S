@@ -1,13 +1,12 @@
 ﻿using Genesis.Factory.Tools;
+using Genesis.Factory.Tools.SerializationInterface;
 using Genesis.Factory.Universe.CreationModule.DTOs.location;
 using Genesis.Factory.Universe.CreationModule.entities.region;
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
 namespace Genesis.Factory.Universe.CreationModule.systems
 {
@@ -20,7 +19,8 @@ namespace Genesis.Factory.Universe.CreationModule.systems
 
         public UniverseEnvironments EnvironmentDatabase { get; private set; }
 
-        public EnvironmentFactory()
+        private ISerializer _serializer;
+        public EnvironmentFactory(ISerializer serialzier)
         {
             string loreFolderPath = DirectoryBuilderComponent.BuildCustomPath(ENVIRONMENT_SAVE_DIRECTORY_NAME);
             _environmentsFilePath = Path.Combine(loreFolderPath, ENVIRONMENTS_FILE_NAME);
@@ -34,13 +34,17 @@ namespace Genesis.Factory.Universe.CreationModule.systems
             Debug.WriteLine($"Caminho do arquivo de raças: {_environmentsFilePath}");
 
             EnvironmentDatabase = new UniverseEnvironments(); // Inicializa o banco de dados de environments vazio
+            
+            this._serializer = serialzier ?? throw new ArgumentNullException(nameof(serialzier), "O serializador não pode ser nulo.");
         }
 
-        public EnvironmentFactory(string path)
+        public EnvironmentFactory(string path, ISerializer serialzier)
         {
             string fullPath = Path.Combine(path, ENVIRONMENT_SAVE_DIRECTORY_NAME.TrimStart(Path.DirectorySeparatorChar, Path.AltDirectorySeparatorChar));
 
             _environmentsFilePath = fullPath;
+
+            this._serializer = serialzier ?? throw new ArgumentNullException(nameof(serialzier), "O serializador não pode ser nulo.");
         }
 
         /// <summary>
@@ -50,7 +54,7 @@ namespace Genesis.Factory.Universe.CreationModule.systems
         {
             try
             {
-                EnvironmentDatabase = UniverseEnvironments.LoadFromJsonFile(_environmentsFilePath);
+                EnvironmentDatabase = this._serializer.Deserialize<UniverseEnvironments>(UniverseEnvironments.LoadFromJsonFile(_environmentsFilePath));
             }
             catch (FileNotFoundException)
             {
@@ -71,11 +75,12 @@ namespace Genesis.Factory.Universe.CreationModule.systems
         {
             if (EnvironmentDatabase != null)
             {
-                UniverseEnvironments.SaveToJsonFile(EnvironmentDatabase, _environmentsFilePath);
+                //UniverseEnvironments.SaveToJsonFile(EnvironmentDatabase, _environmentsFilePath);
+                UniverseEnvironments.SaveToJsonFile(_serializer.Serialize(EnvironmentDatabase), _environmentsFilePath);
             }
             else
             {
-                Debug.WriteLine("Aviso: Tentativa de salvar raças, mas RaceDatabase é nulo.");
+                Debug.WriteLine("Aviso: Tentativa de salvar environments, mas RaceDatabase é nulo.");
             }
         }
 

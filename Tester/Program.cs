@@ -14,8 +14,9 @@ using Genesis.Mind.KnowledgeModule.entities;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text.Json;
 using static System.Net.Mime.MediaTypeNames;
+using System.Threading.Tasks;
+using Tester;
 
 namespace A.T.L.A.S
 {
@@ -25,7 +26,7 @@ namespace A.T.L.A.S
         {
             RaceFactory raceFactory = new RaceFactory();
             EnvironmentFactory environmentFactory = new EnvironmentFactory();
-            CharacterFactory characterFactory = new CharacterFactory();
+            CharacterFactory characterFactory = new CharacterFactory(new TestSerializer());
             CommunicationSystem communicator = new CommunicationSystem(characterFactory);
 
             /*Debug.WriteLine("--- Iniciando Teste de Geração de Prompt de NPC ---");
@@ -34,7 +35,7 @@ namespace A.T.L.A.S
             CommunicationSystem communicator = new CommunicationSystem(characterFactory);*/
 
             // 1. Criar alguns Documentos
-            Document docGenetica01 = new Document(
+            /*Document docGenetica01 = new Document(
                 "genetics_dna",
                 "Fundamentos de Genética — Volume 1",
                 "Livro base sobre cinemática e leis da física. Contém informações essenciais sobre movimento, força e energia.",
@@ -222,7 +223,7 @@ namespace A.T.L.A.S
 
             Debug.WriteLine("\n--- Gerando JSON do Prompt para NPC_Einstein ---");
             characterFactory.SaveCharacterAsJSON("rosa");
-            characterFactory.SaveCharacterAsJSON("lucio");
+            characterFactory.SaveCharacterAsJSON("lucio");*/
 
 
             //communicator.SendPromptToGEMINI("rosa-alternate");
@@ -230,7 +231,7 @@ namespace A.T.L.A.S
             //characterFactory.LoadNPC("rosa");
             //characterFactory.LoadNPC("lucio");
             
-            Location CoffeShop = new Location(
+            /*Location CoffeShop = new Location(
                 "coffe_shop",
                 "Cafeteria do Bairro",
                 "Coffe Shop",
@@ -353,12 +354,12 @@ namespace A.T.L.A.S
             raceFactory.AddRace(Orc);
             raceFactory.AddRace(Dwarf);
 
-            raceFactory.SaveAllRaces();
+            raceFactory.SaveAllRaces();*/
 
-            /*characterFactory.LoadNPC("rosa");
-            characterFactory.LoadNPC("lucio");*/
+            characterFactory.LoadNPC("rosa");
+            characterFactory.LoadNPC("lucio");
 
-            //await communicator.SendPromptToGEMINI("lucio", "O que você acha da Rosa, sua amiga?", "");
+            //await communicator.SendPromptToGEMINI("lucio", "O que você acha da Rosa, sua amiga?", "AIzaSyCP8mQ3vaTcgs9sDl7p2xuFzwqlPyxQHe4");
             //Console.ReadLine();
         }
     }

@@ -1,0 +1,17 @@
+C:\Projects\CSharp\A.T.L.A.S\Tester\bin\Debug\netcoreapp2.1\Tester.deps.json
+C:\Projects\CSharp\A.T.L.A.S\Tester\bin\Debug\netcoreapp2.1\Tester.runtimeconfig.json
+C:\Projects\CSharp\A.T.L.A.S\Tester\bin\Debug\netcoreapp2.1\Tester.runtimeconfig.dev.json
+C:\Projects\CSharp\A.T.L.A.S\Tester\bin\Debug\netcoreapp2.1\Tester.dll
+C:\Projects\CSharp\A.T.L.A.S\Tester\bin\Debug\netcoreapp2.1\Tester.pdb
+C:\Projects\CSharp\A.T.L.A.S\Tester\bin\Debug\netcoreapp2.1\Genesis.dll
+C:\Projects\CSharp\A.T.L.A.S\Tester\bin\Debug\netcoreapp2.1\Genesis.pdb
+C:\Projects\CSharp\A.T.L.A.S\Tester\obj\Debug\netcoreapp2.1\Tester.csproj.AssemblyReference.cache
+C:\Projects\CSharp\A.T.L.A.S\Tester\obj\Debug\netcoreapp2.1\Tester.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\CSharp\A.T.L.A.S\Tester\obj\Debug\netcoreapp2.1\Tester.AssemblyInfoInputs.cache
+C:\Projects\CSharp\A.T.L.A.S\Tester\obj\Debug\netcoreapp2.1\Tester.AssemblyInfo.cs
+C:\Projects\CSharp\A.T.L.A.S\Tester\obj\Debug\netcoreapp2.1\Tester.csproj.CoreCompileInputs.cache
+C:\Projects\CSharp\A.T.L.A.S\Tester\obj\Debug\netcoreapp2.1\Tester.sourcelink.json
+C:\Projects\CSharp\A.T.L.A.S\Tester\obj\Debug\netcoreapp2.1\Tester.csproj.Up2Date
+C:\Projects\CSharp\A.T.L.A.S\Tester\obj\Debug\netcoreapp2.1\Tester.dll
+C:\Projects\CSharp\A.T.L.A.S\Tester\obj\Debug\netcoreapp2.1\Tester.pdb
+C:\Projects\CSharp\A.T.L.A.S\Tester\obj\Debug\netcoreapp2.1\Tester.genruntimeconfig.cache
