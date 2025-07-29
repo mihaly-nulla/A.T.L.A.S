@@ -206,6 +206,8 @@ namespace A.T.L.A.S
 
             atlas.SaveSystemData(0, "test", npcJsonString);
 
+            atlas.SaveSystemData(1, "a", racesJsonString);
+
             string loadedJson = atlas.LoadSystemData(0, "rosa");
 
             Debug.WriteLine($"Loaded NPC JSON:{loadedJson}");

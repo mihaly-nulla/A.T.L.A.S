@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Newtonsoft")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+06c5fd3188515a8579eff32ea9b90d91eab3a348")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7c13282570ebc61ea3f1ad3bf7e3929f7c7a1c56")]
 [assembly: System.Reflection.AssemblyProductAttribute("Newtonsoft")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Newtonsoft")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
