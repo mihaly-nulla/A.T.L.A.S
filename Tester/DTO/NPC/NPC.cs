@@ -1,12 +1,12 @@
-﻿using Newtonsoft.DTO.Affection;
-using Newtonsoft.DTO.Identity;
-using Newtonsoft.DTO.Personality;
+﻿using Newtonsoft.DTO.NPC.Affection;
+using Newtonsoft.DTO.NPC.Identity;
+using Newtonsoft.DTO.NPC.Personality;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Newtonsoft.DTO
+namespace Newtonsoft.DTO.NPC
 {
     public class NPC
     {

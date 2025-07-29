@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Genesis.Factory.Universe.CreationModule.DTOs.race
+namespace Genesis.Factory.Universe.CreationModule.components.race
 {
     public class UniverseRaces : UniverseResourceInterface<Race, UniverseRaces>
     {
@@ -15,12 +15,12 @@ namespace Genesis.Factory.Universe.CreationModule.DTOs.race
 
         public UniverseRaces()
         {
-            this.UniverseResourcesDatabase = new Dictionary<string, Race>();
+            UniverseResourcesDatabase = new Dictionary<string, Race>();
         }
 
         public UniverseRaces(Dictionary<string, Race> worldRaces)
         {
-            this.UniverseResourcesDatabase = worldRaces ?? new Dictionary<string, Race>();
+            UniverseResourcesDatabase = worldRaces ?? new Dictionary<string, Race>();
         }
 
         /// <summary>
@@ -28,16 +28,16 @@ namespace Genesis.Factory.Universe.CreationModule.DTOs.race
         /// </summary>
         public Race GetResourceById(string raceId)
         {
-            if (this.UniverseResourcesDatabase.ContainsKey(raceId))
+            if (UniverseResourcesDatabase.ContainsKey(raceId))
             {
-                return this.UniverseResourcesDatabase[raceId];
+                return UniverseResourcesDatabase[raceId];
             }
             return null;
         }
 
         public bool CheckIfEmpty()
         {
-            if (this.UniverseResourcesDatabase == null || this.UniverseResourcesDatabase.Count == 0)
+            if (UniverseResourcesDatabase == null || UniverseResourcesDatabase.Count == 0)
             {
                 return true;
             }

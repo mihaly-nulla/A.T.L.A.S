@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Newtonsoft.DTO.Personality
+namespace Newtonsoft.DTO.NPC.Personality
 {
     public class PersonalityMapper : IMapper<PersonalitySystem, NPCPersonality>
     {

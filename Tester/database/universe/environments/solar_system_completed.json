@@ -4,14 +4,14 @@
       "environment_id": "unknown_planet1",
       "name": "Gallatos",
       "type": "Planet",
-      "general_description": "Um grande planeta oceânico que possui duas luas. Sua atmosfera é azul, possui uma paisagem bonita e não aparenta ter formas de vida",
+      "general_description": "Um grande planeta oceï¿½nico que possui duas luas. Sua atmosfera ï¿½ azul, possui uma paisagem bonita e nï¿½o aparenta ter formas de vida",
       "key_characteristics": [
-        "Planeta Oceânico",
+        "Planeta Oceï¿½nico",
         "Atmosfera Azul",
         "Sem Vida Conhecida",
         "Clima Temperado",
       ],
-      "historical_context_summary": "O fato de ter muita água pode ser devido a choques com corpos que possuíam uma alta concentração de H2O, como cometas.",
+      "historical_context_summary": "O fato de ter muita ï¿½gua pode ser devido a choques com corpos que possuï¿½am uma alta concentraï¿½ï¿½o de H2O, como cometas.",
       "major_locations_overview": {
         "unknown_location1": {
           "location_id": "unknown_location1",
@@ -20,8 +20,8 @@
           "description_summary": "",
           "key_features": [
             "Lua de Gallatos",
-            "Superfície Coberta de Gelo",
-            "Possível Presença de Água Líquida"
+            "Superfï¿½cie Coberta de Gelo",
+            "Possï¿½vel Presenï¿½a de ï¿½gua Lï¿½quida"
           ]
         },
         "unknown_location2": {
@@ -31,8 +31,8 @@
           "description_summary": " Uma lua de cor esverdeada e terreno bastante acidentado.",
           "key_features": [
             "Lua de Gallatos",
-            "Superfície Irregular",
-            "Possível Presença de Recursos Minerais"
+            "Superfï¿½cie Irregular",
+            "Possï¿½vel Presenï¿½a de Recursos Minerais"
           ]
         },
         "unknown_location3": {
@@ -48,24 +48,24 @@
       "environment_id": "unknown_planet2",
       "name": "Arco Gasoso",
       "type": "Planet",
-      "general_description": "Um planeta gasoso com uma atmosfera que combina tons de roxo, amarelo e vermelho. É um planeta muito grande e aparenta possuir uma alta gravidade.",
+      "general_description": "Um planeta gasoso com uma atmosfera que combina tons de roxo, amarelo e vermelho. ï¿½ um planeta muito grande e aparenta possuir uma alta gravidade.",
       "key_characteristics": [
         "Alta Gravidade",
         "Planeta Gasoso",
         "Atmosfera Colorida"
       ],
-      "historical_context_summary": "Provavelmente a coloração da sua atmosfera pode ser devido a alta concentrações de metano, vapor ou minerais em estado gasoso",
+      "historical_context_summary": "Provavelmente a coloraï¿½ï¿½o da sua atmosfera pode ser devido a alta concentraï¿½ï¿½es de metano, vapor ou minerais em estado gasoso",
       "major_locations_overview": {
         "unknown_location1": {
           "location_id": "unknown_location1",
-          "name": "Núcleo Maciço",
+          "name": "Nï¿½cleo Maciï¿½o",
           "type": "Anomally",
-          "description_summary": "Um núcleo escuro impenetrável. Encontra-se bem no centro do planeta.",
+          "description_summary": "Um nï¿½cleo escuro impenetrï¿½vel. Encontra-se bem no centro do planeta.",
           "key_features": [
-            "Núcleo Central",
-            "Impenetrável",
+            "Nï¿½cleo Central",
+            "Impenetrï¿½vel",
             "Altamente Denso",
-            "Possível Fonte de Energia"
+            "Possï¿½vel Fonte de Energia"
           ]
         },
         "unknown_location2": {

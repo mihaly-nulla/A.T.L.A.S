@@ -1,4 +1,4 @@
-﻿using Genesis.Factory.Universe.CreationModule.DTOs.race;
+﻿using Genesis.Factory.Universe.CreationModule.components.race;
 using Genesis.Factory.Universe.CreationModule.entities.race;
 using System;
 using System.Collections.Generic;
@@ -51,12 +51,14 @@ namespace Genesis.Factory.Universe.CreationModule.systems
                                string raceAppearenceDescription,
                                string raceLore)
         {
-            return new Race(raceID,
+            var race = new Race(raceID,
                                   raceName,
                                   raceInformation,
                                   raceAppearenceDescription,
                                   raceLore
                                   );
+            AddRace(race);
+            return race;
         }
 
         public RaceDescription CreateRaceDescription(string racialGeneralOverview,

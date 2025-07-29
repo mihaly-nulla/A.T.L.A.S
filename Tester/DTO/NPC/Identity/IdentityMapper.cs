@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Newtonsoft.DTO.Identity
+namespace Newtonsoft.DTO.NPC.Identity
 {
     public class IdentityMapper : IMapper<IdentitySystem, NPCIdentity>
     {

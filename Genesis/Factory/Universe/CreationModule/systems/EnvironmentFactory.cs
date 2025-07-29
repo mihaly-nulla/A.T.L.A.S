@@ -1,4 +1,4 @@
-﻿using Genesis.Factory.Universe.CreationModule.DTOs.location;
+﻿using Genesis.Factory.Universe.CreationModule.components.location;
 using Genesis.Factory.Universe.CreationModule.entities.region;
 
 using System;
@@ -35,11 +35,11 @@ namespace Genesis.Factory.Universe.CreationModule.systems
             if (EnvironmentDatabase != null && !EnvironmentDatabase.UniverseResourcesDatabase.ContainsKey(newEnvironment.EnvironmentID))
             {
                 EnvironmentDatabase.UniverseResourcesDatabase.Add(newEnvironment.EnvironmentID, newEnvironment);
-                Debug.WriteLine($"Raça '{newEnvironment.EnvironmentID}' adicionada ao banco de dados.");
+                Debug.WriteLine($"Environment '{newEnvironment.EnvironmentID}' adicionada ao banco de dados.");
             }
             else
             {
-                Debug.WriteLine($"Aviso: Raça '{newEnvironment.EnvironmentID}' já existe ou RaceDatabase é nulo.");
+                Debug.WriteLine($"Aviso: Environment '{newEnvironment.EnvironmentID}' já existe ou RaceDatabase é nulo.");
             }
         }
 
@@ -51,7 +51,7 @@ namespace Genesis.Factory.Universe.CreationModule.systems
                                string environmentHistoricalContext,
                                Dictionary<string, Location> relevantLocations)
         {
-            return new WorldEnvironment(
+            var worldEnvironment = new WorldEnvironment(
                                             environmentID,
                                             environmentName,
                                             environmentType,
@@ -60,6 +60,9 @@ namespace Genesis.Factory.Universe.CreationModule.systems
                                             environmentHistoricalContext,
                                             relevantLocations
                                         );
+            AddEnvironment(worldEnvironment);
+
+            return worldEnvironment;
         }
 
         public Location CreateEnvironmentLocation(string locationID,

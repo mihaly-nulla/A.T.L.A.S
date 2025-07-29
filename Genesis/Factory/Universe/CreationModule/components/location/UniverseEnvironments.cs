@@ -1,5 +1,4 @@
 ﻿using Genesis.Factory.Universe.CreationModule.components;
-using Genesis.Factory.Universe.CreationModule.DTOs.race;
 using Genesis.Factory.Universe.CreationModule.entities.race;
 using Genesis.Factory.Universe.CreationModule.entities.region;
 
@@ -9,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Genesis.Factory.Universe.CreationModule.DTOs.location
+namespace Genesis.Factory.Universe.CreationModule.components.location
 {
     public class UniverseEnvironments : UniverseResourceInterface<WorldEnvironment, UniverseEnvironments>
     {
@@ -17,12 +16,12 @@ namespace Genesis.Factory.Universe.CreationModule.DTOs.location
 
         public UniverseEnvironments()
         {
-            this.UniverseResourcesDatabase = new Dictionary<string, WorldEnvironment>();
+            UniverseResourcesDatabase = new Dictionary<string, WorldEnvironment>();
         }
 
         public UniverseEnvironments(Dictionary<string, WorldEnvironment> worldEnvironments)
         {
-            this.UniverseResourcesDatabase = worldEnvironments ?? new Dictionary<string, WorldEnvironment>();
+            UniverseResourcesDatabase = worldEnvironments ?? new Dictionary<string, WorldEnvironment>();
         }
 
         /// <summary>
@@ -30,16 +29,16 @@ namespace Genesis.Factory.Universe.CreationModule.DTOs.location
         /// </summary>
         public WorldEnvironment GetResourceById(string environmentId)
         {
-            if (this.UniverseResourcesDatabase.ContainsKey(environmentId))
+            if (UniverseResourcesDatabase.ContainsKey(environmentId))
             {
-                return this.UniverseResourcesDatabase[environmentId];
+                return UniverseResourcesDatabase[environmentId];
             }
             return null;
         }
 
         public bool CheckIfEmpty()
         {
-            if (this.UniverseResourcesDatabase == null || this.UniverseResourcesDatabase.Count == 0)
+            if (UniverseResourcesDatabase == null || UniverseResourcesDatabase.Count == 0)
             {
                 return true;
             }

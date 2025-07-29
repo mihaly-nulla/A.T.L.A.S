@@ -19,10 +19,14 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Genesis;
 using System.Runtime.CompilerServices;
-using Newtonsoft.DTO;
-using Newtonsoft.DTO.Identity;
-using Newtonsoft.DTO.Personality;
-using Newtonsoft.DTO.Affection;
+using Newtonsoft;
+using Newtonsoft.DTO.NPC;
+using Newtonsoft.DTO.NPC.Personality;
+using Newtonsoft.DTO.NPC.Identity;
+using Newtonsoft.DTO.NPC.Affection;
+using Newtonsoft.DTO.World._Location;
+using Newtonsoft.DTO.World;
+using Newtonsoft.DTO.Races;
 
 namespace A.T.L.A.S
 {
@@ -93,6 +97,49 @@ namespace A.T.L.A.S
             IdentityMapper identityMapper = new IdentityMapper();
             AffectionMapper affectionMapper = new AffectionMapper();
 
+            var testEnvironment = atlas.GetEnvironmentManager().CreateEnvironment
+            (
+                "test_environment",
+                "Test Environment",
+                "planet",
+                "This is a test environment created to demonstrate the functionality of the Atlas system. It serves as a placeholder for testing purposes.",
+                new List<string> { "test", "environment", "placeholder" },
+                "This test environment is designed to showcase the capabilities of the Atlas system. It is not intended for actual gameplay but rather for testing and development purposes.",
+                new Dictionary<string, Location>
+                {
+                    { "test_location", new Location("test_location", "Test Location", "Test Type", "This is a test location within the test environment.", new List<string> { "test", "location" }) }
+                }
+            );
+
+            var testRace = atlas.GetRaceManager().CreateRace
+            (
+                "test_race",
+                "Test Race",
+                new RaceDescription
+                (
+                    "This is a test",
+                    "This is a test",
+                    "This is a test",
+                    "This is a test"
+                ),
+                "This is a test appearance",
+                "This is a test lore"
+            );
+
+            var testRace2 = atlas.GetRaceManager().CreateRace
+            (
+                "test_race_2",
+                "Test Race2",
+                new RaceDescription
+                (
+                    "This is a test2",
+                    "This is a test2",
+                    "This is a test2",
+                    "This is a test2"
+                ),
+                "This is a test appearance2",
+                "This is a test lore2"
+            );
             var npcDTO = new NPC
             {
                 NPCId = test_npc.GetNPCID(),
@@ -100,6 +147,15 @@ namespace A.T.L.A.S
                 NpcPersonality = personalityMapper.ToDTO(test_npc.NpcPersonality),
                 NpcAffections = affectionMapper.ToDTO(test_npc.NpcAffections)
             };
+
+            
+
+            UniverseMapper universeMapper = new UniverseMapper();
+            UniverseRacesMapper racesMapper = new UniverseRacesMapper();
+
+            var environmentDTO = universeMapper.ToDTO(atlas.GetEnvironmentManager().EnvironmentDatabase);
+
+            var racesDTO = racesMapper.ToDTO(atlas.GetRaceManager().RaceDatabase);
 
             var settings = new JsonSerializerSettings
             {
@@ -112,8 +168,18 @@ namespace A.T.L.A.S
             // 2. Serialize o objeto DTO para uma string JSON
             string npcJsonString = JsonConvert.SerializeObject(npcDTO, settings);
 
+            string environmentJsonString = JsonConvert.SerializeObject(environmentDTO, settings);
+
+            string racesJsonString = JsonConvert.SerializeObject(racesDTO, settings);
+
             Debug.WriteLine("Serialized NPC JSON:");
             Debug.WriteLine(npcJsonString);
+
+            Debug.WriteLine("Serialized Universe JSON:");
+            Debug.WriteLine(environmentJsonString);
+
+            Debug.WriteLine("Serialized Universe Races JSON:");
+            Debug.WriteLine(racesJsonString);
 
             NPC deserializedNpc = JsonConvert.DeserializeObject<NPC>(npcJsonString);
 
@@ -134,6 +200,15 @@ namespace A.T.L.A.S
             Debug.WriteLine($"NPC OCEAN: {created_npc.NpcPersonality.oceanPersonality.Openness}");
             Debug.WriteLine($"NPC Biography: {created_npc.NpcIdentity.BiographyFull}");
 
+            TestSaver saver = new TestSaver();
+
+            atlas.SetFileStorageSystem(saver);
+
+            atlas.SaveSystemData(0, "test", npcJsonString);
+
+            string loadedJson = atlas.LoadSystemData(0, "rosa");
+
+            Debug.WriteLine($"Loaded NPC JSON:{loadedJson}");
 
             /*RaceFactory raceFactory = new RaceFactory();
             EnvironmentFactory environmentFactory = new EnvironmentFactory();

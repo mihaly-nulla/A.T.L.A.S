@@ -1,0 +1,79 @@
+{
+  "npc_id": "test",
+  "npc_identity": {
+    "name": "Test",
+    "race_id": "human",
+    "origin_environment_id": "rua_acasia",
+    "gender": "Male",
+    "age": 30,
+    "biography": "This is a test NPC created to demonstrate the functionality of the Atlas system. It serves as a placeholder for testing purposes.",
+    "role": "Test Role",
+    "physical_description": "A generic test NPC with no specific features.",
+    "core_beliefs": [
+      "Knowledge is power.",
+      "Curiosity drives innovation.",
+      "Empathy is essential for understanding others."
+    ],
+    "likes": [
+      "Reading books",
+      "Exploring new ideas",
+      "Helping others"
+    ],
+    "dislikes": [
+      "Ignorance",
+      "Close-mindedness",
+      "Dishonesty"
+    ]
+  },
+  "npc_personality": {
+    "OCEAN": {
+      "openness": 100,
+      "conscientiousness": 100,
+      "extraversion": 100,
+      "agreeableness": 100,
+      "neuroticism": 100
+    },
+    "SCHWARTZ": {
+      "self_direction": 100,
+      "stimulation": 100,
+      "hedonism": 100,
+      "achievement": 100,
+      "power": 100,
+      "security": 100,
+      "conformity": 100,
+      "tradition": 100,
+      "benevolence": 100,
+      "universalism": 100
+    },
+    "dialogue_style": {
+      "tone": "enthusiastic and inspiring",
+      "formality": 30,
+      "vocabulary": "accessible, full of analogies and metaphors",
+      "vocabulary_reference": ""
+    }
+  },
+  "npc_affections": {
+    "relationships": [
+      {
+        "target_npc_id": "lucio",
+        "affection_score": 80,
+        "trust_score": 70,
+        "friendship_level": "Friend",
+        "traits": [
+          "sarcastic",
+          "blunt"
+        ]
+      }
+    ],
+    "social_standing": {
+      "reputation_score": 90,
+      "reputation_type": "Beloved",
+      "known_by_npcs": [
+        "lucio"
+      ],
+      "unfavorable_npcs": [
+        "dracula"
+      ]
+    }
+  }
+}
