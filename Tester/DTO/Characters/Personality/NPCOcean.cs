@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Newtonsoft.DTO.NPC.Personality
+namespace Newtonsoft.DTO.Characters.Personality
 {
     public class NPCOcean
     {

@@ -10,19 +10,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Runtime.CompilerServices;
 
 
 namespace Genesis.Factory.NPCs.CreationModule.entities
 {
     public class Brain
     {
-        private string NPCId;
+        public string NPCId;
 
-        public IdentitySystem NpcIdentity { get; private set; }
+        public IdentitySystem NpcIdentity { get; set; }
 
-        public PersonalitySystem NpcPersonality { get; private set; }
+        public PersonalitySystem NpcPersonality { get; set; }
 
-        public AffectionSystem NpcAffections { get; private set; }
+        public AffectionSystem NpcAffections { get; set; }
+
+        public Brain() { }
 
         public Brain(string npcId, List<Knowledge> initialKnowledge)
         {

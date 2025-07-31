@@ -9,6 +9,7 @@ namespace Genesis.Factory.Tools
         /// <summary>
         /// Salva um conteúdo de texto em um arquivo.
         /// </summary>
+        /// <param name="type">O tipo de arquivo (ex: 0 para personagens, 1 para raças, 2 para ambientes).</param>
         /// <param name="fileName">O nome do arquivo (ex: "npc_01.json").</param>
         /// <param name="content">O conteúdo a ser salvo.</param>
         void Save(int type, string fileName, string content);
@@ -16,6 +17,7 @@ namespace Genesis.Factory.Tools
         /// <summary>
         /// Carrega o conteúdo de texto de um arquivo.
         /// </summary>
+        /// <param name="type">O tipo de arquivo (ex: 0 para personagens, 1 para raças, 2 para ambientes).</param>
         /// <param name="fileName">O nome do arquivo a ser lido.</param>
         /// <returns>O conteúdo do arquivo, ou null se não existir.</returns>
         string Load(int type, string fileName);

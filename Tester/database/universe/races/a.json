@@ -1,0 +1,28 @@
+{
+  "world_races": {
+    "test_race": {
+      "race_id": "test_race",
+      "race_name": "Test Race",
+      "race_description": {
+        "general_overview": "This is a test",
+        "cultural_values": "This is a test",
+        "social_behavior": "This is a test",
+        "typical_abilities_and_skills": "This is a test"
+      },
+      "race_appearence_description": "This is a test appearance",
+      "race_lore": "This is a test lore"
+    },
+    "test_race_2": {
+      "race_id": "test_race_2",
+      "race_name": "Test Race2",
+      "race_description": {
+        "general_overview": "This is a test2",
+        "cultural_values": "This is a test2",
+        "social_behavior": "This is a test2",
+        "typical_abilities_and_skills": "This is a test2"
+      },
+      "race_appearence_description": "This is a test appearance2",
+      "race_lore": "This is a test lore2"
+    }
+  }
+}

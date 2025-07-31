@@ -8,7 +8,6 @@ using Genesis.Heart.AffectionModule.systems;
 using Genesis.Heart.IdentityModule.systems;
 using Genesis.Heart.PersonalityModule.entities;
 using Genesis.Heart.PersonalityModule.systems;
-using Genesis.Mind.CommunicationModule.systems;
 using Genesis.Mind.KnowledgeModule.entities;
 
 using System;
@@ -20,13 +19,15 @@ using Newtonsoft.Json;
 using Genesis;
 using System.Runtime.CompilerServices;
 using Newtonsoft;
-using Newtonsoft.DTO.NPC;
-using Newtonsoft.DTO.NPC.Personality;
-using Newtonsoft.DTO.NPC.Identity;
-using Newtonsoft.DTO.NPC.Affection;
+using Newtonsoft.DTO.Characters;
+using Newtonsoft.DTO.Characters.Personality;
+using Newtonsoft.DTO.Characters.Identity;
+using Newtonsoft.DTO.Characters.Affection;
 using Newtonsoft.DTO.World._Location;
 using Newtonsoft.DTO.World;
 using Newtonsoft.DTO.Races;
+using Newtonsoft.Serializer;
+using Newtonsoft.Communication;
 
 namespace A.T.L.A.S
 {
@@ -201,16 +202,39 @@ namespace A.T.L.A.S
             Debug.WriteLine($"NPC Biography: {created_npc.NpcIdentity.BiographyFull}");
 
             TestSaver saver = new TestSaver();
+            NewtonsoftSerializer serializer = new NewtonsoftSerializer();
+          
 
             atlas.SetFileStorageSystem(saver);
+            atlas.SetDataSerializer(serializer);
+
+
 
             atlas.SaveSystemData(0, "test", npcJsonString);
 
             atlas.SaveSystemData(1, "a", racesJsonString);
 
-            string loadedJson = atlas.LoadSystemData(0, "rosa");
+            string loadedJson = atlas.LoadSystemData(0, "test");
 
-            Debug.WriteLine($"Loaded NPC JSON:{loadedJson}");
+            NPCMapper characterMapper = new NPCMapper();
+
+
+            NPC loadedNPC = serializer.Deserialize<NPC>(loadedJson);
+
+            Brain loadedBrain = characterMapper.FromDTO(loadedNPC);
+
+            atlas.GetCharacterManager().AddNPC(loadedBrain);
+
+            string geminiData = await atlas.CommunicateWithCharacter("test", "Quem é você?", "AIzaSyAOBkg1xtrnLVhF8OoLaxxFiNvOqO3ZnUk");
+
+            //string geminiData = await atlas.GetCommunicationManager().SendPromptToGEMINI("test", loadedJson, "Quem é você?", "AIzaSyAOBkg1xtrnLVhF8OoLaxxFiNvOqO3ZnUk");
+
+            //string parsedData = Retriever.ParseGEMINI(geminiData);
+
+            Debug.WriteLine("GEMINI Response:");
+            Debug.WriteLine(geminiData);
+
+
 
             /*RaceFactory raceFactory = new RaceFactory();
             EnvironmentFactory environmentFactory = new EnvironmentFactory();

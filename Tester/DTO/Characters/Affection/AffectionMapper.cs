@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Newtonsoft.DTO.NPC.Affection
+namespace Newtonsoft.DTO.Characters.Affection
 {
     public class AffectionMapper : IMapper<AffectionSystem, NPCAffection>
     {

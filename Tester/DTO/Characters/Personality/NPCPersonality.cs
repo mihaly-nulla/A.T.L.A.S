@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Newtonsoft.Json;
 
-namespace Newtonsoft.DTO.NPC.Personality
+namespace Newtonsoft.DTO.Characters.Personality
 {
     public class NPCPersonality
     {

@@ -3,7 +3,6 @@ using Genesis.Factory.NPCs.CreationModule.entities;
 using Genesis.Factory.Universe.CreationModule.entities.race;
 using Genesis.Factory.Universe.CreationModule.entities.region;
 using Genesis.Factory.Universe.CreationModule.systems;
-using Genesis.Mind.CommunicationModule.components;
 
 using System;
 using System.Collections.Generic;
@@ -14,10 +13,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Genesis.Factory.Tools;
 
-namespace Genesis.Mind.CommunicationModule.systems
+namespace Genesis.Speech.CommunicationModule.components
 {
-    public class CommunicationSystem
+    public class GeminiCommunicator
     {
         private readonly HttpClient _httpClient;
 
@@ -25,42 +25,10 @@ namespace Genesis.Mind.CommunicationModule.systems
 
         private const string GEMINI_MODEL_ID = "gemini-2.5-flash-lite-preview-06-17";
 
-        private CharacterFactory NPCFactory;
-
-        private RaceFactory NPCRaceFactory;
-
-        private EnvironmentFactory NPCEnvironmentFactory;
-
-        public CommunicationSystem()
-        {
-            _httpClient = new HttpClient();
-            //this._serializer = serializer ?? throw new ArgumentNullException(nameof(serializer), "O serializador não pode ser nulo.");
-
-            this.NPCFactory = new CharacterFactory();
-            this.NPCRaceFactory = new RaceFactory();
-            this.NPCEnvironmentFactory = new EnvironmentFactory();
-        }
-
-        public CommunicationSystem(
-                                        CharacterFactory characterFactory,
-                                        RaceFactory raceFactory,
-                                        EnvironmentFactory environmentFactory
-                                   )
+        public GeminiCommunicator()
         {
             _httpClient = new HttpClient();
 
-            this.NPCFactory = characterFactory;
-            this.NPCEnvironmentFactory = environmentFactory;    
-            this.NPCRaceFactory = raceFactory;
-        }
-
-        public CommunicationSystem(CharacterFactory characterFactory)
-        {
-            _httpClient = new HttpClient();            
-            this.NPCFactory = characterFactory;
-
-            this.NPCRaceFactory = new RaceFactory();
-            this.NPCEnvironmentFactory = new EnvironmentFactory();
         }
 
 
@@ -127,14 +95,14 @@ namespace Genesis.Mind.CommunicationModule.systems
         }
 
 
-        private string GetRelevantRaceDataFromPrompt(Brain correspondingCharacter, string inputPrompt)
+        private string GetRelevantRaceDataFromPrompt(Brain correspondingCharacter, RaceFactory npcRaceFactory, string inputPrompt)
         {
             //Debug.WriteLine("NOME DO NPC: " + correspondingCharacter.GetNPCName());
             string raceDataSummary = string.Empty;
 
             if (!string.IsNullOrWhiteSpace(correspondingCharacter.NpcIdentity.RaceID))
             {
-                Race npcRace = this.NPCRaceFactory.GetRaceById(correspondingCharacter.NpcIdentity.RaceID);
+                Race npcRace = npcRaceFactory.GetRaceById(correspondingCharacter.NpcIdentity.RaceID);
 
                 if(npcRace != null)
                 {
@@ -165,13 +133,13 @@ namespace Genesis.Mind.CommunicationModule.systems
             return raceDataSummary;
         }
 
-        private string GetRelevantEnvironmentDataFromPrompt(Brain correspondingCharacter, string inputPrompt)
+        private string GetRelevantEnvironmentDataFromPrompt(Brain correspondingCharacter, EnvironmentFactory npcEnvironmentFactory, string inputPrompt)
         {
             string environmentDataSummary = string.Empty;
 
             if (!string.IsNullOrWhiteSpace(correspondingCharacter.NpcIdentity.EnvironmentID))
             {
-                WorldEnvironment npcEnvironment = this.NPCEnvironmentFactory.GetEnvironmentById(correspondingCharacter.NpcIdentity.EnvironmentID);
+                WorldEnvironment npcEnvironment = npcEnvironmentFactory.GetEnvironmentById(correspondingCharacter.NpcIdentity.EnvironmentID);
 
                 if (npcEnvironment != null)
                 {
@@ -215,19 +183,24 @@ namespace Genesis.Mind.CommunicationModule.systems
         }
 
 
-        /*public async Task<string> SendPromptToGEMINI(
-                                                        Brain npc, string inputPrompt, string apiKey
+        public async Task<string> SendPromptToGEMINI(
+                                                        string npcId, 
+                                                        string npcProfileJson,
+                                                        CharacterFactory npcFactory,
+                                                        RaceFactory npcRaceFactory,
+                                                        EnvironmentFactory npcEnvironmentFactory,
+                                                        ISerializer serializer,
+                                                        string inputPrompt, string apiKey
                                                     )
         {
             string inputPromptLower = inputPrompt.ToLowerInvariant();
 
             Debug.WriteLine($"\nCommunicationSystem: Preparando prompt para NPC '{npcId}' com input do jogador: '{inputPrompt}'");
-            string npcProfileJson = RetrieveNPCJSON(npcId, path);
 
-            Brain brain = this.NPCFactory.GetNPCBrain(npcId);
-            var npcDatabase = this.NPCFactory.GetAllNPCBrains();
+            Brain brain = npcFactory.GetNPCBrain(npcId);
+            var npcDatabase = npcFactory.GetAllNPCBrains();
 
-            if(npcDatabase == null || !npcDatabase.Any())
+            if (npcDatabase == null || !npcDatabase.Any())
             {
                 Debug.WriteLine("Nenhum NPC encontrado no banco de dados.");
                 return "Erro: Nenhum NPC encontrado no banco de dados.";
@@ -235,9 +208,9 @@ namespace Genesis.Mind.CommunicationModule.systems
 
             var relevantRelationshipsData = GetRelevantNpcDataFromPrompt(brain, npcDatabase, inputPromptLower);
 
-            var relevantRaceData = GetRelevantRaceDataFromPrompt(brain, inputPromptLower);
+            var relevantRaceData = GetRelevantRaceDataFromPrompt(brain, npcRaceFactory, inputPromptLower);
 
-            var relevantEnvironmentData = GetRelevantEnvironmentDataFromPrompt(brain, inputPromptLower);
+            var relevantEnvironmentData = GetRelevantEnvironmentDataFromPrompt(brain, npcEnvironmentFactory, inputPromptLower);
 
             string fullPrompt = PromptBuilder.BuildAiPrompt(
                                                                 npcProfileJson, inputPrompt, 
@@ -245,11 +218,6 @@ namespace Genesis.Mind.CommunicationModule.systems
                                                                 relevantRaceData,
                                                                 relevantEnvironmentData
                                                             );
-
-            Debug.WriteLine("--- FULL PROMPT SENT TO AI (Simulated) ---");
-            Debug.WriteLine(fullPrompt);
-            Debug.WriteLine("------------------------------------------");
-            //return $"AI Response (simulated for {npcId}): Based on the detailed profile provided and your input, I would say something witty and insightful about {inputPrompt}.";
             
             var requestPayload = new
             {
@@ -278,17 +246,14 @@ namespace Genesis.Mind.CommunicationModule.systems
                 }
             };
 
-            var jsonPayload = JsonConvert.SerializeObject(requestPayload, new JsonSerializerSettings { Formatting = Formatting.None });
+            var jsonPayload = serializer.Serialize(requestPayload);
             string fullRequestUri = $"{GEMINI_MODEL_URL}{GEMINI_MODEL_ID}:generateContent?key={apiKey}";
             Debug.WriteLine($"JSON PAYLOAD:\n\n {jsonPayload}");
-            Debug.WriteLine($"FULL URL:\n\n {fullRequestUri}");
 
             try
             {
                 var httpRequest = new HttpRequestMessage(HttpMethod.Post, fullRequestUri);
                 httpRequest.Content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-
-                Debug.WriteLine("ANTES DE ENVIAR!\n\n");
                 var httpResponse = await _httpClient.SendAsync(httpRequest);
                 httpResponse.EnsureSuccessStatusCode();
 
@@ -296,33 +261,7 @@ namespace Genesis.Mind.CommunicationModule.systems
 
                 string responseBody = await httpResponse.Content.ReadAsStringAsync();
 
-                Debug.WriteLine($"RESPONSE BODY: {responseBody}");
-
-                var geminiResponse = JObject.Parse(responseBody);
-
-                if (geminiResponse.TryGetValue("candidates", out JToken candidatesToken) &&
-                    candidatesToken is JArray candidatesArray && candidatesArray.Any())
-                {
-                    JToken firstCandidate = candidatesArray.First();
-
-                    JToken textToken = firstCandidate?["content"]?["parts"]?.FirstOrDefault()?["text"];
-
-                    if (textToken != null)
-                    {
-                        // Converte o valor do token para string
-                        string aiResponseText = textToken.Value<string>();
-
-                        Debug.WriteLine("\n--- Resposta Bruta da API do Gemini ---");
-                        Debug.WriteLine(responseBody);
-                        Debug.WriteLine("------------------------------------");
-                        return aiResponseText;
-                    }
-                           
-                }
-                Debug.WriteLine("\n--- Resposta Bruta da API do Gemini ---");
-                Debug.WriteLine(responseBody);
-                Debug.WriteLine("------------------------------------");
-                return "Erro: Resposta da IA não contém o formato esperado (texto).";
+                return responseBody;
             }
             catch (Exception e)
             {
@@ -330,6 +269,6 @@ namespace Genesis.Mind.CommunicationModule.systems
             }
 
             return $"AI Response (simulated for {npcId}): Based on the detailed profile provided and your input, I would say something witty and insightful about {inputPrompt}.";
-        }*/
+        }
     }
 }

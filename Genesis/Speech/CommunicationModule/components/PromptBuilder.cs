@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Genesis.Mind.CommunicationModule.components
+namespace Genesis.Speech.CommunicationModule.components
 {
     public static class PromptBuilder
     {
