@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("Newtonsoft")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Genesis")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5b6affd53f37f106b52d2a6cadf4f2102b8d174e")]
-[assembly: System.Reflection.AssemblyProductAttribute("Newtonsoft")]
-[assembly: System.Reflection.AssemblyTitleAttribute("Newtonsoft")]
+[assembly: System.Reflection.AssemblyProductAttribute("Genesis")]
+[assembly: System.Reflection.AssemblyTitleAttribute("Genesis")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 
 // Gerado pela classe WriteCodeFragment do MSBuild.
